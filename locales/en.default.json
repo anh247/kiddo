@@ -701,6 +701,8 @@
       "phone": "Phone:",
       "city": "City:",
       "zip": "Zip:",
+       "address": "Address:",
+      "address2": "Address 2:",
     "return": "Return to Account details"
     },
     "activate_account": {
