@@ -22,10 +22,18 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "main-activate-account":{
+      "type":"main-activate-account",
+      "settings":{
+          "padding_top": 28,
+        "padding_bottom": 28
+      }
     }
   },
   "order": [
     "main",
-    "main-account"
+    "main-account",
+    "main-activate-account"
   ]
 }
