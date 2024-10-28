@@ -17,8 +17,8 @@
       }
     },
   
-    "main-register":{
-      "type":"main-register",
+    "main-reset-password":{
+      "type":"main-reset-password",
       "settings":{
           "padding_top": 28,
         "padding_bottom": 28
@@ -27,6 +27,6 @@
   },
   "order": [
     "main",
-    "main-register"
+    "main-reset-password"
   ]
 }
