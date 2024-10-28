@@ -688,16 +688,16 @@
   },
   "customer": {
     "account": {
-      "title": "Account",
-       "logout": "Logout",
-      "details": "Account details",
-      "view_addresses": "View addresses",
-        "dashboard": "Dashboard",
-        "view_wishlist": "Wishlist",
-      "back_account":"Back account",
-       "name": "Name:",
-       "country": "Country:",
-      "return": "Return to Account details"
+    "title": "Account",
+    "logout": "Logout",
+    "details": "Account details",
+    "view_addresses": "View addresses",
+    "dashboard": "Dashboard",
+    "view_wishlist": "Wishlist",
+    "back_account":"Back account",
+    "name": "Name:",
+    "country": "Country:",
+    "return": "Return to Account details"
     },
     "activate_account": {
       "title": "Activate Account",
