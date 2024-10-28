@@ -728,6 +728,7 @@
     "order": {
       "title": "Order {{ name }}",
        "date": "Placed on {{ date }}",
+        "cancelled": "Order Cancelled on {{ date }}",
       "date_html": "Placed on {{ date }}",
       "cancelled_html": "Order Cancelled on {{ date }}",
       "cancelled_reason": "Reason: {{ reason }}",
