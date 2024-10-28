@@ -692,6 +692,7 @@
       "details": "Account details",
       "view_addresses": "View addresses",
         "dashboard": "Dashboard",
+        "view_wishlist": "Wishlist",
       "return": "Return to Account details"
     },
     "activate_account": {
