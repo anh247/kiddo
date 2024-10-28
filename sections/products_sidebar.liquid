@@ -1,0 +1,920 @@
+<link rel="stylesheet" href="{{ 'products_sidebar.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'sidebar-products.css' | asset_url }}">
+<section class="shop-products">
+  <div class="container shop_products">
+    <section class="products">
+      <div class="title-products">
+        <div class="left_title-products">Showing 1-9 of {{ collection.products_count }} results</div>
+        <div class="facet-filters__field">
+          <div class="select">
+            <select
+              name="sort_by"
+              class="facet-filters__sort select__select caption-large"
+              id="SortBy"
+              aria-describedby="a11y-refresh-page-message"
+            >
+              <option value="title-ascending" selected="selected">Alphabetically, A-Z</option>
+              <option value="title-descending">Alphabetically, Z-A</option>
+              <option value="price-ascending">Price, low to high</option>
+              <option value="price-descending">Price, high to low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="items-products" id="items-page-1">
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-sales">
+             <p class="lable-sale"> Sale%</p>
+            </div>
+            <img src="{{ 'Dragonfly_Toy.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Dragonfly Toy</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$99</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <img src="{{ 'Teddy_Bear.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Teddy Bear</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$30</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-news">
+             <p class="label-new">New</p>
+            </div>
+            <img src="{{ 'Newborn_Cloth_Set.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Newborn Cloth Set</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$120</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-sales">
+             <p class="lable-sale"> Sale%</p>
+            </div>
+            <img src="{{ 'Blue_Bakpack.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Blue Bakpack</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$99</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Child Boots</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$30</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-news">
+             <p class="label-new">New</p>
+            </div>
+            <img src="{{ 'Panda_with_Heart.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Panda with Heart</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$120</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-sales">
+             <p class="lable-sale"> Sale%</p>
+            </div>
+            <img src="{{ 'Car_Seat_for_5T-7Y.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Car Seat for 5T-7Y</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$99</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <img src="{{ 'Pink_Bunny.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Pink Bunny</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$30</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-news">
+             <p class="label-new">New</p>
+            </div>
+            <img src="{{ 'Newborn_Clothing_Set.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Newborn Clothing Set</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$120</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-sales">
+             <p class="lable-sale"> Sale%</p>
+            </div>
+            <img src="{{ 'School_Cardigan.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>School Cardigan</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$99</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <img src="{{ 'Train_Toy.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Train Toy</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$30</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-news">
+             <p class="label-new">New</p>
+            </div>
+            <img src="{{ 'Jamper.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Jamper</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$120</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-sales">
+             <p class="lable-sale"> Sale%</p>
+            </div>
+            <img src="{{ 'Stroller1.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Stroller</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$99</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <img src="{{ 'Teddy_Bear_Toy.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Teddy Bear Toy</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$30</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-news">
+             <p class="label-new">New</p>
+            </div>
+            <img src="{{ 'Lego.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Lego</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$120</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="items-products" id="items-page-2" style="display: none;">
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-sales">
+             <p class="lable-sale"> Sale%</p>
+            </div>
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Dragonfly Toy</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$99</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <img src="{{ 'Stroller1.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Teddy Bear</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$30</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-news">
+             <p class="label-new">New</p>
+            </div>
+            <img src="{{ 'Teddy_Bear_Toy.png'  | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Newborn Cloth Set</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$120</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-sales">
+             <p class="lable-sale"> Sale%</p>
+            </div>
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Dragonfly Toy</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$99</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Teddy Bear</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$30</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-news">
+             <p class="label-new">New</p>
+            </div>
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Newborn Cloth Set</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$120</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="items-products" id="items-page-3" style="display: none;">
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-sales">
+             <p class="lable-sale"> Sale%</p>
+            </div>
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Dragonfly Toy</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$99</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Teddy Bear</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$30</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-news">
+             <p class="label-new">New</p>
+            </div>
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Newborn Cloth Set</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$120</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-sales">
+             <p class="lable-sale"> Sale%</p>
+            </div>
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Dragonfly Toy</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$99</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Teddy Bear</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$30</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://demo-tranning.myshopify.com/pages/products">
+          <div class="card_items-products">
+            <div class="lable-news">
+             <p class="label-new">New</p>
+            </div>
+            <img src="{{ 'Child_Boots.png' | asset_url }}" alt="">
+            <div class="infor-card_items-products">
+              <h2>Newborn Cloth Set</h2>
+              <div class="star-rating">
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star filled">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <div class="price">
+                <span class="discounted-price">$120</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="pagination_products">
+        <!-- Giả lập nút phân trang -->
+        <div class="pagination" data-page="1">1</div>
+        <div class="pagination" data-page="2">2</div>
+        <div class="pagination" data-page="3">3</div>
+      </div>
+    </section>
+    <section class="sidebar-products">
+      <div class="sidebar-top">
+        <div class="infor_categories">
+          <h4 class="title_infor-sidebar">Categories</h4>
+          <ul class="list_infor">
+            <li>Newborn Shop</li>
+            <li>Baby Care Products</li>
+            <li>Toddlers Shop</li>
+            <li>School Clothing & Sets</li>
+            <li>Toys & Games</li>
+            <li>Books & Stationary</li>
+            <li>Strollers & Car Seats</li>
+            <li>Ride-Ons</li>
+          </ul>
+        </div>
+        <div class="filter-item filter-price shop-dropdown">
+          <div class="filter-header">
+            <h2 class="filter-title-price">Price</h2>
+            <button class="shop-dropdown__btn-toggle" id="price-button">
+         <i class='bx bx-plus'></i>
+            </button>
+          </div>
+          <input
+            type="range"
+            id="priceRange"
+            min="10"
+            max="670"
+            value="340"
+            step="10"
+            oninput="updatePrice(this.value)"
+          >
+          <div class="value-range shop-dropdown__content" style="color: #555;">
+            Price:
+            <span style="color: black;">$</span>
+            <span id="priceValue" style="color: black;">0</span>
+          </div>
+        </div>
+        <div class="filter-item filter-type shop-dropdown">
+          <div class="filter-header">
+            <h2 class="filter-title-type">Product Type</h2>
+            <button class="shop-dropdown__btn-toggle" id="product_type-button">
+          <i class='bx bx-plus'></i>
+            </button>
+          </div>
+          <div class="filter-body-type shop-dropdown__content">
+            <div class="filter-select">
+              <input type="checkbox" id="Fermentumo">
+              <label for="Fermentumo">Fermentumo <span class="large-text">(12)</span> </label>
+            </div>
+            <div class="filter-select">
+              <input type="checkbox" id="Dincidunteros">
+              <label for="Dincidunteros">Dincidunteros <span class="large-text">(12)</span></label>
+            </div>
+            <div class="filter-select">
+              <input type="checkbox" id="Donatello">
+              <label for="Donatello">Donatello <span class="large-text">(12)</span></label>
+            </div>
+            <div class="filter-select">
+              <input type="checkbox" id="Georgine">
+              <label for="Georgine">Georgine <span class="large-text">(12)</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="filter-item_filter-availability shop-dropdown">
+          <div class="filter-header">
+            <h2 class="filter-title-avai">Gender</h2>
+            <button class="shop-dropdown__btn-toggle" id="availability-button">
+           <i class='bx bx-plus'></i>
+            </button>
+          </div>
+          <div class="filter-body-avai shop-dropdown__content">
+            <div class="filter-select">
+              <input type="checkbox" id="inStock">
+              <label for="inStock">Boys <span class="large-text">(12)</span></label>
+            </div>
+            <div class="filter-select">
+              <input type="checkbox" id="outStock">
+              <label for="outStock">Girls <span class="large-text">(12)</span></label>
+            </div>
+            <div class="filter-select">
+              <input type="checkbox" id="outStock">
+              <label for="outStock">Uni <span class="large-text">(12)</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="fitler-item filter-color shop-dropdown">
+          <div class="filter-header">
+            <h2 class="filter-title-color">Color</h2>
+            <button class="shop-dropdown__btn-toggle" id="color-button">
+           <i class='bx bx-plus'></i>
+            </button>
+          </div>
+        </div>
+        <div class="button_products">
+          <button class="filter-button_products">Filter</button>
+          <button class="clear_filter-button_products">Clear filter</button>
+        </div>
+        <div class="img_banner-sidebar-top">
+          <img src="{{ 'flower_1.png' | asset_url }}" alt="">
+
+          <div class="banner-text_sidebar-top">
+            <h2>Seasonal Sale</h2>
+            <div class="element_sale">
+              <p>50%</p>
+            </div>
+          </div>
+          <img class="right_img" src="{{ 'flower_2.png' | asset_url }}" alt="">
+        </div>
+        <div class="recent_prducts">
+          <h2>Recent Products</h2>
+          <a href="#">
+            <div class="Product_List_Small">
+              <div class="badges">
+                <img src="{{ 'Teddy_Bearsmall.png' | asset_url }}" alt="">
+                <p>Sale</p>
+              </div>
+              <div class="content_img">
+                <h3>Teddy Bear</h3>
+                <div class="star-rating">
+                  <span class="star filled">★</span>
+                  <span class="star filled">★</span>
+                  <span class="star filled">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                </div>
+                <div class="price">
+                  <span class="original-price">$38</span>
+                  <span class="discounted-price">$15</span>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="#">
+            <div class="Product_List_Small">
+              <div class="badges">
+                <img src="{{ 'School_Bagsmall.png' | asset_url }}" alt="">
+                <p>Sale</p>
+              </div>
+              <div class="content_img">
+                <h3>School Bag</h3>
+                <div class="star-rating">
+                  <span class="star filled">★</span>
+                  <span class="star filled">★</span>
+                  <span class="star filled">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                </div>
+                <div class="price">
+                  <span class="original-price">$203 </span>
+                  <span class="discounted-price">$180</span>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a href="#">
+            <div class="Product_List_Small">
+              <div class="badges">
+                <img src="{{ 'Romper_Woolsmall.png' | asset_url }}" alt="">
+                <p>Sale</p>
+              </div>
+              <div class="content_img">
+                <h3>Romper Wool</h3>
+                <div class="star-rating">
+                  <span class="star filled">★</span>
+                  <span class="star filled">★</span>
+                  <span class="star filled">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                </div>
+                <div class="price">
+                  <span class="original-price">$100</span>
+                  <span class="discounted-price">$99</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <h1 class="title_sidebar-bottom">Special Offer</h1>
+        <a href="#">
+          <div class="card_sidebar-bottom">
+            <div class="img_card">
+              <img src="{{ 'Stroller.png' | asset_url }}" alt="">
+              <p>-50%</p>
+            </div>
+            <div class="infor-card_items-products">
+              <h2>Stroller 2 in 1</h2>
+              <div class="star-rating">
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+              <div class="price">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$99</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <div class="progressbar-container">
+          <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+          <div class="stock-info">
+            <span>Available: <span id="available">18</span></span>
+            <span>Sold: <span id="sold">20</span></span>
+          </div>
+        </div>
+        <div class="countdown-container">
+          <p class="countdown-text"><strong>Hurry Up!</strong> Offer ends in:</p>
+          <div class="countdown">
+            <div class="countdown-item_card">
+              <div class="countdown-item">
+                <span id="days">234</span>
+              </div>
+              <p>Days</p>
+            </div>
+            <div class="countdown-item_card">
+              <div class="countdown-item">
+                <span id="hours">02</span>
+              </div>
+              <p>Hours</p>
+            </div>
+            <div class="countdown-item_card">
+              <div class="countdown-item">
+                <span id="minutes">25</span>
+              </div>
+              <p>Mins</p>
+            </div>
+            <div class="countdown-item_card">
+              <div class="countdown-item">
+                <span id="seconds">54</span>
+              </div>
+              <p>Secs</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Products Sidebar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Featured Products"
+    },
+    {
+      "type": "select",
+      "id": "sort_by",
+      "label": "Sort Products By",
+      "options": [
+        { "value": "title-ascending", "label": "Alphabetically, A-Z" },
+        { "value": "title-descending", "label": "Alphabetically, Z-A" },
+        { "value": "price-ascending", "label": "Price, low to high" },
+        { "value": "price-descending", "label": "Price, high to low" }
+
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "image1",
+      "label": "Product Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image2",
+      "label": "Product Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image3",
+      "label": "Product Image 3"
+    }
+  ],
+   "blocks": [
+    {
+      "type": "categories",
+      "name": "Categories",
+      "settings": []
+    },
+    {
+      "type": "price_filter",
+      "name": "Price Filter",
+      "settings": []
+    },
+    {
+      "type": "product_type_filter",
+      "name": "Product Type Filter",
+      "settings": []
+    },
+    {
+      "type": "gender_filter",
+      "name": "Gender Filter",
+      "settings": []
+    },
+    {
+      "type": "color_filter",
+      "name": "Color Filter",
+      "settings": []
+    },
+    {
+      "type": "recent_products",
+      "name": "Recent Products",
+      "settings": []
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}
+<script src="{{ 'pagination.js' | asset_url }}" defer></script>
+<script src="{{ 'tag_list.js' | asset_url }}" defer></script>
+
+<script src="{{ 'priceRange.js' | asset_url }}" defer></script>
+<script src="{{ 'remaining_product.js' | asset_url }}" defer></script>
+<script src="{{ 'countdown_time.js' | asset_url }}" defer></script>
+<script src="{{ 'content_displayed.js' | asset_url }}" defer></script>
+<script src="{{ 'product_filter.js' | asset_url }}" defer></script>
+
+<script src="{{ 'Filter_price.js' | asset_url }}" defer></script>

@@ -2,13 +2,18 @@
     <div data-product-quantity class="js-quantity quantity skeleton-item">
         <span class="quantity-title">{{ 'products.product.quantity' | t }}</span>
         <div class="quantity-inner">
-            <a class="js_minus" href="#"><i class="main-icon-minus"></i></a>
+            <a class="js_minus" href="#">
+                <i class='bx bx-minus main-icon-minus'></i>
+            </a>
             <input id="Quantity" class="input-text js_qty" type="text" size="4" title="Qty" value="1" name="quantity" data-step="1" data-min="1"
             {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
                 data-max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
                 max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
-                {% endif %}>
-            <a class="js_plus" href="#"><i class="main-icon-plus"></i></a>
+            {% endif %}>
+            <a class="js_plus" href="#">
+                <i class='bx bx-plus main-icon-plus'></i>
+            </a>
         </div>
     </div>
 {% endif %}
+<script src="{{ 'quantity-inner.js' | asset_url }}" defer></script>

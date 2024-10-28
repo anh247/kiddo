@@ -1,0 +1,95 @@
+<link rel="stylesheet" href="{{ 'section-product01.css' | asset_url }}">
+<div class="product-section">
+  <div class="container">
+    <h2>Best Sellers this Week</h2>
+    <div class="product-grid">
+      {% for block in section.blocks %}
+        <a href="{{ block.settings.product_url }}" class="product-link">
+          <div class="product-item">
+            <div class="product-image">
+              {% if block.settings.product_image %}
+                <img src="{{ block.settings.product_image | img_url: 'master' }}" alt="{{ block.settings.product_name }}">
+              {% endif %}
+              <span class="sale-tag">Sale%</span>
+            </div>
+            <div class="product-info">
+              <h3>{{ block.settings.product_name }}</h3>
+              <div class="product-rating">
+                {% for i in (1..block.settings.product_rating) %}
+                  <span class="star">&#9733;</span>
+                {% endfor %}
+              </div>
+              <div class="product-prices">
+                <span class="old-price">{{ block.settings.old_price }}</span>
+                <span class="new-price">{{ block.settings.new_price }}</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product Name",
+          "default": "Product Name"
+        },
+        {
+          "type": "text",
+          "id": "old_price",
+          "label": "Old Price",
+          "default": "$100"
+        },
+        {
+          "type": "text",
+          "id": "new_price",
+          "label": "New Price",
+          "default": "$99"
+        },
+        {
+          "type": "select",
+          "id": "product_rating",
+          "label": "Product Rating",
+          "options": [
+            {"value": "5", "label": "5 stars"},
+            {"value": "4", "label": "4 stars"},
+            {"value": "3", "label": "3 stars"},
+            {"value": "2", "label": "2 stars"},
+            {"value": "1", "label": "1 star"}
+          ],
+          "default": "5"
+        },
+        {
+          "type": "text",
+          "id": "product_url",
+          "label": "Product Link",
+          "default": "/products/sample-product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,8 +1,0 @@
-<div class="post-meta post-comment-count">
-    <strong class="number">{{ article.comments_count | default: 18 }}</strong>
-    {% if article.comments_count == 1 %}
-        {{ 'blogs.article.comment' | t }}
-    {% else %}
-        {{ 'blogs.article.comments' | t }}
-    {% endif %}
-</div>

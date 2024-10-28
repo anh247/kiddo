@@ -1,8 +1,0 @@
-{% assign product_style = product_style | default: settings.product_style %}
-{% case product_style %}
-    {% when '1' %}{% render 'product-style-01', product: product, aspect_ratio: aspect_ratio, animation_order: animation_order, list_content: list_content %}
-    {% when '2' %}{% render 'product-style-02', product: product, aspect_ratio: aspect_ratio, animation_order: animation_order, list_content: list_content %}
-    {% when '3' %}{% render 'product-style-03', product: product, aspect_ratio: aspect_ratio, animation_order: animation_order, list_content: list_content %}
-    {% when '4' %}{% render 'product-style-04', product: product, aspect_ratio: aspect_ratio, animation_order: animation_order, list_content: list_content %}
-    {% when '5' %}{% render 'product-style-05', product: product, aspect_ratio: aspect_ratio, animation_order: animation_order, list_content: list_content %}
-{% endcase %}

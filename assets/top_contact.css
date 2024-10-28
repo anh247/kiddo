@@ -1,0 +1,133 @@
+.header_contact h2 {
+    color: #423127;
+    font-family: Nunito, sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    text-align: center;
+
+}
+
+.header_contact {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.header_contact {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    /* Căn giữa các phần tử bên trong theo chiều ngang */
+
+}
+
+.map_body-contact {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 7px;
+
+}
+
+.gg-map {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 55px;
+}
+
+.contact_content h2 {
+    color: #423127;
+    font-family: Nunito, sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    text-align: left;
+
+}
+.content_time h2{
+    color: #423127;
+    font-family: Nunito, sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    text-align: center;
+
+}
+.content_contact ul {
+    
+    width: 193px;
+}
+
+.content_contact ul li {
+    list-style: none;
+}
+
+.content_contact ul li a {
+    text-decoration: none;
+    transition: color 0.3s;
+    color: #423127;
+    font-family: Lato;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+
+}
+
+.content_contact ul li a:hover {
+    color: #7C81FF;
+}
+
+.content-page_contact {
+    display: flex;
+    gap: 65px;
+}
+
+.line_time {
+    background-color: #FFE3C2; /* Màu nền cho dòng */
+    width: 243px; /* Độ rộng của dòng */
+    height: 1px; /* Chiều cao của dòng */
+    display: block; /* Đảm bảo span hiển thị như một khối */
+    margin: 20px 0; /* Thêm khoảng cách trên và dưới (tuỳ chọn) */
+}
+.time_section-small {
+    display: flex;
+    gap: 10px;
+}
+.time_section-small h6 ,.time_section-small p{
+    margin: 0;
+}
+.time_section-small h6{
+    color:#724D37;
+    font-family: Lato;
+font-size: 16px;
+font-weight: 700;
+line-height: 24px;
+text-align: left;
+width: 34px;
+}
+.time_section-small p{
+    font-family: Lato;
+font-size: 16px;
+font-weight: 400;
+line-height: 24px;
+text-align: left;
+color: #724D37;
+}
+.content_time {
+    padding: 40px;
+   margin-top: -100px;
+  margin-right: 100px;
+    background: #FFFCF9;
+    border-style: dashed;
+    border-width: 2px;
+    border-color: #FFE3C2;
+    border-radius: 12px;
+  }
+.content-bottom{
+    display: flex;
+    justify-content: space-between;
+}
+.time_section {
+    margin-top: 30px;
+  }
+.img_left_header,.img_right_header {
+  margin-top: 10px;
+}

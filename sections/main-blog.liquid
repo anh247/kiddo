@@ -1,742 +1,153 @@
-{% liquid
-    assign sid = section.id
-    assign content_width = section.settings.content_width
-    assign container = section.settings.container
-    assign space = section.settings.space
-    assign layout = section.settings.layout
-    assign sidebar = section.settings.sidebar
-    assign per_page = section.settings.per_page | default: 12
-    assign post_style = section.settings.post_style
-    assign ratio = section.settings.ratio
-    if ratio > 0
-        assign aspect_ratio = ratio
-    endif
-    assign title_line = section.settings.title_line
-    assign title_equal = section.settings.title_equal
-    assign excerpt_line = section.settings.excerpt_line
-    assign item_border = section.settings.item_border
-    assign stretch_thumb = section.settings.stretch_thumb
-    assign pageUrl = content_for_header | split: '"pageurl":"' | last | split: '"' | first | split: '.myshopify.com' | last | replace: '\/', '/' | replace: '%20', ' ' | replace: '\u0026', '&'
-    if pageUrl contains "?"
-        assign query_string = pageUrl | split: '?' | last
-        assign query_parts = query_string | split: '&'
-        for part in query_parts
-            assign key_and_value = part | split: '='
-            case key_and_value[0]
-                when 'layout'
-                    assign layout = key_and_value[1]
-                when 'sidebar'
-                    assign sidebar = key_and_value[1]
-                when 'pagination'
-                    assign pagination = key_and_value[1]
-                when 'post_style'
-                    assign post_style = key_and_value[1]
-                when 'item_border'
-                    assign item_border = key_and_value[1]
-                when 'cols_number'
-                    assign cols_number = key_and_value[1]
-            endcase
-        endfor
-    endif
-%}
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
 
-{%- capture s_style -%}
-    {% if title_line != blank %}--post-title-line:{{ title_line }};{% endif %}
-    {% if title_equal == '1' %}
-        --post-title-height:calc(var(--post-title-line) * var(--post-title-lh));
-    {% elsif title_equal == '0' %}
-        --post-title-height:auto;
-    {% endif %}
-    {% if excerpt_line != blank %}--post-excerpt-line:{{ excerpt_line }};{% endif %}
-{%- endcapture -%}
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
 
-<section id="{{ sid }}" class="blog-page blog-{{ layout }} space-{{ space }}">
-    <div class="{{ content_width }} sidebar-{{ sidebar }}" style="{% if container != blank %}--container:{{ container }}{% endif %}">
-        {% if sidebar != 'full' %}{% render 'sidebar-mobile-btn' %}{% endif %}
-        <div class="section-inner">
-            <div class="site-main {{ item_border }} grid-box-wrap {% if stretch_thumb %}stretch-thumb{% endif %}" style="{{ s_style | strip_newlines | remove: "  " }}">
-                {%- if blog.articles.size > 0 -%}
-                    {% paginate blog.articles by per_page %}
-                        <div class="post-list grid-box">
-                            {% for article in blog.articles %}
-                                {% render 'post-style', post_style: post_style, article: article, aspect_ratio: aspect_ratio %}
-                            {% endfor %}
-                        </div>
-                        {%- if paginate.pages > 1 -%}
-                            {% render 'pagination', paginate: paginate, anchor: '#primary' %}
-                        {%- endif -%}
-                    {% endpaginate %}
-                {% else %}
-                    <h5 class="not-found">{{ 'blogs.article.not_create' | t }}</h5>
-                {% endif %}
-            </div>
-            {% if sidebar != 'full' %}{% render 'sidebar' %}{% endif %}
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- paginate blog.articles by 6 -%}
+  <div class="main-blog page-width section-{{ section.id }}-padding">
+    <h1 class="title--primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {{ blog.title | escape }}
+    </h1>
+
+    <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
+      {%- for article in blog.articles -%}
+        <div
+          class="blog-articles__article article{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: {{ forloop.index }};"
+          {% endif %}
+        >
+          {%- render 'article-card',
+            article: article,
+            media_height: section.settings.image_height,
+            media_aspect_ratio: article.image.aspect_ratio,
+            show_image: section.settings.show_image,
+            show_date: section.settings.show_date,
+            show_author: section.settings.show_author,
+            show_excerpt: true
+          -%}
         </div>
+      {%- endfor -%}
     </div>
-</section>
 
-{%- render 'section_style' -%}
-{%- render 'section_style_box', cols_number: cols_number, cols_gap: cols_gap, rows_gap: rows_gap -%}
+    {%- if paginate.pages > 1 -%}
+      {%- render 'pagination', paginate: paginate -%}
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
 
 {% schema %}
 {
-    "name": "Blog",
-    "class": "alz-section section-main-blog",
-    "settings": [
+  "name": "t:sections.main-blog.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.main-blog.settings.header.content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
         {
-            "type": "select",
-            "id": "content_width",
-            "label": "Content width",
-            "options": [
-                {
-                    "value": "container",
-                    "label": "Container"
-                },
-                {
-                    "value": "full-width",
-                    "label": "Full Width"
-                },
-                {
-                    "value": "full-width-pd",
-                    "label": "Full Width no Padding"
-                }
-            ]
+          "value": "grid",
+          "label": "t:sections.main-blog.settings.layout.options__1.label"
         },
         {
-            "type": "text",
-            "id": "container",
-            "label": "Container width",
-            "info": "Example: 1410px, 70%, 70vw"
-        },
-        {
-            "type": "text",
-            "id": "space",
-            "label": "Space",
-            "info": "Example:10,20,30,40,50,60,70,80,90,100"
-        },
-        {
-            "type": "select",
-            "id": "layout",
-            "label": "Layout",
-            "options": [
-                {
-                    "value": "grid",
-                    "label": "Grid"
-                },
-                {
-                    "value": "list",
-                    "label": "List"
-                }
-            ]
-        },
-        {
-            "type": "select",
-            "id": "sidebar",
-            "label": "Sidebar",
-            "options": [
-                {
-                    "value": "full",
-                    "label": "No sidebar"
-                },
-                {
-                    "value": "start",
-                    "label": "Start"
-                },
-                {
-                    "value": "end",
-                    "label": "End"
-                }
-            ]
-        },
-        {
-            "type": "header",
-            "content": "== Item settings"
-        },
-        {
-            "type": "number",
-            "id": "per_page",
-            "label": "Posts per page",
-            "default": 12
-        },
-        {
-            "type": "select",
-            "id": "post_style",
-            "label": "Post style",
-            "options": [
-                {
-                    "value": "1",
-                    "label": "Style 01"
-                },
-                {
-                    "value": "2",
-                    "label": "Style 02"
-                },
-                {
-                    "value": "3",
-                    "label": "Style 03"
-                }
-            ]
-        },
-        {
-            "type": "number",
-            "id": "ratio",
-            "label": "Image ratio",
-            "info": "Ratio = width / height. Example: 1, 1.2, 0.8"
-        },
-        {
-            "type": "text",
-            "id": "title_line",
-            "label": "Number of title line"
-        },
-        {
-            "type": "select",
-            "id": "title_equal",
-            "label": "Title of posts has equal height",
-            "options": [
-                {
-                    "value": "",
-                    "label": "Inherit"
-                },
-                {
-                    "value": "1",
-                    "label": "True"
-                },
-                {
-                    "value": "0",
-                    "label": "False"
-                }
-            ]
-        },
-        {
-            "type": "text",
-            "id": "excerpt_line",
-            "label": "Number of excerpt line",
-            "default": "2"
-        },
-        {
-            "type": "select",
-            "id": "item_border",
-            "label": "Item border",
-            "info": "If Full, Columns gap & Rows gap is 0",
-            "options": [
-                {
-                    "value": "",
-                    "label": "None"
-                },
-                {
-                    "value": "border-item",
-                    "label": "Item"
-                },
-                {
-                    "value": "border-between",
-                    "label": "Between"
-                },
-                {
-                    "value": "border-full",
-                    "label": "Full"
-                }
-            ]
-        },
-        {
-            "type": "checkbox",
-            "id": "stretch_thumb",
-            "label": "Stretch Thumbnail",
-            "info": "For item border: item, full",
-            "default": true
-        },
-        {
-            "type": "header",
-            "content": "== Loop settings"
-        },
-        {
-            "type": "text",
-            "id": "cols_number",
-            "label": "Columns (6 screen resolutions)",
-            "info": "Desktop,<1500,<1200,<992,<768,<480",
-            "default": "5,5,4,3,3,2"
-        },
-        {
-            "type": "text",
-            "id": "cols_gap",
-            "label": "Columns gap (6 screen resolutions)",
-            "info": "Desktop,<1500,<1200,<992,<768,<480",
-            "default": "30px,30px,20px,20px,16px,10px"
-        },
-        {
-            "type": "text",
-            "id": "rows_gap",
-            "label": "Rows gap (6 screen resolutions)",
-            "info": "Desktop,<1500,<1200,<992,<768,<480",
-            "default": "30px,30px,20px,20px,16px,10px"
-        },
-        {
-            "type": "header",
-            "content": "== Section settings"
-        },
-        {
-            "type": "checkbox",
-            "id": "for_inner",
-            "label": "Settings apply for inner"
-        },
-        {
-            "type": "color_background",
-            "id": "bg_gradient",
-            "label": "Background gradient"
-        },
-        {
-            "type": "color",
-            "id": "bg_cl",
-            "label": "Background color"
-        },
-        {
-            "type": "color",
-            "id": "main_cl",
-            "label": "Main color"
-        },
-        {
-            "type": "color",
-            "id": "main_cl_t",
-            "label": "Main color - text inside"
-        },
-        {
-            "type": "color",
-            "id": "dark_cl",
-            "label": "Dark color"
-        },
-        {
-            "type": "color",
-            "id": "dark_cl_2",
-            "label": "Dark color 2"
-        },
-        {
-            "type": "color",
-            "id": "dark_cl_3",
-            "label": "Dark color 3"
-        },
-        {
-            "type": "color",
-            "id": "light_cl",
-            "label": "Light color"
-        },
-        {
-            "type": "color",
-            "id": "light_cl_2",
-            "label": "Light color 2"
-        },
-        {
-            "type": "color",
-            "id": "line_cl",
-            "label": "Line color"
-        },
-        {
-            "type": "text",
-            "id": "fz",
-            "label": "Font size",
-            "info": "Example: 16px"
-        },
-        {
-            "type": "text",
-            "id": "lh",
-            "label": "Line Height",
-            "info": "Example: 24px, 1.4em"
-        },
-        {
-            "type": "text",
-            "id": "ls",
-            "label": "Letter spacing",
-            "info": "Example: 1px, 0.1em"
-        },
-        {
-            "type": "text",
-            "id": "fw",
-            "label": "Font weight",
-            "info": "Example: 100, 200, 300, 400, 500, 600, 700, 800"
-        },
-        {
-            "type": "text",
-            "id": "tt",
-            "label": "Text transform",
-            "info": "Example: none, uppercase, lowercase, capitalize"
-        },
-        {
-            "type": "color",
-            "id": "bd_color",
-            "label": "Border color"
-        },
-        {
-            "type": "text",
-            "id": "bd_style",
-            "label": "Border style",
-            "info": "Example: solid, dotted, dashed, double, groove, ridge, outset"
-        },
-        {
-            "type": "text",
-            "id": "bd_width",
-            "label": "Border width",
-            "info": "Example: 1px, 1px 0, 1px 0 0 0"
-        },
-        {
-            "type": "text",
-            "id": "bd_radius",
-            "label": "Border radius",
-            "info": "Example: 10px, 20px 10px, 20px 20px 10px 10px, 10%"
-        },
-        {
-            "type": "text",
-            "id": "mg",
-            "label": "Margin",
-            "info": "Example: 10px, 10px 0, 10px 0 0 0"
-        },
-        {
-            "type": "text",
-            "id": "pd",
-            "label": "Padding",
-            "info": "Example: 10px, 10px 0, 10px 0 0 0"
-        },
-        {
-            "type": "header",
-            "content": "== Settings (resolution < 1200px)"
-        },
-        {
-            "type": "text",
-            "id": "bd_width_1200",
-            "label": "Border width"
-        },
-        {
-            "type": "text",
-            "id": "mg_1200",
-            "label": "Margin"
-        },
-        {
-            "type": "text",
-            "id": "pd_1200",
-            "label": "Padding"
-        },
-        {
-            "type": "header",
-            "content": "== Settings (resolution < 992px)"
-        },
-        {
-            "type": "text",
-            "id": "bd_width_992",
-            "label": "Border width"
-        },
-        {
-            "type": "text",
-            "id": "mg_992",
-            "label": "Margin"
-        },
-        {
-            "type": "text",
-            "id": "pd_992",
-            "label": "Padding"
-        },
-        {
-            "type": "header",
-            "content": "== Settings (resolution < 768px)"
-        },
-        {
-            "type": "text",
-            "id": "bd_width_768",
-            "label": "Border width"
-        },
-        {
-            "type": "text",
-            "id": "mg_768",
-            "label": "Margin"
-        },
-        {
-            "type": "text",
-            "id": "pd_768",
-            "label": "Padding"
+          "value": "collage",
+          "label": "t:sections.main-blog.settings.layout.options__2.label"
         }
-    ],
-    "blocks": [
+      ],
+      "default": "collage",
+      "label": "t:sections.main-blog.settings.layout.label",
+      "info": "t:sections.main-blog.settings.layout.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "t:sections.main-blog.settings.show_image.label"
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
         {
-            "type": "search",
-            "name": "Sidebar: Search",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "title",
-                    "label": "Title",
-                    "default": "Search"
-                },
-                {
-                    "type": "text",
-                    "id": "placeholder",
-                    "label": "Placeholder",
-                    "default": "Search..."
-                }
-            ]
+          "value": "adapt",
+          "label": "t:sections.main-blog.settings.image_height.options__1.label"
         },
         {
-            "type": "menu",
-            "name": "Sidebar: Menu",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "title",
-                    "label": "Title",
-                    "default": "Blogs"
-                },
-                {
-                    "type": "link_list",
-                    "id": "menu",
-                    "label": "Add menu"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "count",
-                    "label": "Count",
-                    "default": true
-                }
-            ]
+          "value": "small",
+          "label": "t:sections.main-blog.settings.image_height.options__2.label"
         },
         {
-            "type": "post",
-            "name": "Sidebar: Post list",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "title",
-                    "label": "Title",
-                    "default": "Latest posts"
-                },
-                {
-                    "type": "blog",
-                    "id": "blog",
-                    "label": "Blog"
-                },
-                {
-                    "type": "number",
-                    "id": "limit",
-                    "label": "Limit posts",
-                    "default": 3
-                },
-                {
-                    "type": "select",
-                    "id": "post_style",
-                    "label": "Post style",
-                    "options": [
-                        {
-                            "value": "1",
-                            "label": "Style 01"
-                        },
-                        {
-                            "value": "2",
-                            "label": "Style 02"
-                        },
-                        {
-                            "value": "3",
-                            "label": "Style 03"
-                        }
-                    ],
-                    "default": "2"
-                },
-                {
-                    "type": "number",
-                    "id": "ratio",
-                    "label": "Image ratio",
-                    "info": "Ratio = width / height. Example: 1, 1.2, 0.8",
-                    "default": 1
-                }
-            ]
+          "value": "medium",
+          "label": "t:sections.main-blog.settings.image_height.options__3.label"
         },
         {
-            "type": "product",
-            "name": "Sidebar: Product list",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "title",
-                    "label": "Title",
-                    "default": "Featured products"
-                },
-                {
-                    "type": "collection",
-                    "id": "collection",
-                    "label": "Collection"
-                },
-                {
-                    "type": "product_list",
-                    "id": "product_list",
-                    "label": "Product list"
-                },
-                {
-                    "type": "number",
-                    "id": "limit",
-                    "label": "Limit products",
-                    "default": 3
-                },
-                {
-                    "type": "select",
-                    "id": "product_style",
-                    "label": "Product style",
-                    "options": [
-                        {
-                            "value": "1",
-                            "label": "Style 01"
-                        },
-                        {
-                            "value": "2",
-                            "label": "Style 02"
-                        },
-                        {
-                            "value": "3",
-                            "label": "Style 03"
-                        },
-                        {
-                            "value": "4",
-                            "label": "Style 04"
-                        },
-                        {
-                            "value": "5",
-                            "label": "Style 05"
-                        }
-                    ],
-                    "default": "2"
-                },
-                {
-                    "type": "number",
-                    "id": "ratio",
-                    "label": "Image ratio",
-                    "info": "Ratio = width / height. Example: 1, 1.2, 0.8"
-                }
-            ]
-        },
-        {
-            "type": "tag",
-            "name": "Sidebar: Tag",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "title",
-                    "label": "Title",
-                    "default": "Tags"
-                }
-            ]
-        },
-        {
-            "type": "social",
-            "name": "Sidebar: Social",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "title",
-                    "label": "Title",
-                    "default": "Socials"
-                },
-                {
-                    "type": "select",
-                    "id": "social_style",
-                    "label": "Social style",
-                    "options": [
-                        {
-                            "value": "style-01",
-                            "label": "Style 01"
-                        },
-                        {
-                            "value": "style-02",
-                            "label": "Style 02"
-                        },
-                        {
-                            "value": "style-03",
-                            "label": "Style 03"
-                        }
-                    ]
-                },
-                {
-                    "type": "color",
-                    "id": "social_icon_cl",
-                    "label": "Social icon color"
-                },
-                {
-                    "type": "color",
-                    "id": "social_icon_bg",
-                    "label": "Social icon background"
-                }
-            ]
-        },
-        {
-            "type": "image",
-            "name": "Sidebar: Image",
-            "settings": [
-                {
-                    "type": "image_picker",
-                    "id": "image",
-                    "label": "Image"
-                },
-                {
-                    "type": "url",
-                    "id": "link",
-                    "label": "Link"
-                },
-                {
-                    "type": "select",
-                    "id": "open_link",
-                    "options": [
-                        {
-                            "value": "_self",
-                            "label": "Current window (_self)"
-                        },
-                        {
-                            "value": "_blank",
-                            "label": "New window (_blank)"
-                        }
-                    ],
-                    "label": "Open link in"
-                },
-                {
-                    "type": "select",
-                    "id": "hover_effect",
-                    "label": "Hover Effect",
-                    "options": [
-                        {
-                            "value": "",
-                            "label": "None"
-                        },
-                        {
-                            "value": "image-zoom",
-                            "label": "Image zoom"
-                        },
-                        {
-                            "value": "image-overlay",
-                            "label": "Image overlay"
-                        },
-                        {
-                            "value": "plus-zoom",
-                            "label": "Plus zoom"
-                        },
-                        {
-                            "value": "overlay-plus",
-                            "label": "Overlay Plus"
-                        },
-                        {
-                            "value": "overlay-cross",
-                            "label": "Overlay Cross"
-                        },
-                        {
-                            "value": "overlay-horizontal",
-                            "label": "Overlay Horizontal"
-                        },
-                        {
-                            "value": "overlay-vertical",
-                            "label": "Overlay Vertical"
-                        },
-                        {
-                            "value": "border-zoom",
-                            "label": "Border Zoom"
-                        },
-                        {
-                            "value": "border-plus",
-                            "label": "Border Plus"
-                        }
-                    ]
-                }
-            ]
+          "value": "large",
+          "label": "t:sections.main-blog.settings.image_height.options__4.label"
         }
-    ]
+      ],
+      "default": "medium",
+      "label": "t:sections.main-blog.settings.image_height.label",
+      "info": "t:sections.main-blog.settings.image_height.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "t:sections.main-blog.settings.show_date.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "t:sections.main-blog.settings.show_author.label"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.main-blog.settings.paragraph.content"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
 }
 {% endschema %}

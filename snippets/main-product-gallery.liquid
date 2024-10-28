@@ -1,126 +1,208 @@
 {% liquid
-    assign thumb_ratio = section.settings.thumb_ratio
-    if thumb_ratio > 0
-        assign thumb_aspect_ratio = thumb_ratio
-    endif
-    assign thumb_number = section.settings.thumb_number
-    assign thumb_width = section.settings.thumb_width | default: '70px'
-    assign thumb_gap = section.settings.thumb_gap | default: '10px'
-    assign thumb_number_1200 = section.settings.thumb_number_1200
-    assign thumb_width_1200 = section.settings.thumb_width_1200
-    assign thumb_gap_1200 = section.settings.thumb_gap_1200
-    assign thumb_number_992 = section.settings.thumb_number_992
-    assign thumb_width_992 = section.settings.thumb_width_992
-    assign thumb_gap_992 = section.settings.thumb_gap_992
-    assign thumb_number_768 = section.settings.thumb_number_768
-    assign thumb_width_768 = section.settings.thumb_width_768
-    assign thumb_gap_768 = section.settings.thumb_gap_768
-    assign ratio = section.settings.ratio
-    if ratio > 0
-        assign aspect_ratio = ratio
-    endif
-    assign enable_fullscreen = section.settings.enable_fullscreen
-    assign enable_zoom = section.settings.enable_zoom
-    assign zoom_effect_duration = section.settings.zoom_effect_duration
-    assign zoom_level = section.settings.zoom_level
-    assign zoom_width = section.settings.zoom_width
-    assign zoom_height = section.settings.zoom_height
+  assign thumb_ratio = section.settings.thumb_ratio
+  if thumb_ratio > 0
+    assign thumb_aspect_ratio = thumb_ratio
+  endif
+  assign thumb_number = section.settings.thumb_number
+  assign thumb_width = section.settings.thumb_width | default: '70px'
+  assign thumb_gap = section.settings.thumb_gap | default: '10px'
+  assign thumb_number_1200 = section.settings.thumb_number_1200
+  assign thumb_width_1200 = section.settings.thumb_width_1200
+  assign thumb_gap_1200 = section.settings.thumb_gap_1200
+  assign thumb_number_992 = section.settings.thumb_number_992
+  assign thumb_width_992 = section.settings.thumb_width_992
+  assign thumb_gap_992 = section.settings.thumb_gap_992
+  assign thumb_number_768 = section.settings.thumb_number_768
+  assign thumb_width_768 = section.settings.thumb_width_768
+  assign thumb_gap_768 = section.settings.thumb_gap_768
+  assign ratio = section.settings.ratio
+  if ratio > 0
+    assign aspect_ratio = ratio
+  endif
+  assign enable_fullscreen = section.settings.enable_fullscreen
+  assign enable_zoom = section.settings.enable_zoom
+  assign zoom_effect_duration = section.settings.zoom_effect_duration
+  assign zoom_level = section.settings.zoom_level
+  assign zoom_width = section.settings.zoom_width
+  assign zoom_height = section.settings.zoom_height
 %}
+<link rel="stylesheet" href="{{ 'main-product-gallery.css' | asset_url }}">
+<div
+  {% if sticky == 'gallery' %}
+    id="js-stickyProduct"
+  {% endif %}
+  class="product-gallery {{ gallery_layout }}"
+>
+  <div class="product-cover-thumbnails">
+    {% if product.images.size > 0 %}
+      <div class="slider-main {{ gallery_layout }} slick-carousel">
+        {% if enable_fullscreen %}
+          <div data-js-gallery class="open-fullscreen">
+            <span class="icon main-icon-expand"> <i class='bx bx-fullscreen' ></i></span>
+          </div>
+        {% endif %}
+        <div
+          data-slide-main
+          data-enable-zoom="{{ enable_zoom }}"
+          data-width-zoom="{{ zoom_width }}"
+          data-height-zoom="{{ zoom_height }}"
+          class="grid-slider one-time"
+        >
+          {% for media in product.media %}
+            {% case media.media_type %}
+              {% when 'image' %}
+                <div
+                  id="main_img_{{ media.id }}"
+                  data-image-id="{{ media.id }}"
+                  data-media_type="{{ media.media_type }}"
+                  class="image item-main skeleton-list"
+                >
+                  {% if media.src %}
+                    {% assign ratio = aspect_ratio | default: media.aspect_ratio %}
+                    <div class="ratio">
+                      <img
+                        class="main-image js-image-{{ media.id }} lazyload"
+                        src="{{ media.src | image_url }}"
+                        alt="{{ media.src.alt | escape }}"
+                        {% if enable_zoom %}
+                          data-style-zoom="{{ zoom_type }}" data-effect="{{ zoom_effect }}"
+                          data-effect-duration="{{ zoom_effect_duration }}" data-zoomLevel="{{ zoom_level }}"
+                          data-zoom-image="{{ media.src | img_url: '1920x' }}"
+                        {% endif %}
+                      >
+                    </div>
+                  {% endif %}
+                </div>
+              {% when 'video', 'external_video' %}
+                <div
+                  id="main_img_{{ media.id }}"
+                  data-image-id="{{ media.id }}"
+                  data-media_type="{{ media.media_type }}"
+                  class="video item-main skeleton-list"
+                >
+                  {% assign image = media.preview_image %}
+                  {{ media | media_tag: image_size: '', autoplay: true, loop: true, controls: true, preload: 'none' }}
+                </div>
+              {% when 'model' %}
+                <div
+                  id="main_img_{{ media.id }}"
+                  data-image-id="{{ media.id }}"
+                  data-media_type="{{ media.media_type }}"
+                  class="model item-main skeleton-list"
+                >
+                  {% assign image = media.preview_image %}
+                  <product-modal id="ProductModal-{{ section.id }}" class="product-media-modal media-modal">
+                    <div
+                      class="product-media-modal__dialog"
+                      role="dialog"
+                      aria-label="{{ 'products.modal.label' | t }}"
+                      aria-modal="true"
+                      tabindex="-1"
+                    >
+                      <button
+                        id="ModalClose-{{ section.id }}"
+                        type="button"
+                        class="product-media-modal__toggle"
+                        aria-label="{{ 'accessibility.close' | t }}"
+                      >
+                        <span class="icon main-icon-x"></span>
+                      </button>
+                      <div
+                        class="product-media-modal__content color-background-1 gradient"
+                        role="document"
+                        aria-label="{{ 'products.modal.label' | t }}"
+                        tabindex="0"
+                      >
+                        {% assign media = product.selected_or_first_available_variant.featured_media %}
+                        {%- if media != null -%}
+                          <div class="product-media-modal__model" data-media-id="{{ media.id }}">
+                            <product-model
+                              class="deferred-media media media--transparent global-media-settings global-media-settings--no-shadow"
+                              style="padding-top: min(calc(100vh - 12rem), 100%)"
+                            >
+                              <button
+                                id="Deferred-Poster-Modal-{{ media.id }}"
+                                class="deferred-media__poster"
+                                type="button"
+                              >
+                               
+                              </button>
+                              <template>{{ media | media_tag: image_size: '2048x', toggleable: true }}</template>
+                            </product-model>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </product-modal>
+                </div>
+            {% endcase %}
+          {% endfor %}
+        </div>
 
-<div {% if sticky == 'gallery' %}id="js-stickyProduct"{% endif %} class="product-gallery {{ gallery_layout }}">
-    <div class="product-cover-thumbnails">
-        {% if product.images.size > 0 %}
-            <div class="slider-main {{ gallery_layout }} slick-carousel">
-                {% if enable_fullscreen %}
-                    <div data-js-gallery class="open-fullscreen">
-                        <span class="icon main-icon-expand"></span>
+        <div class="zoomContainerAppendTo"></div>
+      </div>
+      {% if gallery_layout == 'thumbs_start' or gallery_layout == 'thumbs_end' or gallery_layout == 'thumbs_bottom' %}
+        <div class="slider-nav slick-carousel">
+          <div
+            data-slide-nav
+            class="grid-slider"
+            data-slidesToShow="{{ thumb_number }}"
+            data-vertical="{% if gallery_layout != 'thumbs_bottom' %}true{% else %}false{% endif %}"
+          >
+            {% for media in product.media %}
+              {% case media.media_type %}
+                {% when 'image' %}
+                  <div
+                    id="thumb_img_{{ media.id }}"
+                    data-media_type="{{ media.media_type }}"
+                    data-thumb-id="{{ media.id }}"
+                    data-image="{{ media.src | img_url: 'grande' }}"
+                    data-z-image="{{ media.src | img_url: '1920x' }}"
+                    class=""
+                  >
+                    <div class="inner skeleton-item">
+                      {% if media.src %}
+                        {% assign ratio = thumb_aspect_ratio | default: media.aspect_ratio %}
+                        <img src="{{ media.src | img_url: '100x100' }}">
+                        <!--
+                          <div class="" data-bgset="{{ media.src | img_url: '1x1' }}" data-ratio="{{ ratio }}" data-sizes="auto" style="padding-top:{{ 1.0 | divided_by: ratio | times: 100 }}%;"></div>
+                        -->
+                      {% endif %}
                     </div>
-                {% endif %}
-                <div data-slide-main data-enable-zoom="{{ enable_zoom }}" data-width-zoom="{{ zoom_width }}" data-height-zoom="{{ zoom_height }}" class="grid-slider">
-                    {% for media in product.media %}
-                        {% case media.media_type %}
-                            {% when 'image' %}
-                                <div id="main_img_{{ media.id }}" data-image-id="{{ media.id }}" data-media_type="{{ media.media_type }}" class="image item-main skeleton-list">
-                                    {% if media.src %}
-                                        {% assign ratio = aspect_ratio | default: media.aspect_ratio %}
-                                        <div class="ratio" style="padding-top:{{ 1.0 | divided_by: ratio | times: 100 }}%;">
-                                            <img class="main-image js-image-{{ media.id }} lazyload" src="{{ media.src | image_url }}" alt="{{ media.src.alt | escape }}"
-                                            {% if enable_zoom %} data-style-zoom="{{ zoom_type }}" data-effect="{{ zoom_effect }}" data-effect-duration="{{ zoom_effect_duration }}" data-zoomLevel="{{ zoom_level }}" data-zoom-image="{{ media.src | img_url: '1920x' }}" {% endif %}>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% when 'video' or 'external_video' %}
-                                <div id="main_img_{{ media.id }}" data-image-id="{{ media.id }}" data-media_type="{{ media.media_type }}" class="video item-main skeleton-list">
-                                    {% assign image = media.preview_image %}
-                                    {{ media | media_tag: image_size: "", autoplay: true, loop: true, controls: true, preload: "none" }}
-                                </div>
-                            {% when 'model' %}
-                                <div id="main_img_{{ media.id }}" data-image-id="{{ media.id }}" data-media_type="{{ media.media_type }}" class="model item-main skeleton-list">
-                                    {% assign image = media.preview_image %}
-                                    <product-modal id="ProductModal-{{ section.id }}" class="product-media-modal media-modal">
-                                        <div class="product-media-modal__dialog" role="dialog" aria-label="{{ 'products.modal.label' | t }}" aria-modal="true" tabindex="-1">
-                                            <button id="ModalClose-{{ section.id }}" type="button" class="product-media-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">
-                                                <span class="icon main-icon-x"></span>
-                                            </button>
-                                            <div class="product-media-modal__content color-background-1 gradient" role="document" aria-label="{{ 'products.modal.label' | t }}" tabindex="0">
-                                                {% assign media = product.selected_or_first_available_variant.featured_media %}
-                                                {%- if media != null -%}
-                                                    <div class="product-media-modal__model" data-media-id="{{ media.id }}">
-                                                        <product-model class="deferred-media media media--transparent global-media-settings global-media-settings--no-shadow" style="padding-top: min(calc(100vh - 12rem), 100%)">
-                                                            <button id="Deferred-Poster-Modal-{{ media.id }}" class="deferred-media__poster" type="button">
-                                                                <img loading="lazy" src="{{ media.preview_image | image_url }}" alt="{{ media.preview_image.alt | escape }}" width="{{ media.preview_image.width }}" height="{{ media.preview_image.height }}">
-                                                            </button>
-                                                            <template>{{ media | media_tag: image_size: "2048x", toggleable: true }}</template>
-                                                        </product-model>
-                                                    </div>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </product-modal>
-                                </div>
-                        {% endcase %}
-                    {% endfor %}
-                </div>
-                <div class="zoomContainerAppendTo"></div>
-            </div>
-            {% if gallery_layout == "thumbs_start" or gallery_layout == "thumbs_end" or gallery_layout == "thumbs_bottom" %}
-                <div class="slider-nav slick-carousel">
-                    <div data-slide-nav class="grid-slider" data-slidesToShow="{{ thumb_number }}" data-vertical="{% if gallery_layout != 'thumbs_bottom' %}true{% else %}false{% endif %}">
-                        {% for media in product.media %}
-                            {% case media.media_type %}
-                                {% when 'image' %}
-                                    <div id="thumb_img_{{ media.id }}" data-media_type="{{ media.media_type }}" data-thumb-id="{{ media.id }}" data-image="{{ media.src | img_url: 'grande' }}" data-z-image="{{ media.src | img_url: '1920x' }}" class="slick-slide image thumb_img">
-                                        <div class="inner skeleton-item">
-                                            {% if media.src %}
-                                                {% assign ratio = thumb_aspect_ratio | default: media.aspect_ratio %}
-                                                <div class="lazyload pr_lazy_img" data-bgset="{{ media.src | img_url: '1x1' }}" data-ratio="{{ ratio }}" data-sizes="auto" style="padding-top:{{ 1.0 | divided_by: ratio | times: 100 }}%;"></div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                {% when 'video' or 'external_video' or 'model' %}
-                                    <div id="thumb_img_{{ media.id }}" data-media_type="{{ media.media_type }}" data-thumb-id="{{ media.id }}" class="slick-slide">
-                                        <div class="inner skeleton-item">
-                                            {% assign image = media.preview_image %}
-                                            {% if image != blank %}
-                                                {% assign ratio = thumb_aspect_ratio | default: image.aspect_ratio %}
-                                                {% assign nav_thumb_width = thumb_width | times: 2 %}
-                                                <div class="ratio" style="padding-top:{{ 1.0 | divided_by: ratio | times: 100 }}%;">
-                                                    <img loading="lazy" alt="{{ image.alt | escape }}" src="{{ media | image_url: width: nav_thumb_width }}">
-                                                </div>
-                                                {% if media.media_type == 'video' or media.media_type == 'external_video' %}
-                                                    <span class="icon main-icon-play-2"></span>
-                                                {% elsif media.media_type == 'model' %}
-                                                    <span class="icon main-icon-cube-2"></span>
-                                                {% endif %}
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                            {% endcase %}
-                        {% endfor %}
+                  </div>
+                {% when 'video', 'external_video', 'model' %}
+                  <div
+                    id="thumb_img_{{ media.id }}"
+                    data-media_type="{{ media.media_type }}"
+                    data-thumb-id="{{ media.id }}"
+                    class=""
+                  >
+                    <div class="inner skeleton-item">
+                      {% assign image = media.preview_image %}
+                      {% if image != blank %}
+                        {% assign ratio = thumb_aspect_ratio | default: image.aspect_ratio %}
+                        {% assign nav_thumb_width = thumb_width | times: 2 %}
+                        <div class="ratio" style="padding-top:{{ 1.0 | divided_by: ratio | times: 100 }}%;">
+                          <img
+                            loading="lazy"
+                            alt="{{ image.alt | escape }}"
+                            src="{{ media | image_url: width: nav_thumb_width }}"
+                          >
+                        </div>
+                        {% if media.media_type == 'video' or media.media_type == 'external_video' %}
+                          <span class="icon main-icon-play-2"></span>
+                        {% elsif media.media_type == 'model' %}
+                          <span class="icon main-icon-cube-2"></span>
+                        {% endif %}
+                      {% endif %}
                     </div>
-                </div>
-            {% endif %}
-            {% capture style %}
+                  </div>
+              {% endcase %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      {% capture style %}
                 :root{
                 --prd-thumb-number: {{ thumb_number }};
                 --prd-thumb-width: {{ thumb_width }}px;
@@ -151,17 +233,27 @@
                 display:none
                 }
             {% endcapture %}
-            {%- style -%}{{ style | strip_newlines | remove: "  " }}{%- endstyle -%}
-        {% else %}
-            {{ 'image' | placeholder_svg_tag: 'placeholder-svg w-full h-full object-cover' }}
+      {%- style -%}{{ style | strip_newlines | remove: "  " }}{%- endstyle -%}
+    {% else %}
+      {{ 'image' | placeholder_svg_tag: 'placeholder-svg w-full h-full object-cover' }}
+    {% endif %}
+    <div data-fotorama data-allow-full-screen="native">
+      {% for media in product.media %}
+        {% if media.media_type == 'image' %}
+          {% assign image = media.src %}
+          {% if image -%}
+            <img
+              class="lazyload"
+              data-image-id="{{ media.id }}"
+              data-src="{{ image | img_url: '1920x' }}"
+              style="width:auto; height:auto"
+              alt=""
+            >
+          {%- endif %}
         {% endif %}
-        <div data-fotorama data-allow-full-screen="native">
-            {% for media in product.media %}
-                {% if media.media_type == 'image' %}
-                    {% assign image = media.src %}
-                    {% if image %}<img class="lazyload" data-image-id="{{ media.id }}" data-src="{{ image | img_url: '1920x' }}" style="width:auto; height:auto" alt=""/>{% endif %}
-                {% endif %}
-            {% endfor %}
-        </div>
+      {% endfor %}
     </div>
+  </div>
 </div>
+
+<script src="{{ 'slider-product.js' | asset_url }}" defer></script>

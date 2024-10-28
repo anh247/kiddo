@@ -1,6 +1,0 @@
-{% assign post_style = post_style | default: settings.post_style %}
-{% case post_style %}
-    {% when '1' %}{% render 'post-style-01', blog: blog, article: article, aspect_ratio: aspect_ratio %}
-    {% when '2' %}{% render 'post-style-02', blog: blog, article: article, aspect_ratio: aspect_ratio %}
-    {% when '3' %}{% render 'post-style-03', blog: blog, article: article, aspect_ratio: aspect_ratio %}
-{% endcase %}

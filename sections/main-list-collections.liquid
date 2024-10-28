@@ -1,478 +1,145 @@
-{%- liquid
-    assign sid = section.id
-    assign content_width = section.settings.content_width
-    assign container = section.settings.container
-    assign space = section.settings.space
-    assign per_page = section.settings.per_page | default: 12
-    assign collection_style = section.settings.collection_style
-    assign ratio = section.settings.ratio
-    if ratio > 0
-        assign aspect_ratio = ratio
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-collection-list.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width">
+  <h1 class="title title--primary inline-richtext{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    {{ section.settings.title }}
+  </h1>
+  {%- liquid
+    case section.settings.sort
+      when 'products_high', 'products_low'
+        assign collections = collections | sort: 'all_products_count'
+      when 'date', 'date_reversed'
+        assign collections = collections | sort: 'published_at'
+    endcase
+
+    if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed'
+      assign collections = collections | reverse
     endif
-    assign count = section.settings.count
-    assign item_border = section.settings.item_border
-    assign stretch_thumb = section.settings.stretch_thumb
-    assign pageUrl = content_for_header | split: '"pageurl":"' | last | split: '"' | first | split: '.myshopify.com' | last | replace: '\/', '/' | replace: '%20', ' ' | replace: '\u0026', '&'
-    if pageUrl contains "?"
-        assign query_string = pageUrl | split: '?' | last
-        assign query_parts = query_string | split: '&'
-        for part in query_parts
-            assign key_and_value = part | split: '='
-            case key_and_value[0]
-                when 'collection_style'
-                    assign collection_style = key_and_value[1]
-                when 'item_border'
-                    assign item_border = key_and_value[1]
-                when 'cols_number'
-                    assign cols_number = key_and_value[1]
-            endcase
-        endfor
+
+    assign moduloResult = 28 | modulo: section.settings.columns_desktop
+    assign paginate_by = 30
+    if moduloResult == 0
+      assign paginate_by = 28
     endif
--%}
-
-<section id="{{ sid }}" class="collection-list-page space-{{ space }}">
-    <div class="{{ content_width }}" style="{% if container != blank %}--container:{{ container }}{% endif %}">
-        <div class="section-inner {{ item_border }} grid-box-wrap {% if stretch_thumb %}stretch-thumb{% endif %}">
-            {% assign target = section.settings.target %}
-            {% if target == 'selected' %}
-                {% assign collections = section.settings.collection_list %}
-                <div class="grid-box">
-                    {% if collections != blank %}
-                        {% for collection in collections %}
-                            {% render 'collection-style', collection_style: collection_style, collection: collection, aspect_ratio: aspect_ratio, count: count %}
-                        {% endfor %}
-                    {% else %}
-                        <h5 class="not-found">{{ 'collections.collection.not_select' | t }}</h5>
-                    {% endif %}
-                </div>
-            {% else %}
-                {%- case section.settings.sort -%}
-                    {%- when 'products_low' or 'products_high' -%}
-                        {%- assign collections = collections | sort: 'all_products_count' -%}
-                    {%- when 'date' or 'date_reversed' -%}
-                        {%- assign collections = collections | sort: 'published_at' -%}
-                {%- endcase -%}
-                {%- if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed' -%}
-                    {%- assign collections = collections | reverse -%}
-                {%- endif -%}
-                {% paginate collections by per_page %}
-                    <div class="grid-box">
-                        {% if collections != blank %}
-                            {% for collection in collections %}
-                                {% render 'collection-style', collection_style: collection_style, collection: collection, aspect_ratio: aspect_ratio, count: count %}
-                            {% endfor %}
-                        {% else %}
-                            <h5 class="not-found">{{ 'collections.collection.not_select' | t }}</h5>
-                        {% endif %}
-                    </div>
-                    {%- if paginate.pages > 1 -%}
-                        {% render 'pagination', paginate: paginate, anchor: '' %}
-                    {%- endif -%}
-                {% endpaginate %}
-            {% endif %}
-        </div>
-    </div>
-</section>
-
-{%- render 'section_style' -%}
-{%- render 'section_style_box', cols_number: cols_number, cols_gap: cols_gap, rows_gap: rows_gap -%}
-
-{%- schema -%}
+  -%}
+  {%- paginate collections by paginate_by -%}
+    <ul
+      class="collection-list grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+      role="list"
+    >
+      {%- for collection in collections -%}
+        <li
+          class="collection-list__item grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: {{ forloop.index }};"
+          {% endif %}
+        >
+          {% render 'card-collection',
+            card_collection: collection,
+            media_aspect_ratio: section.settings.image_ratio,
+            columns: 3
+          %}
+        </li>
+      {%- endfor -%}
+    </ul>
+    {% render 'pagination', paginate: paginate %}
+  {%- endpaginate -%}
+</div>
+{% schema %}
 {
-    "name": "Collection List",
-    "class": "alz-section section-main-list-collection",
-    "settings": [
+  "name": "t:sections.main-list-collections.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "t:sections.main-list-collections.settings.title.label",
+      "default": "t:sections.main-list-collections.settings.title.default"
+    },
+    {
+      "type": "select",
+      "id": "sort",
+      "options": [
         {
-            "type": "select",
-            "id": "content_width",
-            "label": "Content width",
-            "options": [
-                {
-                    "value": "container",
-                    "label": "Container"
-                },
-                {
-                    "value": "full-width",
-                    "label": "Full Width"
-                },
-                {
-                    "value": "full-width-pd",
-                    "label": "Full Width no Padding"
-                }
-            ]
+          "value": "alphabetical",
+          "label": "t:sections.main-list-collections.settings.sort.options__1.label"
         },
         {
-            "type": "text",
-            "id": "container",
-            "label": "Container width",
-            "info": "Example: 1410px, 70%, 70vw"
+          "value": "alphabetical_reversed",
+          "label": "t:sections.main-list-collections.settings.sort.options__2.label"
         },
         {
-            "type": "text",
-            "id": "space",
-            "label": "Space",
-            "info": "Example:10,20,30,40,50,60,70,80,90,100"
+          "value": "date_reversed",
+          "label": "t:sections.main-list-collections.settings.sort.options__3.label"
         },
         {
-            "type": "header",
-            "content": "== Item settings"
+          "value": "date",
+          "label": "t:sections.main-list-collections.settings.sort.options__4.label"
         },
         {
-            "type": "select",
-            "id": "target",
-            "label": "Select collections to show",
-            "options": [
-                {
-                    "value": "all",
-                    "label": "All"
-                },
-                {
-                    "value": "selected",
-                    "label": "Selected"
-                }
-            ]
+          "value": "products_high",
+          "label": "t:sections.main-list-collections.settings.sort.options__5.label"
         },
         {
-            "type": "collection_list",
-            "id": "collection_list",
-            "label": "Collections"
-        },
-        {
-            "type": "select",
-            "id": "sort",
-            "label": "Sort collections by:",
-            "info": "Sorting only applies when selected is 'All'",
-            "options": [
-                {
-                    "value": "alphabetical",
-                    "label": "Alphabetically, A-Z"
-                },
-                {
-                    "value": "alphabetical_reversed",
-                    "label": "Alphabetically, Z-A"
-                },
-                {
-                    "value": "date",
-                    "label": "Date, old to new"
-                },
-                {
-                    "value": "date_reversed",
-                    "label": "Date, new to old"
-                },
-                {
-                    "value": "products_low",
-                    "label": "Product count, low to high"
-                },
-                {
-                    "value": "products_high",
-                    "label": "Product count, high to low"
-                }
-            ]
-        },
-        {
-            "type": "number",
-            "id": "per_page",
-            "label": "Collections per page",
-            "info": "Per page only applies when selected is 'All' and sort by 'Alphabetically, A-Z'",
-            "default": 12
-        },
-        {
-            "type": "select",
-            "id": "collection_style",
-            "label": "Collection style",
-            "options": [
-                {
-                    "value": "1",
-                    "label": "Style 01"
-                },
-                {
-                    "value": "2",
-                    "label": "Style 02"
-                },
-                {
-                    "value": "3",
-                    "label": "Style 03"
-                }
-            ]
-        },
-        {
-            "type": "number",
-            "id": "ratio",
-            "label": "Image ratio",
-            "info": "Ratio = width / height. Example: 1, 1.2, 0.8"
-        },
-        {
-            "type": "checkbox",
-            "id": "count",
-            "label": "Product count"
-        },
-        {
-            "type": "select",
-            "id": "item_border",
-            "label": "Item border",
-            "info": "If Full, Columns gap & Rows gap is 0",
-            "options": [
-                {
-                    "value": "",
-                    "label": "None"
-                },
-                {
-                    "value": "border-image",
-                    "label": "Image"
-                },
-                {
-                    "value": "border-item",
-                    "label": "Item"
-                },
-                {
-                    "value": "border-between",
-                    "label": "Between"
-                },
-                {
-                    "value": "border-full",
-                    "label": "Full"
-                }
-            ]
-        },
-        {
-            "type": "checkbox",
-            "id": "stretch_thumb",
-            "label": "Stretch Thumbnail",
-            "info": "For item border: item, full",
-            "default": true
-        },
-        {
-            "type": "header",
-            "content": "== Loop settings"
-        },
-        {
-            "type": "text",
-            "id": "cols_number",
-            "label": "Columns (6 screen resolutions)",
-            "info": "Desktop,<1500,<1200,<992,<768,<480",
-            "default": "5,5,4,3,3,2"
-        },
-        {
-            "type": "text",
-            "id": "cols_gap",
-            "label": "Columns gap (6 screen resolutions)",
-            "info": "Desktop,<1500,<1200,<992,<768,<480",
-            "default": "30px,30px,20px,20px,16px,10px"
-        },
-        {
-            "type": "text",
-            "id": "rows_gap",
-            "label": "Rows gap (6 screen resolutions)",
-            "info": "Desktop,<1500,<1200,<992,<768,<480",
-            "default": "30px,30px,20px,20px,16px,10px"
-        },
-        {
-            "type": "header",
-            "content": "== Section settings"
-        },
-        {
-            "type": "checkbox",
-            "id": "for_inner",
-            "label": "Settings apply for inner"
-        },
-        {
-            "type": "image_picker",
-            "id": "bg_image",
-            "label": "Background image"
-        },
-        {
-            "type": "text",
-            "id": "bg_position",
-            "label": "Background position",
-            "info": "Example: center/top/bottom center/left/right, 100% 100%, 100px 100px",
-            "default": "center center"
-        },
-        {
-            "type": "text",
-            "id": "bg_size",
-            "label": "Background size",
-            "info": "Example: cover, contain, 100% 100%, 100px 100px",
-            "default": "cover"
-        },
-        {
-            "type": "text",
-            "id": "bg_repeat",
-            "label": "Background repeat",
-            "info": "Example: no-repeat, repeat, repeat-x, repeat-y",
-            "default": "no-repeat"
-        },
-        {
-            "type": "checkbox",
-            "id": "bg_fixed",
-            "label": "Background fixed",
-            "info": "For desktop (resolution > 1200px)"
-        },
-        {
-            "type": "color_background",
-            "id": "bg_gradient",
-            "label": "Background gradient"
-        },
-        {
-            "type": "color",
-            "id": "bg_cl",
-            "label": "Background color"
-        },
-        {
-            "type": "color",
-            "id": "main_cl",
-            "label": "Main color"
-        },
-        {
-            "type": "color",
-            "id": "main_cl_t",
-            "label": "Main color - text inside"
-        },
-        {
-            "type": "color",
-            "id": "dark_cl",
-            "label": "Dark color"
-        },
-        {
-            "type": "color",
-            "id": "dark_cl_2",
-            "label": "Dark color 2"
-        },
-        {
-            "type": "color",
-            "id": "dark_cl_3",
-            "label": "Dark color 3"
-        },
-        {
-            "type": "color",
-            "id": "light_cl",
-            "label": "Light color"
-        },
-        {
-            "type": "color",
-            "id": "light_cl_2",
-            "label": "Light color 2"
-        },
-        {
-            "type": "color",
-            "id": "line_cl",
-            "label": "Line color"
-        },
-        {
-            "type": "text",
-            "id": "fz",
-            "label": "Font size",
-            "info": "Example: 16px"
-        },
-        {
-            "type": "text",
-            "id": "lh",
-            "label": "Line Height",
-            "info": "Example: 24px, 1.4em"
-        },
-        {
-            "type": "text",
-            "id": "ls",
-            "label": "Letter spacing",
-            "info": "Example: 1px, 0.1em"
-        },
-        {
-            "type": "text",
-            "id": "fw",
-            "label": "Font weight",
-            "info": "Example: 100, 200, 300, 400, 500, 600, 700, 800"
-        },
-        {
-            "type": "text",
-            "id": "tt",
-            "label": "Text transform",
-            "info": "Example: none, uppercase, lowercase, capitalize"
-        },
-        {
-            "type": "color",
-            "id": "bd_color",
-            "label": "Border color"
-        },
-        {
-            "type": "text",
-            "id": "bd_style",
-            "label": "Border style",
-            "info": "Example: solid, dotted, dashed, double, groove, ridge, outset"
-        },
-        {
-            "type": "text",
-            "id": "bd_width",
-            "label": "Border width",
-            "info": "Example: 1px, 1px 0, 1px 0 0 0"
-        },
-        {
-            "type": "text",
-            "id": "mg",
-            "label": "Margin",
-            "info": "Example: 10px, 10px 0, 10px 0 0 0"
-        },
-        {
-            "type": "text",
-            "id": "pd",
-            "label": "Padding",
-            "info": "Example: 10px, 10px 0, 10px 0 0 0"
-        },
-        {
-            "type": "header",
-            "content": "== Settings (resolution < 1200px)"
-        },
-        {
-            "type": "text",
-            "id": "bd_width_1200",
-            "label": "Border width"
-        },
-        {
-            "type": "text",
-            "id": "mg_1200",
-            "label": "Margin"
-        },
-        {
-            "type": "text",
-            "id": "pd_1200",
-            "label": "Padding"
-        },
-        {
-            "type": "header",
-            "content": "== Settings (resolution < 992px)"
-        },
-        {
-            "type": "text",
-            "id": "bd_width_992",
-            "label": "Border width"
-        },
-        {
-            "type": "text",
-            "id": "mg_992",
-            "label": "Margin"
-        },
-        {
-            "type": "text",
-            "id": "pd_992",
-            "label": "Padding"
-        },
-        {
-            "type": "header",
-            "content": "== Settings (resolution < 768px)"
-        },
-        {
-            "type": "text",
-            "id": "bd_width_768",
-            "label": "Border width"
-        },
-        {
-            "type": "text",
-            "id": "mg_768",
-            "label": "Margin"
-        },
-        {
-            "type": "text",
-            "id": "pd_768",
-            "label": "Padding"
+          "value": "products_low",
+          "label": "t:sections.main-list-collections.settings.sort.options__6.label"
         }
-    ]
+      ],
+      "default": "alphabetical",
+      "label": "t:sections.main-list-collections.settings.sort.label"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-list-collections.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.main-list-collections.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.main-list-collections.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.main-list-collections.settings.image_ratio.label",
+      "info": "t:sections.main-list-collections.settings.image_ratio.info"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.main-list-collections.settings.columns_desktop.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-list-collections.settings.header_mobile.content"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.main-list-collections.settings.columns_mobile.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.main-list-collections.settings.columns_mobile.options__2.label"
+        }
+      ],
+      "default": "2",
+      "label": "t:sections.main-list-collections.settings.columns_mobile.label"
+    }
+  ]
 }
 {% endschema %}

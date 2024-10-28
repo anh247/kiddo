@@ -1,0 +1,33 @@
+.page_heading {
+  display: flex;
+  gap: 50px;
+}
+.text-banner-bg h2 {
+  color: #423127;
+  font-family: "Nunito", sans-serif;
+  font-size: 34px;
+  font-weight: 900;
+  text-align: left;
+  margin: 0;
+}
+.text-banner-bg p {
+  color: #724d37;
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: left;
+  margin: 0;
+}
+.banner-bg {
+  background-color: #fffcf9;
+  margin:50px auto;
+}
+.text-banner-bg {
+  width: 410px;
+  align-content: center;
+}
+.img-banner-bg {
+  padding: 10px;
+  border: 2px #ffe3c2 dashed;
+  border-radius: 16px;
+}

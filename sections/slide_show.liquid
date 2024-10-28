@@ -1,0 +1,78 @@
+<!-- Add the required styles inline or use Shopify's theme CSS -->
+<style>
+  .w3-content {
+    margin: 0 auto;
+  }
+  .mySlides {
+    display: none;
+  }
+  .mySlides.w3-animate-fading {
+    animation: fading 9s infinite;
+  }
+  @keyframes fading {
+    from {opacity: 1;} 
+    to {opacity: 0;}
+  }
+</style>
+
+<!-- Slideshow container -->
+<div class="w3-content w3-section">
+  <p>The w3-animate-fading class animates an element in and out (takes about 10 seconds).</p>
+
+  <!-- Dynamic images using Shopify's setting -->
+  {% for block in section.blocks %}
+    <img class="mySlides w3-animate-fading" src="{{ block.settings.image | image_url }}" alt="Slideshow Image">
+  {% endfor %}
+</div>
+
+<!-- JavaScript to control the slideshow -->
+<script>
+  var myIndex = 0;
+  carousel();
+
+  function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";  
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}    
+    x[myIndex-1].style.display = "block";  
+    setTimeout(carousel, 9000);    
+  }
+</script>
+
+<!-- Shopify Section Schema -->
+{% schema %}
+  {
+    "name": "Slide Show",
+    "settings": [
+      {
+        "type": "text",
+        "id": "description",
+        "label": "Description",
+        "default": "The w3-animate-fading class animates an element in and out (takes about 10 seconds)."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Slide Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Select Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Slide Show",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

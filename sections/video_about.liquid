@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="{{ 'video_about.css' | asset_url }}">
+<section class="section_video">
+    <div class="container video">
+       <iframe width="1200" height="620" src="https://www.youtube.com/embed/6wwkO-yjccI?si=7V016syYc0T6InK1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Section Video",
+  "settings": [
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL",
+      "default": "https://www.youtube.com/watch?v=example"  // Đường dẫn video YouTube mặc định
+    },
+    {
+      "type": "number",
+      "id": "video_width",
+      "label": "Video Width",
+      "default": 560  // Chiều rộng video mặc định
+    },
+    {
+      "type": "number",
+      "id": "video_height",
+      "label": "Video Height",
+      "default": 315  // Chiều cao video mặc định
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Custom"
+    }
+  ]
+}
+
+{% endschema %}

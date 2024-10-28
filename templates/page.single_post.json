@@ -1,0 +1,93 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "title_banner_mmmwng": {
+      "type": "title-banner",
+      "settings": {
+        "home_link": "/",
+        "home_text": "Home",
+        "sidebar_link": "home",
+        "sidebar_text": "Top Gifts for Toddlers 18-24 Months and for $50 & Under"
+      }
+    },
+    "top_single_post": {
+      "type": "top_single_post",
+      "settings": {
+        "title_blog_1": "",
+        "content_blog_1": "",
+        "author_blog_1": "",
+        "date_blog_1": "",
+        "tag_blog_1": "",
+        "read_more_link_1": ""
+      }
+    },
+    "our_latest_news_section": {
+      "type": "section_our-latest-new",
+      "blocks": {
+        "blog_post_NaJc6i": {
+          "type": "blog_post",
+          "settings": {
+            "blog_image": "shopify://shop_images/Blog_Image1.png",
+            "blog_title": "Everything you need to know about family travel",
+            "blog_link": "#",
+            "author_name": "John Doe",
+            "blog_date": "Nov 10, 2021",
+            "blog_category": "Kids World"
+          }
+        },
+        "blog_post_XayJxd": {
+          "type": "blog_post",
+          "settings": {
+            "blog_image": "shopify://shop_images/Blog_Image2.png",
+            "blog_title": "Preschool Activities & Craft Ideas for Kids",
+            "blog_link": "#",
+            "author_name": "John Doe",
+            "blog_date": "Nov 10, 2021",
+            "blog_category": "Kids World"
+          }
+        },
+        "blog_post_X8zpV8": {
+          "type": "blog_post",
+          "settings": {
+            "blog_image": "shopify://shop_images/Blog_Image3.png",
+            "blog_title": "Best Summer Activities: Bubbly Ball Pit For Kids",
+            "blog_link": "#",
+            "author_name": "John Doe",
+            "blog_date": "Nov 10, 2021",
+            "blog_category": "Kids World"
+          }
+        }
+      },
+      "block_order": [
+        "blog_post_NaJc6i",
+        "blog_post_XayJxd",
+        "blog_post_X8zpV8"
+      ],
+      "settings": {
+        "heading": "Our Latest News"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "title_banner_mmmwng",
+    "top_single_post",
+     "our_latest_news_section"
+  ]
+}

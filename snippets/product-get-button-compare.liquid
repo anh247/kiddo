@@ -10,7 +10,9 @@
 {%- endif -%}
 <div class="product-btn-compare">
     <a href="javascript:void(0)" class="compare-button btn--status js-store-lists-add-compare js-compare" {% if present_in_compare %} data-button-status="added"{% endif %} data-pid="{{ product.handle }}">
-        <span class="icon main-icon-refresh-ccw"></span>
+        <span class="icon main-icon-refresh-ccw">
+            <i class='bx bx-refresh'></i> <!-- Sử dụng thẻ i với class của Boxicons -->
+        </span>
         <span class="text">{{ 'products.product.add_to_compare.title' | t }}</span>
         <span class="added" data-button-content=added>{{ 'products.product.add_to_compare.added' | t }}</span>
     </a>

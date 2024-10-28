@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="{{ 'announcement-bar.css' | asset_url }}">
+<section class="section_announcement-bar">
+  <div class="container announcement-bar">
+    <div class="text__announcement-bar__left">
+      <p>{{ section.settings.announcement_text }}</p>
+      <a href="{{ section.settings.announcement_link }}">
+        {{- section.settings.announcement_link_text }}
+        <img src="{{ 'icon-next01.svg' | asset_url }}" alt="icon">
+      </a>
+    </div>
+    <div class="text__announcement-bar__right">
+      <h5>{{ section.settings.customer_care_heading }}</h5>
+      <h6>{{ section.settings.customer_care_number }}</h6>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement Text",
+      "default": "New sale Season - Up to 20%"
+    },
+    {
+      "type": "text",
+      "id": "announcement_link",
+      "label": "Link URL",
+      "default": "#"
+    },
+    {
+      "type": "text",
+      "id": "announcement_link_text",
+      "label": "Link Text",
+      "default": "Shop now"
+    },
+    {
+      "type": "text",
+      "id": "customer_care_heading",
+      "label": "Customer Care Heading",
+      "default": "Customer Care Services:"
+    },
+    {
+      "type": "text",
+      "id": "customer_care_number",
+      "label": "Customer Care Number",
+      "default": "+1 202 234 556"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}

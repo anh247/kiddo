@@ -1,0 +1,205 @@
+<!-- Thêm link CSS vào -->
+<link rel="stylesheet" href="{{ 'tabs_infor.css' | asset_url }}">
+<section class=" container tabs_infor">
+  <ul class="tab-header">
+    <li name="tab-1" class="active" onclick="tabClicked(this)">
+      <p>{{ section.settings.tab1_title }}</p>
+    </li>
+    <li name="tab-2" onclick="tabClicked(this)">
+      <p>{{ section.settings.tab2_title }}</p>
+    </li>
+    <li name="tab-3" onclick="tabClicked(this)">
+      <p>{{ section.settings.tab3_title }}</p>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div id="tab-1" class="tab active">
+     <div class="tab-content-top">
+                        <div class="inf_tab-content-top">
+                            <h5>SKU:</h5>
+                            <h6>12345</h6>
+                        </div>
+                        <div class="inf_tab-content-top">
+                            <h5>Age:</h5>
+                            <h6>0-12m</h6>
+                        </div>
+                        <div class="inf_tab-content-top main">
+                            <h5>Main:</h5>
+                            <div class="inf_main">
+                                <h6>100% Cotton</h6>
+                                <p>Pellentesque ut diam condimentum, pellentesque ante imperdiet, ultricies dui.
+                                    Praesent eu lectus enim. Fusce ac nisi non orci <br> malesuada porta</p>
+                            </div>
+
+                        </div>
+                        <div class="inf_tab-content-top">
+                            <h5>Tags:</h5>
+                            <h6>Baby, Clothing, Set</h6>
+                        </div>
+                    </div>
+                    <div class="tab-content-bottom">
+                        <div class="table_inf">
+                            <div class="table_infor tab1">
+                                <div class="table_infor-heading">
+                                    <p>Materials</p>
+                                </div>
+                                <div class="list_describe">
+                                    <ul class="list_infor">
+                                        <li>Fusce facilisis tempor lacinia. Sed arcu est, molestie</li>
+                                        <li>Bibendum est ultricies integer quis auctor elit. Dolor purus non enim
+                                            <br>praesent elementum. Tempus urna
+                                        </li>
+                                        <li>Fusce facilisis tempor lacinia. Sed arcu est, molestie</li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                            <div class="table_infor tab2">
+                                <div class="table_infor-heading">
+                                    <p>Size Guide</p>
+                                </div>
+                                <div class="list_describe">
+                                    <p> Congue eu consequat ac felis donec et odio pellentesque diam. At imperdiet<br>
+                                        dui accumsan sit amet nulla. Semper eget duis at tellus at urna <br>condimentum.
+                                        Risus pretium quam vulputate dignissim</p>
+                                </div>
+                            </div>
+                            <div class="table_infor tab3">
+                                <div class="table_infor-heading">
+                                    <p>Shipping & Return</p>
+                                </div>
+                                <div class="list_describe">
+                                    <div class="icon_lists">
+                                        <div class="icon_list delivery">
+                                            <div class="icon_list-img">
+                                                <img src="assets/images/products_sidebar/oto_vang.png" alt="">
+                                            </div>
+
+                                            <p>Free Delivery Options for Subscriber. Standard and Express delivery
+                                                services are <br>available</p>
+                                        </div>
+                                        <div class="icon_list conditions">
+                                            <div class="icon_list-img">
+                                                <img src="assets/images/products_sidebar/cb_vang.png" alt="">
+                                            </div>
+
+                                            <p>Terms and Returns</p>
+                                        </div>
+                                        <div class="icon_list more_infor">
+                                            <div class="icon_list-img">
+                                                <img src="assets/images/products_sidebar/faq_vang.png" alt="">
+                                            </div>
+
+                                            <p>For More Information please check FAQ</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+    <div id="tab-2" class="tab">
+      {{ section.settings.tab2_content | escape }}
+    </div>
+    <div id="tab-3" class="tab">
+       <table class="add-information">
+                        <tbody>
+                            <tr class="color">
+                                <th>Color</th>
+                                <td>
+                                    <p>Blue, Brown, Green</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Product Type</th>
+                                <td>
+                                    <p>
+
+                                        Backpacks, Newborn, Teddy Bear , Toddler Gift Set</p>
+                                </td>
+                            </tr>
+                            <tr class="color">
+                                <th>Size</th>
+                                <td>
+                                    <p>
+
+                                        S, M, L, XL, XXL</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Product Information Tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab1_title",
+      "label": "Tab 1 Title",
+      "default": "Description"
+    },
+    {
+      "type": "textarea",
+      "id": "tab1_content",
+      "label": "Tab 1 Content",
+    },
+    {
+      "type": "text",
+      "id": "tab2_title",
+      "label": "Tab 2 Title",
+      "default": "Delivery"
+    },
+    {
+      "type": "textarea",
+      "id": "tab2_content",
+      "label": "Tab 2 Content",
+      "default": " We work with monitoring programmes to ensure compliance with our social, environmental and health and safety standards for our garments. To assess compliance, we have developed a programme of audits and continuous improvement plans. Made of super-soft cotton, the Organic Cotton Cutaway Tank features a high neck and back, and a slight curve at the shoulders, which makes it extra flattering. If there’s one thing the ’90s got right, it’s the basics."
+    },
+    {
+      "type": "text",
+      "id": "tab3_title",
+      "label": "Tab 3 Title",
+      "default": "Information"
+    },
+    {
+      "type": "textarea",
+      "id": "tab3_content",
+      "label": "Tab 3 Content",
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Tabs",
+      "category": "Product"
+    }
+  ]
+}
+  {% endschema %}
+  <script>
+        function tabClicked(element) {
+            // Xóa lớp active khỏi tất cả các tab và nội dung tab
+            document.querySelectorAll('.tab-header li').forEach(function (tab) {
+                tab.classList.remove('active');
+            });
+
+            document.querySelectorAll('.tab-content .tab').forEach(function (content) {
+                content.classList.remove('active');
+            });
+
+            // Thêm lớp active vào tab được nhấp vào
+            element.classList.add('active');
+
+            // Lấy giá trị thuộc tính "name" của tab được nhấp vào
+            const tabName = element.getAttribute('name');
+
+            // Kích hoạt nội dung tab tương ứng
+            const contentToShow = document.getElementById(tabName);
+            if (contentToShow) {
+                contentToShow.classList.add('active');
+            }
+        }
+    </script>

@@ -1,0 +1,115 @@
+/* slide show text */
+.content-slide-show_text {
+  display: grid;
+  gap: 30px;
+  text-align: center;
+}
+
+.content-slide-show_text h2 {
+  color: #724d37;
+  font-family: Nunito, sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+  margin: 0;
+}
+
+.content-slide-show_text p {
+  font-family: Lato, sans-serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  text-align: center;
+  color: #724d37;
+  margin: 0;
+}
+
+.content-slide-show_text h5 {
+  font-family: Nunito, sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
+  color: #423127;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Container holding the badges */
+.center {
+  display: flex;
+  justify-content: center;
+  /* Căn giữa theo chiều ngang */
+  align-items: center;
+  /* Căn giữa theo chiều dọc (nếu cần) */
+  margin: 20px 0;
+  /* Khoảng cách trên dưới */
+  padding: 20px 0;
+}
+
+/* badge styles */
+.badge {
+  height: 15px;
+  width: 15px;
+  margin: 0 10px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Khi được chọn, thay đổi màu thành cam */
+.badge.active,
+.badge:hover {
+  background-color: orange;
+}
+
+/* Ẩn các slide ban đầu */
+.slide-show_text {
+  display: none;
+}
+
+/* Hiển thị slide hiện tại */
+.slide-show_text.active {
+  display: block;
+}
+
+.center.container.section.large.text-white.display-bottommiddle {
+  margin: auto;
+}
+.star_wrap {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: auto;
+}
+
+input {
+  appearance: none;
+}
+
+input::before {
+  content: "\2605";
+  color: #d6d8ff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+input:checked::before,
+input:checked ~ input::before {
+  color: #7c81ff;
+}
+@media screen and (max-width: 425px) {
+  .content-slide-show_text {
+    gap: 10px;
+  }
+  .content-slide-show_text p {
+    font-size: 15px;
+  }
+  .content-slide-show_text h2 {
+    font-size: 16px;
+  }
+   .container {
+    width: 100%; /* Đảm bảo container rộng 100% màn hình */
+    padding: 0 10px; /* Giảm padding cho màn hình nhỏ */
+  }
+}

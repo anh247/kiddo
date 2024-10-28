@@ -1,0 +1,76 @@
+.collections_categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.collections_card img {
+  width: 100%;
+}
+.container.collections_categories {
+  padding: 50px 0;
+}
+.text_first,
+.text_second,
+.text_third,
+.text_for {
+  border-radius: 15px; /* Bo tròn góc */
+  padding: 15px;
+}
+.text_first {
+  background: #fff8f0;
+}
+.text_second {
+  background-color: #d6d8ff;
+}
+.text_third {
+  background-color: #e9fdfb;
+}
+.text_for {
+  background-color: #fff2f5;
+}
+.text_first h4,
+.text_second h4,
+.text_third h4,
+.text_for h4 {
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  text-align: center;
+  margin: 0;
+}
+
+.text_first h4 {
+  color: #ff961a;
+}
+.text_second h4 {
+  color: #7c81ff;
+}
+.text_third h4 {
+  color: #00bbae;
+}
+.text_for h4 {
+  color: #ff7e9a;
+}
+.collections_card {
+  display: grid;
+  gap: 10px;
+}
+@media screen and (max-width: 425px) {
+  .collections_categories {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .text_first h4,
+  .text_second h4,
+  .text_third h4,
+  .text_for h4 {
+    font-size: 14px;
+  }
+  .container.collections_categories {
+    padding: 0;
+  }
+  .container {
+    width: 100%; /* Đảm bảo container rộng 100% màn hình */
+    padding: 0 10px; /* Giảm padding cho màn hình nhỏ */
+  }
+}

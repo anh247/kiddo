@@ -1,7 +1,0 @@
-<div class="product-category">
-    {%- if product.collections.size > 0 -%}
-        {%- for collection in product.collections limit: 1 -%}
-            <a class="collection_item" href="{{ collection.url }}">{{ collection.title }}</a>{% if forloop.last != true %},{% endif %}
-        {%- endfor -%}
-    {%- endif -%}
-</div>

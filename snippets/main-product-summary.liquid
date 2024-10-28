@@ -39,77 +39,12 @@
                             {% capture visitors_counter_html %}
                                 <span class="visitors__counter d-inline-block px-8" data-js-counter>{{ visitors_random }}</span>
                             {% endcapture %}
-                            <i class="icon main-icon-eye"></i><span class="text">{{ 'products.product.visitors_html' | t: counter: visitors_counter_html }}</span>
+                          <i class='bx bx-show'></i> <span class="text">{{ 'products.product.visitors_html' | t: counter: visitors_counter_html }}</span>
                         </div>
                     {%- when 'line' -%}
                         {% comment %}-----LINE-----{% endcomment %}
                         {% assign line_cl = block.settings.line_cl %}
-                        <div class="line" style="{% if line_cl != blank and line_cl.alpha != 0.0 %}--line-cl:{{ line_cl }}{% endif %}"></div>
-                    {%- when 'operations' -%}
-                        {% comment %}-----OPERATION-----{% endcomment %}
-                        <div class="product-operations skeleton-list">
-                            {% comment %}-----COMPARE COLOR-----{% endcomment %}
-                            {% if block.settings.show_compare_color %}
-                                {%- for option in product.options_with_values -%}
-                                    {% if option.name contains 'Color' %}
-                                        {%- render 'compare-color-popup', compare_color_text: block.settings.compare_color_text -%}
-                                    {% endif %}
-                                {%- endfor -%}
-                            {% endif %}
-                            {% comment %}-----SIZE CHART-----{% endcomment %}
-                            {% if block.settings.show_size_chart %}
-                                {% assign text = block.settings.size_chart_text %}
-                                {% assign page = product.metafields.custom.size_chart | default: block.settings.size_chart_page %}
-                                {% assign image = product.metafields.custom.size_chart_image | default: block.settings.size_chart_image %}
-                                <div class="product-size-chart">
-                                    <a class="size-chart" data-page-open-popup href="#size-chart" data-effect="mfp-move-horizontal">
-                                        <span class="icon main-icon-size-chart"></span>{{ text }}
-                                    </a>
-                                    <div id="size-chart" data-effect="mfp-move-horizontal" class="mfp-hide mfp-with-anim mfp-popup size-chart-open-popup">
-                                        <h3 class="mfp-popup-title">{{ text }}</h3>
-                                        <div class="mfp-popup-content">
-                                            {% if image != blank %}
-                                                {% render 'responsive-image', image: image, image_class: 'w-full h-full' %}
-                                            {% else %}
-                                                {{ pages[page].content }}
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                            {% comment %}-----QUESTION-----{% endcomment %}
-                            {% if block.settings.show_question %}
-                                {%- assign text = block.settings.question_text -%}
-                                <div class="product-contact-us">
-                                    <a class="contact-us" data-page-open-popup href="#contact-us" data-effect="mfp-move-horizontal">
-                                        <span class="icon main-icon-support"></span>{{ text }}
-                                    </a>
-                                </div>
-                            {% endif %}
-                            {% comment %}-----SHARE-----{% endcomment %}
-                            {% if block.settings.show_share %}
-                                <div class="product-share">
-                                    <a class="popup_social" data-page-open-popup href="#popup_social" data-effect="mfp-move-horizontal">
-                                        <span class="icon main-icon-share-2"></span>{{ 'products.product.share' | t }}
-                                    </a>
-                                    <div id="popup_social" data-effect="mfp-move-horizontal" class="mfp-hide mfp-with-anim mfp-popup popup_social-open-popup">
-                                        <div class="mfp-popup-content">
-                                            <h4 class="title">{{ 'products.product.copy_link' | t }}</h4>
-                                            <div class="share-group copy-clipboard-warp">
-                                                <div class="form-field">
-                                                    <input type="text" class="field__input copy-clipboard" id="url" value="https://{{ shop.domain }}{{ product.url }}" placeholder="Link" data-url="https://{{ shop.domain }}{{ product.url }}" onclick="this.select();" readonly="">
-                                                </div>
-                                                <button class="button button--primary button-copy">
-                                                    <span class="icon main-icon-copy"></span>
-                                                    {{ 'products.product.copy_link' | t }}
-                                                </button>
-                                            </div>
-                                            {% render 'social-sharing', product: product %}
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        </div>
+                               
                     {%- when 'countdown' -%}
                         {% comment %}-----COUNTDOWN-----{% endcomment %}
                         {%- render 'product-get-countdown', product: product, title: block.settings.text -%}
@@ -190,12 +125,12 @@
                             <div class="delivery-info skeleton-list">
                                 {% if shipping != blank %}
                                     <div class="item shipping">
-                                        <span class="icon main-icon-boat"></span>{{ shipping }}
+                                        <span class="icon main-icon-boat"> <i class='bx bxs-truck'></i></span>{{ shipping }}
                                     </div>
                                 {% endif %}
                                 {% if return != blank %}
                                     <div class="item return">
-                                        <span class="icon main-icon-return"></span>{{ return }}
+                                        <span class="icon main-icon-return"> <i class='bx bx-atom' ></i></span>{{ return }}
                                     </div>
                                 {% endif %}
                             </div>

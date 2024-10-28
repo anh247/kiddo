@@ -241,6 +241,10 @@ body{
     color: var(--body-cl);
     background-color: var(--body-bg);
 }
+a.button.add-to-cart.js-btn-sold-out.skeleton-item.d-none-important {
+  display:flex;
+  align-items:center;
+}
 @media (max-width: 1499px){
     :root{
         /* sidebar */
@@ -662,7 +666,6 @@ textarea{
     padding: var(--input-pd) var(--input-pd-hz);
     color: var(--input-cl, var(--dark-cl-2));
     background-color: var(--input-bg, var(--light-cl));
-    box-shadow: 0 0 0 var(--input-bd-width) var(--input-bd, var(--line-cl)) inset;
     border-radius: var(--input-bora);
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -1032,7 +1035,7 @@ SLICK SLIDER
     --arrow-fz: 20px;
 }
 .slick-arrow:before{
-    font-family: main-icon, sans-serif;
+    font-family: boxicons!important;
     font-weight: 400;
     font-size: var(--arrow-fz);
     line-height: 1;
@@ -1040,10 +1043,10 @@ SLICK SLIDER
     -moz-osx-font-smoothing: grayscale;
 }
 .slick-prev:before{
-    content: "\ea1d";
+    content: "\eb33";
 }
 .slick-next:before{
-    content: "\ea1e";
+    content:" \ebe6";
 }
 .slick-arrow.slick-disabled{
     color: var(--dark-cl);
@@ -6012,6 +6015,9 @@ PRODUCT ITEM
 .quantity .quantity-inner{
     position: relative;
     overflow: hidden;
+  display:flex;
+  justify-content: space-around;
+      margin-top: 10px;
 }
 .quantity .input-text{
     text-align: center;
@@ -8840,6 +8846,7 @@ body .shopify-model-viewer-ui .shopify-model-viewer-ui__control-icon{
     flex-wrap: wrap;
     position: relative;
     gap: 30px;
+  margin-top:30px;
 }
 /* gallery */
 .product-gallery{

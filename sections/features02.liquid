@@ -1,0 +1,44 @@
+ <link rel="stylesheet" href="{{ 'features02.css' | asset_url }}">
+<section class="features">
+    <div class="container content_features">
+        {% for block in section.blocks %}
+        <div class="image-container">
+            <img class="image-default" src="{{ block.settings.default_image | img_url: 'large' }}" alt="Default Image">
+            <img class="image-hover" src="{{ block.settings.hover_image | img_url: 'large' }}" alt="Hover Image">
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "features02",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "feature_image",
+      "name": "Feature Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "default_image",
+          "label": "Default Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "hover_image",
+          "label": "Hover Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features Section",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+

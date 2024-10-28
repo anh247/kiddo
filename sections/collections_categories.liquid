@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="{{ 'collections_categories.css' | asset_url }}">
+<section class="section-collections_categories">
+  <div class="container collections_categories">
+    <a href="https://demo-tranning.myshopify.com/products/newborn-clothes-set" class="card-link">
+      <div class="collections_card">
+        <img src="{{ 'baby.png' | asset_url }}" alt="baby_image">
+        <div class="text_first">
+          <h4> New Born & Baby Care Shop </h4>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://demo-tranning.myshopify.com/collections/girls" class="card-link">
+      <div class="collections_card">
+        <img src="{{ 'baby2.png' | asset_url }}" alt="baby_image">
+        <div class="text_second">
+          <h4>Toddlers Clothing & Accessories </h4>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://demo-tranning.myshopify.com/products/lego" class="card-link">
+      <div class="collections_card">
+        <img src="{{ 'baby3.png' | asset_url }}" alt="baby_image">
+        <div class="text_third">
+          <h4> Toys, Games & Books </h4>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://demo-tranning.myshopify.com/products/car-seat" class="card-link">
+      <div class="collections_card">
+        <img src="{{ 'baby4.png' | asset_url }}" alt="baby_image">
+        <div class="text_for">
+          <h4>Strollers, Car Seats & Ride-Ons</h4>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "collections_categories",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Collections Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text",
+          "default": "Feature image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        }
+      
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "collections_categories",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}

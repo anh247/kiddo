@@ -1,0 +1,23 @@
+.banner-link {
+  display: flex;
+  gap: 5px;
+  padding: 15px;
+}
+.banner-link a,.banner-link p {
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  text-align: left;
+  color: #724d37;
+  align-content: center;
+}
+.title-banner {
+  background-color: #f6f7ff;
+}
+.page-title {
+  color: #423127;
+}
+.banner-link p {
+  margin: 0;
+}

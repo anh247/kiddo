@@ -1,0 +1,121 @@
+ <link rel="stylesheet" href="{{ 'banner_group.css' | asset_url }}">
+<section class="section_banner-group">
+    <div class="container banner-group">
+        <div class="banner-group_top">
+            <div class="banner-group_top__left">
+                <img src="{{ 'baby1.png' | asset_url }}" alt="facebook_link"></a>
+            </div>
+            <div class="banner-group_top__right">
+                <div class="text_right__banner-group">
+                    <h4>{{ section.settings.top_heading_small }}</h4>
+                    <h1>{{ section.settings.top_heading_large }}</h1>
+                    <p>{{ section.settings.top_paragraph }}</p>
+                    <div class="btn_right__banner-group">
+                       <a href="{{ section.settings.bottom_button_link }}">
+                          <h5>{{ section.settings.top_button_text }}</h5>
+                           
+                            <!-- SVG Code -->
+                          <img src="{{ 'icon-nextpage.svg' | asset_url }}" alt="icon">
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="banner-group_bottom">
+            <div class="banner-group_bottom__left">
+                <div class="text_left__banner-group">
+                    <h4>{{ section.settings.bottom_heading_small }}</h4>
+                    <h1>{{ section.settings.bottom_heading_large }}</h1>
+                    <div class="btn_left__banner-group">
+                        <a href="{{ section.settings.bottom_button_link }}">
+                             <h5>{{ section.settings.top_button_text }}</h5>
+                          <img src="{{ 'icon-next01.svg' | asset_url }}" alt="icon"> 
+                          <!-- SVG Code -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-group_bottom__right">
+               <img src="{{ 'quanao.png' | asset_url }}" alt="facebook_link">
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner Group Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "left_top_image",
+      "label": "Left Top Image"
+    },
+    {
+      "type": "text",
+      "id": "top_heading_small",
+      "label": "Top Small Heading",
+      "default": "Organic Cotton Basics for Newborn"
+    },
+    {
+      "type": "text",
+      "id": "top_heading_large",
+      "label": "Top Large Heading",
+      "default": "From the Start"
+    },
+    {
+      "type": "text",
+      "id": "top_paragraph",
+      "label": "Top Paragraph",
+      "default": "Cras et massa vitae purus pretium rhoncus vel placerat dolor. Pellentesque habitant morbi tristiques"
+    },
+    {
+      "type": "text",
+      "id": "top_button_text",
+      "label": "Top Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "top_button_link",
+      "label": "Top Button Link",
+    },
+    {
+      "type": "image_picker",
+      "id": "right_bottom_image",
+      "label": "Right Bottom Image"
+    },
+    {
+      "type": "text",
+      "id": "bottom_heading_small",
+      "label": "Bottom Small Heading",
+      "default": "New Collection"
+    },
+    {
+      "type": "text",
+      "id": "bottom_heading_large",
+      "label": "Bottom Large Heading",
+      "default": "Practical, Functional and Stylish"
+    },
+    {
+      "type": "text",
+      "id": "bottom_button_text",
+      "label": "Bottom Button Text",
+        "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "bottom_button_link",
+      "label": "Bottom Button Link",
+      
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner Group Section",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}

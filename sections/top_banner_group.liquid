@@ -1,0 +1,73 @@
+ <link rel="stylesheet" href="{{ 'banner_group.css' | asset_url }}">
+<section class="section_banner-group">
+    <div class="container banner-group">
+        <div class="banner-group_top">
+            <div class="banner-group_top__left">
+                <img src="//demo-tranning.myshopify.com/cdn/shop/t/1/assets/baby1.png?v=28063261773093175461726848808" alt="facebook_link">
+            </div>
+            <div class="banner-group_top__right">
+                <div class="text_right__banner-group">
+                    <h4>Organic Cotton Basics for Newborn</h4>
+                    <h1>From the Start</h1>
+                    <p>Cras et massa vitae purus pretium rhoncus vel placerat dolor. Pellentesque habitant morbi tristiques</p>
+                    <div class="btn_right__banner-group">
+                       <a href="https://demo-tranning.myshopify.com/pages/shop">
+                          <h5>Shop Now</h5>
+                           
+                            <!-- SVG Code -->
+                          <img src="//demo-tranning.myshopify.com/cdn/shop/t/1/assets/icon-nextpage.svg?v=42354664506558014871726841007" alt="icon">
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% schema %}
+  {
+    "name": "Top banner group",
+    "settings": [
+        {
+      "type": "image_picker",
+      "id": "left_top_image",
+      "label": "Left Top Image"
+    },
+    {
+      "type": "text",
+      "id": "top_heading_small",
+      "label": "Top Small Heading",
+      "default": "Organic Cotton Basics for Newborn"
+    },
+    {
+      "type": "text",
+      "id": "top_heading_large",
+      "label": "Top Large Heading",
+      "default": "From the Start"
+    },
+    {
+      "type": "text",
+      "id": "top_paragraph",
+      "label": "Top Paragraph",
+      "default": "Cras et massa vitae purus pretium rhoncus vel placerat dolor. Pellentesque habitant morbi tristiques"
+    },
+    {
+      "type": "text",
+      "id": "top_button_text",
+      "label": "Top Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "top_button_link",
+      "label": "Top Button Link",
+    },
+    ],
+     "presets": [
+    {
+      "name": "Top banner group",
+      "category": "Custom Sections"
+    }
+  ]
+  }
+{% endschema %}

@@ -1,0 +1,136 @@
+<link rel="stylesheet" href="{{ 'slide-show-text.css' | asset_url }}">
+<div class="content display-container">
+  <section class="slide-show_text active">
+    <div class="content-slide-show_text">
+      <div class="star_wrap">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+      </div>
+      <h2>{{ section.settings.heading1 }}</h2>
+      <p>
+        “Nam porta nisi sit amet gravida sodales. Pellentesque placerat ultricies ipsum vel dictum.<br>
+        Suspendisse interdum nisi ac varius hendrerit. Sed pulvinar, metus euismod accumsan viverra,<br>
+        neque arcu hendrerit mauris”
+      </p>
+      <h5>{{ section.settings.author1 }}</h5>
+    </div>
+  </section>
+  <section class="slide-show_text">
+    <div class="content-slide-show_text">
+      <div class="star_wrap">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+      </div>
+      <h2>{{ section.settings.heading2 }}</h2>
+      <p>
+        "This toy not only brings joy but also supports children's cognitive development. With a colorful and safe
+        design,<br>
+        it stimulates creativity and critical thinking skills."
+      </p>
+      <h5>{{ section.settings.author2 }}</h5>
+    </div>
+  </section>
+  <section class="slide-show_text">
+    <div class="content-slide-show_text">
+      <div class="star_wrap">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+        <input type="radio" name="rate">
+      </div>
+      <h2>{{ section.settings.heading3 }}</h2>
+      <p>
+        “Made from high-quality, non-toxic materials, it ensures hours of engaging and educational playtime.<br>
+        A perfect companion for young minds, fostering both fun and learning.”
+      </p>
+      <h5>{{ section.settings.author3 }}</h5>
+    </div>
+  </section>
+  <div class="center container section large text-white display-bottommiddle" style="width:100%">
+    <span class="badge" onclick="showSlide(0)">
+      <div class="circle"></div>
+    </span>
+    <span class="badge" onclick="showSlide(1)">
+      <div class="circle"></div>
+    </span>
+    <span class="badge" onclick="showSlide(2)">
+      <div class="circle"></div>
+    </span>
+  </div>
+</div>
+<script src="{{ 'slide-show-text.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Slide Show Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading1",
+      "label": "Heading 1",
+      "default": "Best Toys I’ve Found"
+    },
+    {
+      "type": "textarea",
+      "id": "description1",
+      "label": "Description 1",
+      "default": "Nam porta nisi sit amet gravida sodales. Pellentesque placerat ultricies ipsum vel dictum. Suspendisse interdum nisi ac varius hendrerit. Sed pulvinar, metus euismod accumsan viverra, neque arcu hendrerit mauris."
+    },
+    {
+      "type": "text",
+      "id": "author1",
+      "label": "Author 1",
+      "default": "John Doe"
+    },
+    {
+      "type": "text",
+      "id": "heading2",
+      "label": "Heading 2",
+      "default": "Another great toy"
+    },
+    {
+      "type": "textarea",
+      "id": "description2",
+      "label": "Description 2",
+      "default": "A sleek and modern design combined with unmatched functionality."
+    },
+    {
+      "type": "text",
+      "id": "author2",
+      "label": "Author 2",
+      "default": "Jane Doe"
+    },
+    {
+      "type": "text",
+      "id": "heading3",
+      "label": "Heading 3",
+      "default": "Another great toy33333333333"
+    },
+    {
+      "type": "textarea",
+      "id": "description3",
+      "label": "Description 3",
+      "default": "A sleek and modern design combined with unmatched functionality33333333333."
+    },
+    {
+      "type": "text",
+      "id": "author3",
+      "label": "Author 3",
+      "default": "Jane Doe33333333"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Slide Show Text",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

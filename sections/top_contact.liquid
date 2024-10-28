@@ -1,0 +1,170 @@
+ <link rel="stylesheet" href="{{ 'top_contact.css' | asset_url }}">
+  <div class="page_contact">
+        <div class="container page_content">
+            <div class="header_contact">
+                <div class="img_left_header">
+                    <img src="{{ 'Icon_World.png' | asset_url }}" alt="">
+                   
+                </div>
+                <h2>Store Locations</h2>
+                <div class="img_right_header">
+                    <img src="{{ 'Icon_Phone.png' | asset_url }}" alt="">
+                 
+                </div>
+            </div>
+            <div class="map_body-contact">
+                <iframe class="gg-map"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59363.50419603107!2d105.76229013863782!3d21.577372534289086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313526e41a2f48ff%3A0x9af085049fb0466f!2zVHAuIFRow6FpIE5ndXnDqm4sIFRow6FpIE5ndXnDqm4sIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1704275472712!5m2!1svi!2s"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="content-bottom">
+                <div class="contact_content">
+                    <h2>Store Addresses: </h2>
+                    <div class="content-page_contact">
+                        <div class="content_contact">
+                            <ul>
+                                <li>
+                                    <a href="https://joytoy.templatekit.co/template-kit/contact-us/">Pavillion 4,
+                                        Glasgow
+                                        Business Park, Glasgow, G69 6GA</a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://joytoy.templatekit.co/template-kit/contact-us/">emailjoytoy@email.com</a>
+                                </li>
+                                <li>
+                                    <a href="https://joytoy.templatekit.co/template-kit/contact-us/">+1 234 567 892v</a>
+                                </li>
+                                <li>
+                                    <a href="https://joytoy.templatekit.co/template-kit/contact-us/">+43 234 567 678</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="content_contact">
+                            <ul>
+                                <li>
+                                    <a href="https://joytoy.templatekit.co/template-kit/contact-us/">
+                                        2-8, Toymarket, Kelso, TD5 7AY</a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://joytoy.templatekit.co/template-kit/contact-us/">emailjoytoy@email.co</a>
+                                </li>
+                                <li>
+                                    <a href="https://joytoy.templatekit.co/template-kit/contact-us/">+1 234 567 302</a>
+                                </li>
+                                <li>
+                                    <a href="https://joytoy.templatekit.co/template-kit/contact-us/">+42 434 567 201</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="content_time">
+                    <h2>Working Hours</h2>
+                    <div class="time_section">
+                        <div class="time_section-small">
+                            <h6>Mon</h6>
+                            <span class="line_time"></span>
+                            <p>09:30 -18:30</p>
+                        </div>
+                        <div class="time_section-small">
+                            <h6>Tue</h6>
+                            <span class="line_time"></span>
+                            <p>09:30 -18:30</p>
+                        </div>
+                        <div class="time_section-small">
+                            <h6>Wed</h6>
+                            <span class="line_time"></span>
+                            <p>09:30 -18:30</p>
+                        </div>
+                        <div class="time_section-small">
+                            <h6>Thu</h6>
+                            <span class="line_time"></span>
+                            <p>09:30 -18:30</p>
+                        </div>
+                        <div class="time_section-small">
+                            <h6>Fri</h6>
+                            <span class="line_time"></span>
+                            <p>09:30 -18:30</p>
+                        </div>
+                        <div class="time_section-small">
+                            <h6>Fri</h6>
+                            <span class="line_time"></span>
+                            <p>11:00 -16:00</p>
+                        </div>
+                        <div class="time_section-small">
+                            <h6>Sun</h6>
+                            <span class="line_time"></span>
+                            <p>Closed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+  {% schema %}
+{
+  "name": "Contact Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "store_location_heading",
+      "label": "Store Location Heading",
+      "default": "Store Locations"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_icon",
+      "label": "Left Icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_icon",
+      "label": "Right Icon"
+    },
+    {
+      "type": "textarea",
+      "id": "google_map_embed",
+      "label": "Google Map Embed Code"
+    },
+    {
+      "type": "text",
+      "id": "store_address_heading",
+      "label": "Store Address Heading",
+      "default": "Store Addresses: "
+    },
+    {
+      "type": "textarea",
+      "id": "store_address_1",
+      "label": "Store Address 1"
+    },
+    {
+      "type": "textarea",
+      "id": "store_address_2",
+      "label": "Store Address 2"
+   
+    },
+    {
+      "type": "text",
+      "id": "working_hours_heading",
+      "label": "Working Hours Heading",
+      "default": "Working Hours"
+    },
+    {
+      "type": "textarea",
+      "id": "working_hours",
+      "label": "Working Hours Content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Contact Page"
+    }
+  ]
+}
+{% endschema %}

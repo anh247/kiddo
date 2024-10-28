@@ -1,0 +1,192 @@
+<!-- Thêm link CSS vào -->
+<link rel="stylesheet" href="{{ 'page_products-main.css' | asset_url }}">
+<section class="container main-products">
+  <div class="products-img">
+        <div class="products-img-thumb">
+            <img class="active" src="{{ 'Placeholder.png' | asset_url }}"
+                data-thumnail="{{ 'Multiply.png' | asset_url }}" alt="" data-image-id="9" >
+            <img src="{{ 'Placeholder-1.png' | asset_url }}"
+                data-thumnail="{{ 'Multiply1.png' | asset_url }}" alt="" data-image-id="9" style="margin-top: 10px;">
+            <img src="{{ 'Placeholder-2.png' | asset_url }}"
+                data-thumnail="{{ 'Multiply2.png' | asset_url }}" alt="" data-image-id="9" style="margin-top: 10px;">
+            <img src="{{ 'Placeholder-3.png' | asset_url }}"
+                data-thumnail="{{ 'Multiply3.png' | asset_url }}" alt="" data-image-id="9"style="margin-top: 10px;">
+        </div>
+        <div class="products-image">
+            <figure class="products-image__inner">
+                <img src="{{ 'Multiply1.png' | asset_url }}" alt="" id="main-product-image">
+            </figure>
+        </div>
+    </div>
+
+    <div class="products-text">
+        <h2>{{ section.settings.product_title }}</h2>
+        <div class="star-rating">
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+        </div>
+        <div class="price">
+            <span class="original-price">${{ section.settings.original_price }}</span>
+            <span class="discounted-price">${{ section.settings.discounted_price }}</span>
+        </div>
+        <p class="description">{{ section.settings.description }}</p>
+        <div class="filters__field-size_color">
+           <div class="facet-filters__field">
+          <div class="select">
+            <select name="sort_by" class="facet-filters__sort select__select caption-large" id="SortBy" aria-describedby="a11y-refresh-page-message">
+              <option value="manual">Size</option>
+                                <option value="XS">XS</option>
+                                <option value="S" selected="selected">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                                <option value="3XL">3XL</option>
+            </select>
+          </div>
+        </div>
+          <div class="facet-filters__field">
+          <div class="select">
+            <select name="sort_bys" class="facet-filters__sort select__select caption-large" id="SortBy" aria-describedby="a11y-refresh-page-message">
+              <option value="manual">Color</option>
+                                <option value="best-selling">Red</option>
+                                <option value="title-ascending" selected="selected">Blue</option>
+                                <option value="title-descending">Yellow</option>
+                                <option value="price-ascending">green</option>
+                                <option value="price-descending">pink</option>
+                                <option value="created-ascending">black</option>
+                                <option value="created-descending">white</option>
+            </select>
+          </div>
+        </div>
+        </div>
+        <div class="filters__field-size_color-bottom">
+            <div class="quantity-selector">
+                <span class="label">Quantity</span>
+                <div class="quantity-controls">
+                    <button type="button" class="quantity-btn decrease">‹</button>
+                    <span class="quantity-number" id="quantity">1</span>
+                    <button type="button" class="quantity-btn increase">›</button>
+                </div>
+            </div>
+            <a href="#">
+                <button class="btn-add">{{ section.settings.add_to_cart_text }}</button>
+            </a>
+        </div>
+         <div class="products_coupone">
+                    <div class="content-products_coupone">
+                        <div class="img_coupone">
+                           <img src="{{ 'car.png' | asset_url }}" alt="baby_image">
+                         
+                        </div>
+
+                        <p>Free Delivery</p>
+                        <a href="">Learn More</a>
+                    </div>
+                    <div class="content-products_coupone">
+                        <div class="img_tag">
+                           <img src="{{ 'tag.png' | asset_url }}" alt="baby_image">
+                            
+                        </div>
+
+                        <p>Coupone 30% OFF :</p>
+                        <a href="">Get Coupon to Email</a>
+                    </div>
+                </div>
+        <div class="infor-sku">
+            <h5>SKU:</h5>
+            <p>{{ section.settings.sku }}</p>
+        </div>
+        <div class="infor-sku" style="margin-top: 6px;">
+            <h5>Tags:</h5>
+            <p>{{ section.settings.tags }}</p>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Main Products ",
+    "settings": [
+        {
+            "type": "text",
+            "id": "product_title",
+            "label": "Product Title",
+            "default": "Baby Cloth Set"
+        },
+       {
+      "type": "select",
+      "id": "sort_by",
+      "label": "Sort Products By",
+      "options": [
+        { "value": "manual", "label": "Size" },
+        { "value": "XS, S, M, L, XL, XXL, 3XL", "label": "XS" },
+        { "value": "S", "label": "S" },
+        { "value": "M", "label": "M" },
+        { "value": "L", "label": "L" },
+        { "value": "XL", "label": "XL" },
+        { "value": "XXL", "label": "XXL" },
+        { "value": "3XL", "label": "3XL" }
+      ]
+    },
+       {
+      "type": "select",
+      "id": "sort_bys",
+      "label": "Sort Products By",
+      "options": [
+        { "value": "manual", "label": "Color" },
+        { "value": "best-selling", "label": "Red" },
+        { "value": "title-ascending", "label": "Blue" },
+        { "value": "title-descending", "label": "Yellow" },
+        { "value": "price-ascending", "label": "green" },
+        { "value": "price-descending", "label": "pink" },
+        { "value": "created-ascending", "label": "black" },
+        { "value": "created-descending", "label": "white" }
+      ]
+    },
+        {
+            "type": "text",
+            "id": "original_price",
+            "label": "Original Price",
+            "default": "100"
+        },
+        {
+            "type": "text",
+            "id": "discounted_price",
+            "label": "Discounted Price",
+            "default": "99"
+        },
+        {
+            "type": "textarea",
+            "id": "description",
+            "label": "Product Description",
+            "default": "Pellentesque ut diam condimentum, pellentesque ante imperdiet, ultricies dui. Praesent eu lectus enim. Fusce ac nisi non orci malesuada porta. Quisque blandit "
+        },
+        {
+            "type": "text",
+            "id": "add_to_cart_text",
+            "label": "Add to Cart Button Text",
+            "default": "Add To Cart"
+        },
+        {
+            "type": "text",
+            "id": "sku",
+            "label": "Product SKU",
+            "default": "12345"
+        },
+        {
+            "type": "text",
+            "id": "tags",
+            "label": "Product Tags",
+            "default": "Baby, Clothing, Set"
+        }
+    ]
+}
+{% endschema %}
+<script src="{{ 'products-img-thumb.js' | asset_url }}" defer></script>
+   
+<script src="{{ 'quantity_product_main.js' | asset_url }}" defer></script> 
+<script src="{{ 'add_product.js' | asset_url }}" defer></script> 

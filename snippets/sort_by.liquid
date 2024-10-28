@@ -1,0 +1,33 @@
+<!-- Liên kết file sort_by.css -->
+<link rel="stylesheet" href="{{ 'sort_by.css' | asset_url }}" type="text/css">
+
+<div class="facet-filters__field">
+            <div class="select">
+              <select name="sort_by" class="facet-filters__sort select__select caption-large" id="SortBy" aria-describedby="a11y-refresh-page-message">
+                <option value="manual">
+                  Featured
+                </option>
+                <option value="best-selling">
+                  Best selling
+                </option>
+                <option value="title-ascending" selected="selected">
+                  Alphabetically, A-Z
+                </option>
+                <option value="title-descending">
+                  Alphabetically, Z-A
+                </option>
+                <option value="price-ascending">
+                  Price, low to high
+                </option>
+                <option value="price-descending">
+                  Price, high to low
+                </option>
+                <option value="created-ascending">
+                  Date, old to new
+                </option>
+                <option value="created-descending">
+                  Date, new to old
+                </option>
+              </select>
+            </div>
+          </div>

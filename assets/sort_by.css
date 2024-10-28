@@ -1,0 +1,13 @@
+.facet-filters__sort {
+  color: #724D37;
+  /* Màu chữ */
+  border: 1px solid #DCDCDC;
+  /* Viền border */
+  border-radius: 25px;
+  /* Border radius */
+  padding: 8px;
+  /* Thêm padding để khoảng cách giữa viền và chữ được rõ hơn */
+  font-size: 16px;
+  /* Điều chỉnh kích thước chữ nếu cần */
+  background-color: #fff;
+}

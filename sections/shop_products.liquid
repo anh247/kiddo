@@ -1,0 +1,44 @@
+  <section class="shop-products">
+     <div class="container shop_products">
+        {% render 'left_sidebar-products' %} 
+        {% render 'sidebar-products' %} 
+     </div>
+  </section>
+{% schema %}
+  {
+    "name": "Section Products Sidebar",
+    "settings": [
+      {
+        "type": "text",
+        "id": "section_title",
+        "label": "Section Title",
+        "default": "Our Products"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sidebar",
+        "label": "Show Sidebar",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Select Product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Default",
+        "category": "Products"
+      }
+    ]
+  }
+{% endschema %}

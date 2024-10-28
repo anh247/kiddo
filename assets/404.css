@@ -1,0 +1,174 @@
+.section_announcement-bar {
+  display: none;
+}
+.header-wrapper.color-scheme-1.gradient.header-wrapper--border-bottom {
+  display: none;
+}
+.footer_section {
+  display: none;
+}
+.page_error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Tùy chỉnh chiều cao */
+  text-align: center;
+  margin:80px auto;
+}
+
+.img-main_error {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-main_error img {
+  max-width: 100%;
+  height: auto;
+}
+
+.card_img-main {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: -17%;
+}
+
+.item_img img {
+  z-index: 2;
+  /* Đảm bảo hình ảnh trong item_img chèn lên item_text */
+}
+
+.item_text img {
+  z-index: 1;
+  /* Hình ảnh trong item_text sẽ nằm bên dưới */
+}
+
+.item_img img,
+.item_text img {
+  max-width: 100%;
+  height: auto;
+}
+
+.imgae_cmd img {
+  position: relative;
+}
+
+.anhphu img {
+  position: absolute;
+  margin-top: -171px;
+  margin-left: 40px;
+  width: 89px;
+  height: 131px;
+}
+
+.item_img img {
+  z-index: 2;
+  position: absolute;
+  top: 38%;
+  left: 4%;
+}
+
+.item_text img {
+  z-index: 1;
+  position: absolute;
+  left: 33%;
+  top: 33%;
+}
+
+.text_item h1 {
+  color: #423127;
+  font-family: Nunito, sans-serif;
+  font-size: 200px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.text_item h1 {
+  margin: 0;
+}
+
+.text_item p {
+  font-family: Nunito, sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  text-align: center;
+  color: #423127;
+  margin-top: -43px;
+}
+
+.text_item button {
+  background-color: #ff961a;
+  border-radius: 24px;
+  border: none;
+  color: #fff;
+  font-family: Lato, sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
+  padding: 10px 50px;
+  text-transform: uppercase;
+   cursor: pointer;
+}
+
+.text_item {
+  display: grid;
+}
+
+.text_content {
+  z-index: 3;
+ top: 39%;
+  position: absolute;
+  left: 45%;
+}
+
+.img_hat img {
+  z-index: 4;
+  position: absolute;
+  left: 59%;
+  top: 37%;
+}
+
+.img_rays img {
+  z-index: 5;
+  position: absolute;
+  top: 22%;
+  left: 73%;
+}
+
+.img_bottom_error {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+top: 69%;
+  left: 13%;
+}
+
+.img_left-bottom img,
+.img_right-bottom img {
+  max-width: 100%;
+  height: auto;
+}
+
+.img_left-bottom img {
+  z-index: 7;
+  position: absolute;
+  top: 44%;
+}
+
+.img_right-bottom img {
+  position: relative;
+
+  z-index: 6;
+}
+.text_content img {
+top: 46%;
+  left: 119%;
+  position: absolute;
+}

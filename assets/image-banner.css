@@ -1,0 +1,168 @@
+.image-banner-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.container {
+  padding: 0;
+}
+
+.slider-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}
+
+.slide.active {
+  opacity: 1;
+}
+.next:active,.prev:active {
+  color: #FF961A;
+}
+.prev, .next {
+  position: absolute;
+top: 50%;
+  transform: translateY(-50%);
+  background-color: #fff;
+  color: #ffe3c2;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font-size: 28px;
+}
+
+/* Giữ cho nút cố định với kích thước màn hình lớn */
+.prev {
+  left:216px;
+}
+.next {
+  right: 216px;
+}
+.slide.active img {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
+.image-banner_text {
+  position: absolute;
+  padding: 10px; /* Thêm khoảng cách cho nội dung */
+  border-radius: 5px; /* Bo góc cho nền văn bản */
+  top: 53%;
+  left: 28%;
+  transform: translate(-50%, -50%);
+}
+
+.slide {
+  display: none;
+}
+
+.slide.active {
+  display: block;
+}
+
+.image-banner_text h4 {
+  color: #ff961a;
+  font-weight: 900;
+  font-size: 14px;
+  font-family: "Nunito";
+  text-transform: uppercase;
+  animation: slideLeft 1s ease forwards;
+  height: 19px;
+}
+.image-banner_text h2 {
+  font-weight: 900;
+  font-size: 64px;
+  font-family: Nunito;
+  color: #423127;
+  animation: slideLeft 1s ease forwards;
+  height: 86px;
+  margin: 0;
+}
+
+.image-banner_text p {
+  color: #724d37;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  animation:slideRight 2s ease forwards;
+}
+
+.image-banner_text a {
+  text-decoration: none;
+  display: inline-block;
+  color: #fff;
+  width: 190px;
+  height: 48px;
+  gap: 0px;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 15px;
+  background: #ff961a;
+  border-radius: 50px;
+  line-height: 48px;
+  text-align: center;
+  animation: slideTop 1s ease forwards;
+  animation-delay: 2s;
+}
+.image_banner{
+  display:flex;
+  justify-content:center;
+}
+/* Tùy chỉnh khi màn hình thu nhỏ dưới 768px */
+@media (max-width: 768px) {
+  .prev, .next {
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+  }
+  
+  .prev {
+    left: 10px;
+  }
+
+  .next {
+    right: 10px;
+  }
+}
+/* Tùy chỉnh khi màn hình thu nhỏ dưới 425px */
+@media screen and (max-width: 425px) {
+  .image-banner_text h2 {
+    font-size: 22px;
+    height:34px;
+  }
+  .image-banner_text h4 {
+    display: none;
+  }
+  .image-banner_text {
+    left: 40%;
+    top: 47%;
+  }
+  .image-banner_text p {
+    font-size: 12px;
+  }
+  .image-banner_text a {
+    margin-top: 10px;
+  }
+   .prev, .next {
+  display:none;
+  }
+  .container.image_banner {
+  width: 100%;
+  padding: 0 10px;
+}
+}
+
+

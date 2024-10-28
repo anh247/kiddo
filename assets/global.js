@@ -93,10 +93,10 @@ alzThemes.ProductReview = function ($product=false) {
 alzThemes.SwitchRTL = function () {
     $('.switch-rtl').click(function() {
         if($body.hasClass('rtl')){
-            $('link[href*="//demo-tranning.myshopify.com/cdn/shop/t/3/assets/global-rtl.css?v=76336006171756670211726125215"]').attr('href', '//demo-tranning.myshopify.com/cdn/shop/t/3/assets/global.css?v=137764441829919513621726125215');
+            $('link[href*="//demo-tranning.myshopify.com/cdn/shop/t/1/assets/global-rtl.css?v=76336006171756670211729496612"]').attr('href', '//demo-tranning.myshopify.com/cdn/shop/t/1/assets/global.css?v=129679492762349366561729732529');
             $body.removeClass('rtl');
         } else {
-            $('link[href*="//demo-tranning.myshopify.com/cdn/shop/t/3/assets/global.css?v=137764441829919513621726125215"]').attr('href', '//demo-tranning.myshopify.com/cdn/shop/t/3/assets/global-rtl.css?v=76336006171756670211726125215');
+            $('link[href*="//demo-tranning.myshopify.com/cdn/shop/t/1/assets/global.css?v=129679492762349366561729732529"]').attr('href', '//demo-tranning.myshopify.com/cdn/shop/t/1/assets/global-rtl.css?v=76336006171756670211729496612');
             $body.addClass('rtl');
         }
         $('body').trigger('alzThemes:SwitchRTL:reload');
@@ -2870,9 +2870,9 @@ $(function ($) {
                 });
             },
             ajaxCart: function () {
-                var ajaxcartDisabled = ( 'true' == 'false' ),
+                var ajaxcartDisabled = ( '' == 'false' ),
                     ajaxcartAfter    ="sidebar_cart",
-                    disableAutoSelect = ( 'enable' == 'disable' );
+                    disableAutoSelect = ( '' == 'disable' );
                 if(ajaxcartDisabled) return;
                 $(document).on('click', '.js_add_to_cart_button', function (e) {
                     e.preventDefault();

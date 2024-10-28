@@ -1,0 +1,82 @@
+
+<link rel="stylesheet" href="{{ 'banner-test.css' | asset_url }}">
+<div class="banner-test-section">
+     <div class="banner-image">
+    {% assign image = section.settings.banner_image %}
+    {% if image %}
+      <img
+        src="{{ image | img_url: 'small' }}"
+        alt="{{ section.settings.banner_alt_text }}"
+      >
+    {% else %}
+      <img
+        src="{{ 'happy-children-play-2021-08-26-15-29-36-utc.jpg' | asset_url }}"
+        alt="Default alt text for happy children image"
+      >
+    {% endif %}
+  </div>
+
+    <div class="banner-text">
+    <h2>{{ section.settings.banner_heading }}</h2>
+    <h4>{{ section.settings.banner_bottom_heading }}</h4>
+    <p>{{ section.settings.banner_content | line_breaks }}</p>
+
+    <!-- Button with dynamic link -->
+    <a href="{{ section.settings.banner_button_link }}" class="btn">{{ section.settings.banner_button_text }}</a>
+  </div>
+  </div>
+ 
+{% schema %}
+{
+  "name": "Banner Test",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Choose Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "banner_alt_text",
+      "label": "Alt Text for Banner Image",
+      "default": "Default alt text"
+    },
+    {
+      "type": "text",
+      "id": "banner_heading",
+      "label": "Banner Heading",
+      "default": "Welcome to our store"
+    },
+    {
+      "type": "text",
+      "id": "banner_bottom_heading",
+      "label": "Banner Bottom Heading",
+      "default": "Sale -50%"
+    },
+    {
+      "type": "textarea",
+      "id": "banner_content",
+      "label": "Banner Content",
+      "default": "Curabitur in rutrum nisl, at pulvinar odio. Etiam quis neque vel neque consectetur vulputate"
+    },
+    {
+      "type": "text",
+      "id": "banner_button_text",
+      "label": "Button Text",
+      "default": "Xem ngay"
+    },
+    {
+      "type": "text",
+      "id": "banner_button_link",
+      "label": "Button Link",
+      "default": "#"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner Test",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,26 @@
+{% if collection.products_count > 0 %}
+  <form id="filter-products" action="{{ collection.url }}" method="get">
+    <label for="vendor">Vendor</label>
+    <select id="vendor" name="vendor">
+      {% assign vendors = '' %}
+      {% for product in collection.products %}
+        {% if vendors contains product.vendor %}
+          {% continue %}
+        {% else %}
+          <option value="{{ product.vendor }}">{{ product.vendor }}</option>
+          {% assign vendors = vendors | append: product.vendor %}
+        {% endif %}
+      {% endfor %}
+    </select>
+
+    <label for="price">Price</label>
+    <select id="price" name="price">
+      <option value="0-50">$0 - $50</option>
+      <option value="50-100">$50 - $100</option>
+    </select>
+
+    <button type="submit">Áp dụng bộ lọc</button>
+  </form>
+{% else %}
+  <p>Không tìm thấy sản phẩm nào</p>
+{% endif %}

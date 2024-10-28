@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="{{ '404.css' | asset_url }}">
+<section class="page_error">
+    <div class="img-oval_left">
+         <img src="{{ 'Oval_left.png' | asset_url }}">
+    </div>
+    <div class="container img-main_error">
+      <img src="{{ 'bg_404.png' | asset_url }}">
+       
+        <div class="card_img-main">
+            <div class="item_img">
+              <img src="{{ 'mouse_cried.png' | asset_url }}">
+              
+            </div>
+            <div class="item_text">
+              <img src="{{ 'Oval.png' | asset_url }}">
+              
+                <div class="text_item">
+                    <div class="img_hat">
+                      <img src="{{ 'hat.png' | asset_url }}">
+                       
+                    </div>
+                    <div class="text_content">
+                        <h1>404</h1>
+                        <p>Aww… Something went wrong</p>
+                        <a href="{{ section.settings.home_link }}">
+                            <button>Back to Home Page</button>
+                        </a>
+                      <img src="{{ 'Icon_Stars.png' | asset_url }}">
+                      
+                    </div>
+                    <div class="img_rays">
+                      <img src="{{ 'rays.png' | asset_url }}">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="img_bottom_error">
+            <div class="img_left-bottom">
+              <img src="{{ 'dinosaur.png' | asset_url }}">
+               
+            </div>
+            <div class="img_right-bottom">
+              <img src="{{ 'mouse.png' | asset_url }}">
+              
+            </div>
+        </div>
+    </div>
+    <div class="img-oval_rigght">
+      <img src="{{ 'Oval_right.png' | asset_url }}">
+        
+    </div>
+</section>
+
+<!-- Thêm schema JSON vào đây -->
+{% schema %}
+{
+  "name": "404 Error Page",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+       "type": "url",
+      "id": "home_link",
+      "label": "Home Link",
+      "default": "/"
+    
+    },
+    
+    {
+      "type": "image_picker",
+      "id": "oval_left_image",
+      "label": "Left Oval Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "oval_right_image",
+      "label": "Right Oval Image"
+   
+    },
+    {
+      "type": "image_picker",
+      "id": "crying_mouse_image",
+      "label": "Crying Mouse Image"
+     
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error Message",
+      "default": "Aww… Something went wrong"
+    },
+    {
+      "type": "image_picker",
+      "id": "hat_image",
+      "label": "Hat Image"
+    
+    },
+    {
+      "type": "url",
+      "id": "home_button_url",
+      "label": "Home Button URL",
+      "default": "/"
+    },
+    {
+      "type": "image_picker",
+      "id": "dinosaur_image",
+      "label": "Dinosaur Image"
+    
+    },
+    {
+      "type": "image_picker",
+      "id": "mouse_image",
+      "label": "Mouse Image"
+    
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default 404 Error Page"
+    }
+  ]
+}
+{% endschema %} 

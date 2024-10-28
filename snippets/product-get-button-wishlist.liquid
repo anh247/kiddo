@@ -9,8 +9,10 @@
     {%- endfor -%}
 {%- endif -%}
 <div class="product-btn-wishlist">
-    <a href="{{ routes.root_url }}pages/wishlist" class="wishlist btn--status js-store-lists-add-wishlist js-wishlist" {% if present_in_wishlist %} data-button-status="added"{% endif %}>
-        <span class="icon main-icon-heart"></span>
+    <a href="https://demo-tranning.myshopify.com/cart" class="wishlist btn--status js-store-lists-add-wishlist js-wishlist" {% if present_in_wishlist %} data-button-status="added"{% endif %}>
+        <span class="icon main-icon-heart">
+            <i class='bx bxs-heart'></i> <!-- Thay box-icon bằng i với class tương ứng -->
+        </span>
         <span class="text">{{ 'products.product.add_to_widhlist.title' | t }}</span>
         <span class="added" data-button-content=added>{{ 'products.product.add_to_widhlist.added' | t }}</span>
     </a>

@@ -1,59 +1,53 @@
-class DetailsModal extends HTMLElement {
+class DetailsDisclosure extends HTMLElement {
   constructor() {
     super();
-    this.detailsContainer = this.querySelector('details');
-    this.summaryToggle = this.querySelector('summary');
+    this.mainDetailsToggle = this.querySelector('details');
+    this.content = this.mainDetailsToggle.querySelector('summary').nextElementSibling;
 
-    this.detailsContainer.addEventListener(
-      'keyup',
-      (event) => event.code.toUpperCase() === 'ESCAPE' && this.close()
-    );
-    this.summaryToggle.addEventListener(
-      'click',
-      this.onSummaryClick.bind(this)
-    );
-    this.querySelector('button[type="button"]').addEventListener(
-      'click',
-      this.close.bind(this)
-    );
-
-    this.summaryToggle.setAttribute('role', 'button');
+    this.mainDetailsToggle.addEventListener('focusout', this.onFocusOut.bind(this));
+    this.mainDetailsToggle.addEventListener('toggle', this.onToggle.bind(this));
   }
 
-  isOpen() {
-    return this.detailsContainer.hasAttribute('open');
+  onFocusOut() {
+    setTimeout(() => {
+      if (!this.contains(document.activeElement)) this.close();
+    });
   }
 
-  onSummaryClick(event) {
-    event.preventDefault();
-    event.target.closest('details').hasAttribute('open')
-      ? this.close()
-      : this.open(event);
+  onToggle() {
+    if (!this.animations) this.animations = this.content.getAnimations();
+
+    if (this.mainDetailsToggle.hasAttribute('open')) {
+      this.animations.forEach((animation) => animation.play());
+    } else {
+      this.animations.forEach((animation) => animation.cancel());
+    }
   }
 
-  onBodyClick(event) {
-    if (!this.contains(event.target) || event.target.classList.contains('modal-overlay')) this.close(false);
-  }
-
-  open(event) {
-    this.onBodyClickEvent =
-      this.onBodyClickEvent || this.onBodyClick.bind(this);
-    event.target.closest('details').setAttribute('open', true);
-    document.body.addEventListener('click', this.onBodyClickEvent);
-    document.body.classList.add('overflow-hidden');
-
-    trapFocus(
-      this.detailsContainer.querySelector('[tabindex="-1"]'),
-      this.detailsContainer.querySelector('input:not([type="hidden"])')
-    );
-  }
-
-  close(focusToggle = true) {
-    removeTrapFocus(focusToggle ? this.summaryToggle : null);
-    this.detailsContainer.removeAttribute('open');
-    document.body.removeEventListener('click', this.onBodyClickEvent);
-    document.body.classList.remove('overflow-hidden');
+  close() {
+    this.mainDetailsToggle.removeAttribute('open');
+    this.mainDetailsToggle.querySelector('summary').setAttribute('aria-expanded', false);
   }
 }
 
-customElements.define('details-modal', DetailsModal);
+customElements.define('details-disclosure', DetailsDisclosure);
+
+class HeaderMenu extends DetailsDisclosure {
+  constructor() {
+    super();
+    this.header = document.querySelector('.header-wrapper');
+  }
+
+  onToggle() {
+    if (!this.header) return;
+    this.header.preventHide = this.mainDetailsToggle.open;
+
+    if (document.documentElement.style.getPropertyValue('--header-bottom-position-desktop') !== '') return;
+    document.documentElement.style.setProperty(
+      '--header-bottom-position-desktop',
+      `${Math.floor(this.header.getBoundingClientRect().bottom)}px`
+    );
+  }
+}
+
+customElements.define('header-menu', HeaderMenu);

@@ -1,0 +1,107 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "sections": {
+    "title_banner": {
+      "type": "title-banner",
+      "settings": {
+        "home_link": "/",
+        "home_text": "Home",
+        "sidebar_link": "shopify://collections/all",
+        "sidebar_text": "Shop Sidebar"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "products_sidebar": {
+      "type": "products_sidebar",
+      "settings": {
+        "title": "Featured Products",
+        "sort_by": "manual",
+        "image1": "shopify://shop_images/Dragonfly_Toy.png",
+        "image2": "shopify://shop_images/Teddy_Bear.png",
+        "image3": "shopify://shop_images/Newborn_Cloth_Set.png"
+      }
+    },
+    "banner_group": {
+      "type": "banner_group",
+      "settings": {
+        "top_heading_small": "Organic Cotton Basics for Newborn",
+        "top_heading_large": "From the Start",
+        "top_paragraph": "Cras et massa vitae purus pretium rhoncus vel placerat dolor. Pellentesque habitant morbi tristiques",
+        "top_button_text": "Shop Now",
+        "top_button_link": "",
+        "bottom_heading_small": "New Collection",
+        "bottom_heading_large": "Practical, Functional and Stylish",
+        "bottom_button_text": "Shop Now",
+        "bottom_button_link": ""
+      }
+    },
+    "our_latest_news_section": {
+      "type": "section_our-latest-new",
+      "blocks": {
+        "blog_post_NaJc6i": {
+          "type": "blog_post",
+          "settings": {
+            "blog_image": "shopify://shop_images/Blog_Image1.png",
+            "blog_title": "Everything you need to know about family travel",
+            "blog_link": "#",
+            "author_name": "John Doe",
+            "blog_date": "Nov 10, 2021",
+            "blog_category": "Kids World"
+          }
+        },
+        "blog_post_XayJxd": {
+          "type": "blog_post",
+          "settings": {
+            "blog_image": "shopify://shop_images/Blog_Image2.png",
+            "blog_title": "Preschool Activities & Craft Ideas for Kids",
+            "blog_link": "#",
+            "author_name": "John Doe",
+            "blog_date": "Nov 10, 2021",
+            "blog_category": "Kids World"
+          }
+        },
+        "blog_post_X8zpV8": {
+          "type": "blog_post",
+          "settings": {
+            "blog_image": "shopify://shop_images/Blog_Image3.png",
+            "blog_title": "Best Summer Activities: Bubbly Ball Pit For Kids",
+            "blog_link": "#",
+            "author_name": "John Doe",
+            "blog_date": "Nov 10, 2021",
+            "blog_category": "Kids World"
+          }
+        }
+      },
+      "block_order": [
+        "blog_post_NaJc6i",
+        "blog_post_XayJxd",
+        "blog_post_X8zpV8"
+      ],
+      "settings": {
+        "heading": "Our Latest News"
+      }
+    }
+  },
+  "order": [
+    "title_banner",
+    "main",
+    "products_sidebar",
+    "banner_group",
+    "our_latest_news_section"
+  ]
+}

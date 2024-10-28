@@ -1,0 +1,161 @@
+.tab-header {
+    list-style: none;
+    display: flex;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+.container.tabs_infor {
+  margin-top: 50px;
+}
+.tab-header li.active {
+    background-color: #fff;
+    color: #FF961A;
+}
+
+.tab-header li {
+    width: 246px;
+    height: 53px;
+    border-top-left-radius: 12px;
+    /* Bo góc trên bên trái */
+    border-top-right-radius: 12px;
+    /* Bo góc trên bên phải */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    background-color: #FFF8F0;
+    transition: all linear 0.2s;
+    border: 1px solid #FFE3C2;
+}
+
+.tab-header p ,#tab-2 p{
+    margin: 0;
+    color: #423127;
+}
+
+.inf_tab-content-top h5 {
+    color: #300C00;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+  margin:0;
+
+}
+
+.inf_tab-content-top h6 {
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    color: #724D37;
+  margin:0;
+}
+
+.inf_tab-content-top {
+    display: flex;
+    gap: 20px;
+}
+
+.inf_main p {
+    color: #724D37;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+  margin:0;
+}
+
+.tab-content {
+    border: 1px solid #FFE3C2;
+    padding: 30px;
+  border-radius: 12px;
+}
+
+.list_infor li::before {
+    content: "\2022";
+    color: #FF961A;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 20px;
+    transition: font-size .3s ease;
+    font-weight: 400;
+    line-height: 28px;
+}
+
+.list_infor li {
+    position: relative;
+    padding-left: 20px;
+    color: #724D37;
+    cursor: pointer;
+}
+
+.list_infor {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.table_infor-heading p{
+    color: #423127;
+    font-family: 'Nunito',sans-serif;
+font-size: 12px;
+font-weight: 900;
+text-align: center;
+text-transform: uppercase;
+}
+.table_infor{
+    display: flex;
+    gap:10px;
+}
+.table_infor-heading{
+    width: 268px;
+    border: 1px solid#FFF8F0;
+    background-color: #FFFCF9;
+    align-content: center;
+    border-radius: 12px;
+}
+.list_describe{
+    border: 1px solid#FFF8F0;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    align-content: center;
+}
+.list_describe p{
+    margin: 0;
+    color: #724D37;
+    font-family:' Lato',sans-serif;
+font-size: 16px;
+font-weight: 400;
+line-height: 28px;
+text-align: left;
+
+}
+.tab-content .tab.active {
+    display: block;
+  }
+  .tab-content .tab {
+    display: none;
+  }
+.icon_list{
+    display: flex;
+    gap: 20px;
+}
+.table_inf{
+    display: grid;
+    gap: 10px;
+  margin-top:30px;
+}
+/*bảng tab3*/
+.add-information {
+    width: 100%;
+  }
+  th, td {
+    padding: 10px 20px;
+  }
+  .color {
+    background-color: rgb(245, 245, 245);
+  }

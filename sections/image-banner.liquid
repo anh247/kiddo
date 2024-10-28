@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="{{ 'image-banner.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'animation.css' | asset_url }}">
+<div class=" image-banner-section">
+  <div class="container image_banner ">
+    <!-- Add buttons for previous and next -->
+    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+    <div class="image-banner-slider">
+      <!-- Create a slider wrapper to hold all slides -->
+      <div class="slider-wrapper">
+        {% for block in section.blocks %}
+          <div class="slide">
+            <!-- Use the block image setting -->
+            <img src="{{ block.settings.banner_image | image_url }}" alt="{{ section.settings.banner_alt_text }}">
+            <div class="image-banner_text">
+              <h4>
+                {{ section.settings.banner_top_heading }}
+              </h4>
+              <h2>
+                {{ section.settings.banner_heading }}
+              </h2>
+              <p>
+                {{ section.settings.banner_content | line_breaks }}
+              </p>
+              <a href="{{ section.settings.banner_button_link }}" class="btn">
+                {{- section.settings.banner_button_text -}}
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <!-- Add buttons for next -->
+    <button class="next" onclick="changeSlide(1)">&#10095;</button>
+  </div>
+</div>
+
+<script src="{{ 'slide_transition.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Image banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_alt_text",
+      "label": "Alt Text for Banner Image",
+      "default": "Default alt text"
+    },
+    {
+      "type": "text",
+      "id": "banner_heading",
+      "label": "Banner Heading",
+      "default": "Best Selling"
+    },
+    {
+      "type": "range",
+      "id": "banner_heading_font_size",
+      "label": "Banner Heading Font Size",
+      "min": 20,
+      "max": 64,
+      "default": 64,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "id": "banner_top_heading",
+      "label": "Banner Top Heading",
+      "default": "New Collection Toys & Clothing Sets"
+    },
+    {
+      "type": "range",
+      "id": "banner_top_heading_font_size",
+      "label": "Banner Top Heading Font Size",
+      "min": 12,
+      "max": 14,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "textarea",
+      "id": "banner_content",
+      "label": "Banner Content",
+      "default": "Nam rhoncus nunc vel libero consectetur, ac euismod erat fermentum. Quisque scelerisque ante eget."
+    },
+    {
+      "type": "range",
+      "id": "banner_content_font_size",
+      "label": "Banner Content Font Size",
+      "min": 14,
+      "max": 16,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "id": "banner_button_text",
+      "label": "Button Text",
+      "default": "Discover More"
+    },
+    {
+      "type": "text",
+      "id": "banner_button_link",
+      "label": "Button Link",
+      "default": "#"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Slide Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "banner_image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image banner",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}

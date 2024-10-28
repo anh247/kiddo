@@ -1,0 +1,65 @@
+<!-- form_contact.liquid -->
+<link rel="stylesheet" href="{{ 'form_contact.css' | asset_url }}">
+<section class="form_contact">
+    <div class="img_border-form">
+        <img src="{{ 'border_contact.png' | asset_url }}" alt="">
+    </div>
+    <div class="content_form">
+        <div class="img-left">
+            <img src="{{ 'left_form.png' | asset_url }}" alt="">
+          
+        </div>
+        <div class="contact_form">
+            <h2>{{ section.settings.form_title }}</h2>
+            <div class="fields_email">
+                <div class="form_email">
+                    <input class="input-text-email email-name" type="text" name="NAME" required="required" placeholder="Your Name">
+                </div>
+                <div class="form_email">
+                    <input class="input-text-email email-name" type="email" name="EMAIL" required="required" placeholder="Your e-mail">
+                </div>
+            </div>
+            <div class="form-message">
+                <textarea name="content" class="form-control" id="detail-comment" placeholder="{{ section.settings.message_placeholder }}"></textarea>
+            </div>
+            <button class="btn_submit">{{ section.settings.submit_button_text }}</button>
+        </div>
+        <div class="img-right">
+            <img src="{{ 'right_form.png' | asset_url }}" alt="">
+        
+        </div>
+    </div>
+</section>
+
+<!-- Schema JSON -->
+{% schema %}
+{
+    "name": "Form Contact Section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "form_title",
+            "label": "Form Title",
+            "default": "Ready to Touch"
+        },
+        {
+            "type": "text",
+            "id": "message_placeholder",
+            "label": "Message Placeholder",
+            "default": "Your Message"
+        },
+        {
+            "type": "text",
+            "id": "submit_button_text",
+            "label": "Submit Button Text",
+            "default": "Submit"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Form Contact",
+            "category": "Contact"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,51 @@
+.image-container {
+    position: relative;
+    width: 300px; /* Chiều rộng của container */
+    height: 300px; /* Chiều cao của container */
+    overflow: hidden; /* Đảm bảo không có phần ảnh nào thừa ra ngoài */
+}
+
+.image-container img {
+    position: absolute;
+    top: 0;,.image-container
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh vừa khít container */
+    transition: opacity 0.5s ease; /* Hiệu ứng chuyển đổi mượt mà */
+    border-radius: 50%;
+}
+
+.image-hover {
+    opacity: 0; /* Ẩn ảnh hover */
+}
+
+.image-container:hover .image-default {
+    opacity: 0; /* Ẩn ảnh mặc định khi hover */
+}
+.image-container:hover .image-hover {
+  opacity: 1;
+  border-style: dashed;
+  border-color: #D6D8FF;
+}
+.content_features
+{
+    display: flex;
+    justify-content: space-between;
+}
+.container.content_features {
+  padding: 40px;
+}
+@media screen and (max-width: 425px) {
+  .container.content_features{
+    width:100%;
+    padding:0 20px;
+    display:none;
+}
+  .image-container img,.image-container{
+    height:135px;
+  }
+  .image-default {
+  width: 100%;
+}
+}

@@ -1,0 +1,170 @@
+<!-- product-template.liquid -->
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_info",
+      "label": "Enable Sticky Info",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        }
+      ],
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "default": 36,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "default": 12,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "settings": []
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "settings": []
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "settings": []
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant Picker",
+      "settings": []
+    },
+    {
+      "type": "quantity_selector",
+      "name": "Quantity Selector",
+      "settings": []
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy Buttons",
+      "settings": []
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "settings": []
+    },
+    {
+      "type": "share",
+      "name": "Share",
+      "settings": []
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
+
+
+<!-- Main product section -->
+<section class="main-product {{ section.settings.color_scheme }}">
+  <div class="product-container">
+    
+    <!-- Product Vendor -->
+    <div class="product-vendor">
+      {{ product.vendor | escape | upcase }}
+    </div>
+
+    <!-- Product Title -->
+    <h1 class="product-title">{{ product.title }}</h1>
+
+    <!-- Product Price -->
+    <div class="product-price">
+      {{ product.price | money }}
+    </div>
+
+    <!-- Variant Picker -->
+    <div class="variant-picker">
+      {% if section.settings.picker_type == 'button' %}
+        <!-- Code to display variants as buttons -->
+        <button>Variant Button 1</button>
+        <button>Variant Button 2</button>
+      {% else %}
+        <!-- Default variant picker -->
+        {{ product | variant_picker }}
+      {% endif %}
+    </div>
+
+    <!-- Quantity Selector -->
+    <div class="quantity-selector">
+      <label for="quantity">Quantity:</label>
+      <input id="quantity" type="number" min="1" max="{{ product.available }}" value="1">
+    </div>
+
+    <!-- Buy Buttons -->
+    <div class="buy-buttons">
+      {% if section.settings.show_dynamic_checkout %}
+        <button class="dynamic-checkout">Buy Now</button>
+      {% endif %}
+      {% if section.settings.show_gift_card_recipient %}
+        <button class="gift-card-recipient">Send as Gift</button>
+      {% endif %}
+    </div>
+
+    <!-- Product Description -->
+    <div class="product-description">
+      {{ product.description }}
+    </div>
+
+    <!-- Share Buttons -->
+    <div class="share-buttons">
+      <button>{{ section.settings.share_label }}</button>
+    </div>
+    
+  </div>
+</section>
+
+<!-- Related Products Section -->
+<section class="related-products">
+  <h2>You may also like</h2>
+  <div class="product-grid">
+    {% for product in collection.products %}
+      <div class="product-card">
+        <img src="{{'xedap1.png' | img_url: 'medium' }}" alt="{{ product.title }}">
+        <h3>{{ product.title }}</h3>
+        <p>{{ product.price | money }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>

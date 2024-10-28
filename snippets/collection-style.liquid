@@ -1,6 +1,0 @@
-{% assign collection_style = collection_style | default: settings.collection_style %}
-{% case collection_style %}
-    {% when '1' %}{% render 'collection-style-01', collection: collection, aspect_ratio: aspect_ratio, count: count %}
-    {% when '2' %}{% render 'collection-style-02', collection: collection, aspect_ratio: aspect_ratio, count: count %}
-    {% when '3' %}{% render 'collection-style-03', collection: collection, aspect_ratio: aspect_ratio, count: count %}
-{% endcase %}

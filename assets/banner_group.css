@@ -1,0 +1,133 @@
+.container.banner-group{
+    display: grid;
+    gap: 10px;
+}
+.banner-group_top,.banner-group_bottom {
+    display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
+
+.btn_right__banner-group a,.btn_left__banner-group a {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    gap: 5px;
+}
+.btn_right__banner-group h5 ,.btn_left__banner-group h5{
+    font-family: 'Lato',sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    color: #FF961A;
+    text-transform: uppercase;
+}
+
+.text_right__banner-group h4 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    text-align: left;
+    color: #7C81FF;
+
+}
+
+.text_right__banner-group h1,.text_left__banner-group h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    text-align: left;
+    color: #423127;
+
+}
+.text_right__banner-group p ,.text_right__banner-group h1,.text_right__banner-group h4,.text_left__banner-group h4,.text_left__banner-group h1{
+margin-bottom: 0;
+
+}
+.text_right__banner-group p {
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    color: #724D37;
+
+}
+.text_right__banner-group,.text_left__banner-group {
+    position: absolute;
+    color: white;
+    text-align: center;
+    z-index: 1;
+    font-weight: bold;
+    display: grid;
+    gap: 9px;
+    top: 21%;
+  left: 14%;
+  }
+.banner-group_top__right,.banner-group_bottom__left{
+    position: relative;
+    width: 100%;
+    text-align: center;
+   
+
+}
+.banner-group_top__right{
+    background-color: #F6F7FF;
+    border-radius: 18px;
+}
+.banner-group_bottom__left{
+    background: #FFF8F0;
+    border-radius: 18px;
+}
+.banner-group_top__left {
+    border: 2px #D6D8FF dashed;
+    padding: 10px;
+    border-radius: 18px;
+  }
+.banner-group_bottom__right{
+    border: 2px #FFE3C2 dashed;
+    padding: 10px;
+    border-radius: 18px;
+}
+.banner-group_top__left img, .banner-group_bottom__right img {
+  border-radius: 18px;
+  width: 100%;
+}
+.text_left__banner-group h4{
+    font-family: 'Nunito',sans-serif;
+font-size: 18px;
+font-weight: 900;
+text-align: left;
+color:  #FF961A;
+}
+h4,h1,p{
+  margin:0;
+}
+@media screen and (max-width: 425px) {
+  .banner-group_top__left,.banner-group_bottom__right{
+    padding:5px;
+  }
+  .text_right__banner-group h4,.text_left__banner-group h4{
+    font-size:14px;
+  }
+  .text_right__banner-group h1, .text_left__banner-group h1{
+    font-size:14px;
+  }
+  .text_right__banner-group p{
+    display:none;
+  }
+  .text_right__banner-group, .text_left__banner-group{
+   top: 15%;
+    left: 10%;
+    gap:0px;
+  }
+  .btn_right__banner-group h5, .btn_left__banner-group h5{
+    margin:0;
+  }
+   .container {
+    width: 100%; /* Đảm bảo container rộng 100% màn hình */
+    padding: 0 10px; /* Giảm padding cho màn hình nhỏ */
+  }
+}
+.section_banner-group {
+  margin: 90px auto;
+  
+}

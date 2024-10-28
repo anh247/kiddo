@@ -1,0 +1,48 @@
+<!-- Thêm link CSS vào -->
+<link rel="stylesheet" href="{{ 'title-banner.css' | asset_url }}">
+<section class="title-banner"> 
+  <div class="container banner-link">
+    <a href="{{ section.settings.home_link }}">{{ section.settings.home_text }}</a>
+    <p>/</p>
+    <p style="color:#423127;" href="{{ section.settings.sidebar_link }}">{{ section.settings.sidebar_text }}</p>
+    
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Title Banner",
+  "settings": [
+    {
+      "type": "url",
+      "id": "home_link",
+      "label": "Home Link",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "home_text",
+      "label": "Home Text",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "sidebar_link",
+      "label": "Sidebar Link",
+      "default": "home"
+    },
+    {
+      "type": "text",
+      "id": "sidebar_text",
+      "label": "Sidebar Text",
+      "default": "Shop Sidebar"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default Title Banner"
+    }
+  ]
+}
+
+{% endschema %}

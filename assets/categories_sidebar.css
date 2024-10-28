@@ -1,0 +1,33 @@
+.list_infor li{
+  color: #7C81FF;
+}
+.list_infor {
+  list-style: none; /* Ẩn dấu chấm mặc định */
+  padding-left: 0;  /* Loại bỏ padding mặc định của ul */
+}
+
+.list_infor li {
+  position: relative;  /* Đặt vị trí tương đối để thêm dấu chấm tùy chỉnh */
+  padding-left: 20px;  /* Tạo khoảng cách cho dấu chấm tùy chỉnh */
+  color: black; /* Màu chữ mặc định là đen */
+  cursor: pointer; /* Hiển thị con trỏ khi di chuột vào */
+}
+
+.list_infor li::before {
+  content: '•';  /* Thêm dấu chấm */
+  color: #7C81FF;  /* Màu của dấu chấm */
+  position: absolute;  /* Đặt vị trí tuyệt đối cho dấu chấm */
+  left: 0;  /* Căn dấu chấm về phía bên trái */
+  top: 0;  /* Đặt vị trí dấu chấm theo trục Y */
+  font-size: 1.5rem; /* Kích thước dấu chấm ban đầu */
+  transition: font-size 0.3s ease; /* Hiệu ứng chuyển đổi kích thước dấu chấm */
+}
+
+/* Khi có class 'selected', chữ sẽ tô đậm và dấu chấm lớn hơn */
+.list_infor li.selected {
+  font-weight: bold; /* Tô đậm chữ */
+}
+
+.list_infor li.selected::before {
+  font-size: 2rem; /* Dấu chấm to hơn khi được chọn */
+}

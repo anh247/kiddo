@@ -1,0 +1,249 @@
+ <link rel="stylesheet" href="{{ 'footer.css' | asset_url }}">
+<section class="footer_section">
+    <section class="section_top">
+        <div class="container footer_section_top ">
+            <div class="footer_section-infor">
+                <div class="footer-item-title">
+                    <h2>Information</h2>
+                </div>
+                <div class="footer-item-text infor joytoy-dropdown__content">
+                   <ul>
+                            <a href="https://demo-tranning.myshopify.com/pages/about-us">
+                                <li class="footer-item-text-smal">About Us</li>
+                            </a>
+                            <a href="https://demo-tranning.myshopify.com/pages/shop">
+                                <li class="footer-item-text-smal">Shop</li>
+                            </a>
+                            <a href="https://demo-tranning.myshopify.com/pages/account">
+                                <li class="footer-item-text-smal">Account</li>
+                            </a>
+                            <a href="https://demo-tranning.myshopify.com/pages/delivery">
+                                <li class="footer-item-text-smal">Delivery</li>
+                            </a>
+                            <a href="https://demo-tranning.myshopify.com/pages/services">
+                                <li class="footer-item-text-smal">Services </li>
+                            </a>
+                            <a href="https://demo-tranning.myshopify.com/pages/blog">
+                                <li class="footer-item-text-smal">Blog</li>
+                            </a>
+                            <a href="https://demo-tranning.myshopify.com/pages/faqs">
+                                <li class="footer-item-text-smal">FAQ</li>
+                            </a>
+                        </ul>
+                </div>
+            </div>
+
+            <div class="footer_section-working">
+                <div class="footer-item-title">
+                    <h2>Working Hours</h2>
+                </div>
+                <div class="footer-item-text working joytoy-dropdown__content">
+                    <ul>
+                            <a href="#">
+                                <li class="footer-item-text-smal">Mon</li>
+                            </a>
+                            <a href="#">
+                                <li class="footer-item-text-smal">Tue</li>
+                            </a>
+                            <a href="#">
+                                <li class="footer-item-text-smal">Wed</li>
+                            </a>
+                            <a href="#">
+                                <li class="footer-item-text-smal">Thu</li>
+                            </a>
+                            <a href="#">
+                                <li class="footer-item-text-smal">Fri </li>
+                            </a>
+                            <a href="#">
+                                <li class="footer-item-text-smal">Sat</li>
+                            </a>
+                            <a href="#">
+                                <li class="footer-item-text-smal">Sun</li>
+                            </a>
+                        </ul>
+                        <ul>
+                            <li class="footer-item-text-smal_time">09:30 -18:30</li>
+    
+                            <li class="footer-item-text-smal_time">09:30 -18:30</li>
+    
+                            <li class="footer-item-text-smal_time">09:30 -18:30</li>
+    
+                            <li class="footer-item-text-smal_time">09:30 -18:30</li>
+    
+                            <li class="footer-item-text-smal_time">09:30 -18:30 </li>
+    
+                            <li class="footer-item-text-smal_time">11:00 -16:00</li>
+    
+                            <li class="footer-item-text-smal_time">Closed</li>
+                        </ul>
+                </div>
+            </div>
+
+            <div class="footer_section-newsletter">
+                <div class="footer_section-newsletter top">
+                    <div class="footer-item-title">
+                        <h2>Newsletter</h2>
+                    </div>
+                    <div class="footer_section-newsletter-form">
+                        {%- form 'customer', id: 'ContactFooter', class: 'footer__newsletter newsletter-form' -%}
+                        <input type="hidden" name="contact[tags]" value="newsletter">
+                        <div class="newsletter-form__field-wrapper">
+                            <label class="text-field field-email">
+                                <input class="input-text email-newsletter" type="email" name="EMAIL" required="required"
+                                    placeholder="Your email address...">
+                                <span class="input-focus"></span>
+                            </label>
+                            <button>SUBSCRIBE</button>
+                        </div>
+                        {%- endform -%}
+                    </div>
+                </div>
+
+               <div class="footer_section-newsletter bottom">
+                        <div class="footer_section-contact">
+                            <div class="footer-item-title">
+                                <h2>Contact</h2>
+                            </div>
+                            <div class="footer-item-text contact joytoy-dropdown__content">
+                                <ul style="display: grid;">
+                                    <a href="#">
+                                        <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.6875 3.96875C14.9688 4.53125 14.0625 5.21875 10.875 7.53125C10.25 8 9.09375 9.03125 8 9.03125C6.875 9.03125 5.75 8 5.09375 7.53125C1.90625 5.21875 1 4.53125 0.28125 3.96875C0.15625 3.875 0 3.96875 0 4.125V10.5C0 11.3438 0.65625 12 1.5 12H14.5C15.3125 12 16 11.3438 16 10.5V4.125C16 3.96875 15.8125 3.875 15.6875 3.96875ZM8 8C8.71875 8.03125 9.75 7.09375 10.2812 6.71875C14.4375 3.71875 14.75 3.4375 15.6875 2.6875C15.875 2.5625 16 2.34375 16 2.09375V1.5C16 0.6875 15.3125 0 14.5 0H1.5C0.65625 0 0 0.6875 0 1.5V2.09375C0 2.34375 0.09375 2.5625 0.28125 2.6875C1.21875 3.4375 1.53125 3.71875 5.6875 6.71875C6.21875 7.09375 7.25 8.03125 8 8Z" fill="#7C81FF"/>
+</svg>
+                                    </a>
+                                    <a href="#">
+                                       <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.03125 16.8438C3.125 16.9688 3.25 17 3.40625 17C3.5 17 3.59375 17 3.6875 16.9375L5.71875 15.6562C5.875 15.5625 5.96875 15.4062 5.96875 15.2188C5.96875 15.1562 5.96875 15.0625 5.9375 15L4.90625 12.4688C4.84375 12.2812 4.65625 12.1562 4.40625 12.1562H4.375L2.625 12.3125C1.96875 10.5312 1.96875 8.53125 2.625 6.71875L4.375 6.875H4.40625C4.65625 6.875 4.84375 6.75 4.90625 6.5625L5.9375 4.03125C5.96875 3.96875 5.96875 3.875 5.96875 3.8125C5.96875 3.625 5.875 3.46875 5.71875 3.375L3.6875 2.09375C3.46875 1.96875 3.21875 2 3.03125 2.1875C-1.03125 6.21875 -1.03125 12.8125 3.03125 16.8438ZM7.71875 4C7.59375 3.78125 7.3125 3.75 7.125 3.90625L6.9375 4.09375C6.8125 4.21875 6.78125 4.40625 6.875 4.5625C6.9375 4.6875 6.96875 4.84375 6.96875 5.03125C6.96875 5.1875 6.9375 5.34375 6.875 5.46875C6.78125 5.625 6.8125 5.8125 6.9375 5.9375L7.125 6.125C7.3125 6.28125 7.59375 6.25 7.71875 6.03125C8.0625 5.40625 8.0625 4.625 7.71875 4ZM10.5625 1.15625C10.4375 0.96875 10.1875 0.96875 10.0312 1.125L9.84375 1.28125C9.71875 1.4375 9.6875 1.65625 9.8125 1.8125C11.375 3.65625 11.375 6.375 9.8125 8.21875C9.6875 8.375 9.71875 8.59375 9.84375 8.75L10.0312 8.90625C10.1875 9.0625 10.4375 9.0625 10.5625 8.875C12.4688 6.65625 12.4688 3.375 10.5625 1.15625ZM9.125 2.5625C9 2.375 8.75 2.34375 8.59375 2.5L8.40625 2.6875C8.25 2.8125 8.25 3.03125 8.34375 3.1875C9.1875 4.25 9.1875 5.78125 8.34375 6.84375C8.25 7 8.25 7.21875 8.40625 7.34375L8.59375 7.53125C8.75 7.6875 9 7.65625 9.125 7.46875C10.2812 6.03125 10.25 4 9.125 2.5625Z" fill="#7C81FF"/>
+</svg>
+                                    </a>
+                                    <a href="#">
+                                      <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 0C3.5625 0 0 2.9375 0 6.5C0 8.0625 0.65625 9.46875 1.78125 10.5938C1.375 12.1875 0.0625 13.5625 0.0625 13.5938C0 13.6562 -0.03125 13.7812 0 13.875C0.0625 13.9688 0.125 14 0.25 14C2.3125 14 3.875 13.0312 4.625 12.4062C5.65625 12.7812 6.78125 13 8 13C12.4062 13 16 10.0938 16 6.5C16 2.9375 12.4062 0 8 0ZM4 7.5C3.4375 7.5 3 7.0625 3 6.5C3 5.96875 3.4375 5.5 4 5.5C4.53125 5.5 5 5.96875 5 6.5C5 7.0625 4.53125 7.5 4 7.5ZM8 7.5C7.4375 7.5 7 7.0625 7 6.5C7 5.96875 7.4375 5.5 8 5.5C8.53125 5.5 9 5.96875 9 6.5C9 7.0625 8.53125 7.5 8 7.5ZM12 7.5C11.4375 7.5 11 7.0625 11 6.5C11 5.96875 11.4375 5.5 12 5.5C12.5312 5.5 13 5.96875 13 6.5C13 7.0625 12.5312 7.5 12 7.5Z" fill="#7C81FF"/>
+</svg>
+                                    </a>
+                                </ul>
+                                <ul>
+                                        <li class="footer-item-text-smal_time">emailjoytoy@email.com</li>
+                                        <li class="footer-item-text-smal_time">+1 234 567 892</li>
+                                  
+                                        <li class="footer-item-text-smal_time">+43 234 567 678</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer_section-faq">
+                            <div class="footer-item-title">
+                                <h2>FAQ</h2>
+                            </div>
+                            <div class="footer-item-text faq joytoy-dropdown__content">
+                                <ul>
+                                    <a href="#">
+                                        <li class="footer-item-text-smal">Store Locations</li>
+                                    </a>
+                                    <a href="#">
+                                        <li class="footer-item-text-smal">Privacy Policy</li>
+                                    </a>
+                                    <a href="#">
+                                        <li class="footer-item-text-smal">Terms & Conditions</li>
+                                    </a>
+    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section_bottom">
+        <div class="footer_section_bottom container">
+            <div class="footer-right-img">
+                <a href="https://www.facebook.com/" target="_blank">
+                  <img src="{{ 'fb.png' | asset_url }}" alt="facebook_link">
+                </a>
+                <a href="https://x.com/" target="_blank">
+                  <img src="{{ 'blank.png' | asset_url }}" alt="x.com_link">
+                </a>
+                <a href="https://www.instagram.com/" target="_blank">
+                  <img src="{{ 'instagam.png' | asset_url }}" alt="instagram_link">
+                </a>
+            </div>
+            <div class="img-payment">
+                 <img src="{{ 'Visa-light.png' | asset_url }}" alt="Payment Image 1">
+                  <img src="{{ 'Bitcoin-light.png' | asset_url }}" alt="Payment Image 2">
+               <img src="{{ 'MasterCard-light.png' | asset_url }}" alt="Payment Image 3">
+                  <img src="{{ 'Maestro-light.png' | asset_url }}" alt="Payment Image 4">
+               <img src="{{ 'WesternUnion-light.png' | asset_url }}" alt="Payment Image 5">
+            </div>
+        </div>
+    </section>
+  <section>
+</section>
+
+  {% schema %}
+{
+  "name": "Footer Section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show Newsletter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact",
+      "label": "Show Contact Information",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_faq",
+      "label": "Show FAQ",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_icons",
+      "label": "Show Social Media Icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show Payment Icons",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Information Links",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "footer_links",
+          "label": "Footer Links"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Working Hours",
+      "settings": [
+        {
+          "type": "text",
+          "id": "working_hours",
+          "label": "Working Hours",
+          "default": "Mon - Fri: 09:30 - 18:30\nSat: 11:00 - 16:00\nSun: Closed"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "category": "Footer"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,94 @@
+/* CSS cho trang sản phẩm */
+.product-container {
+  max-width: 800px; /* Giới hạn chiều rộng của sản phẩm */
+  margin: 0 auto; /* Căn giữa sản phẩm */
+  padding: 20px;
+  border: 1px solid #ccc; /* Đường viền xung quanh sản phẩm */
+  border-radius: 10px; /* Bo tròn góc */
+  background-color: #fff; /* Màu nền trắng */
+}
+
+.product-vendor {
+  font-size: 14px;
+  color: #888; /* Màu xám cho tên nhà cung cấp */
+}
+
+.product-title {
+  font-size: 24px; /* Kích thước chữ tiêu đề */
+  font-weight: bold;
+  margin: 10px 0; /* Khoảng cách trên và dưới */
+}
+
+.product-price {
+  font-size: 20px; /* Kích thước chữ cho giá */
+  color: #e63946; /* Màu đỏ cho giá */
+}
+
+.variant-picker {
+  display: flex; /* Hiển thị biến thể dưới dạng flex */
+  margin: 10px 0;
+}
+
+.variant-button {
+  padding: 10px;
+  margin-right: 5px; /* Khoảng cách giữa các nút */
+  background-color: #457b9d; /* Màu nền cho nút */
+  color: white; /* Màu chữ trắng */
+  border: none; /* Không có đường viền */
+  border-radius: 5px; /* Bo tròn góc */
+  cursor: pointer; /* Con trỏ chuột */
+}
+
+.variant-button:hover {
+  background-color: #1d3557; /* Màu nền khi hover */
+}
+
+.quantity-selector input {
+  width: 60px; /* Chiều rộng cho input số lượng */
+  padding: 5px;
+  margin-right: 10px; /* Khoảng cách bên phải */
+}
+
+.buy-button {
+  padding: 10px 20px;
+  background-color: #2a9d8f; /* Màu nền cho nút mua */
+  color: white; /* Màu chữ trắng */
+  border: none; /* Không có đường viền */
+  border-radius: 5px; /* Bo tròn góc */
+  cursor: pointer; /* Con trỏ chuột */
+}
+
+.buy-button:hover {
+  background-color: #264653; /* Màu nền khi hover */
+}
+
+.product-description {
+  margin-top: 20px; /* Khoảng cách trên cho mô tả */
+}
+
+.share-section {
+  margin-top: 20px; /* Khoảng cách trên cho phần chia sẻ */
+}
+
+/* CSS cho sản phẩm liên quan */
+.related-products {
+  margin-top: 40px; /* Khoảng cách trên cho sản phẩm liên quan */
+}
+
+.related-products-grid {
+  display: grid; /* Hiển thị dưới dạng lưới */
+  grid-template-columns: repeat(4, 1fr); /* 4 cột trên desktop */
+  gap: 20px; /* Khoảng cách giữa các sản phẩm */
+}
+
+.related-product {
+  text-align: center; /* Căn giữa văn bản */
+  border: 1px solid #ccc; /* Đường viền cho sản phẩm liên quan */
+  border-radius: 10px; /* Bo tròn góc */
+  padding: 10px;
+}
+
+.related-product img {
+  max-width: 100%; /* Chiều rộng tối đa cho hình ảnh */
+  border-radius: 5px; /* Bo tròn góc cho hình ảnh */
+}

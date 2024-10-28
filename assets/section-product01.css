@@ -1,0 +1,101 @@
+.product-section {
+  font-family: Nunito, sans-serif;
+}
+.product-grid {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px 70px;
+}
+
+.product-item {
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  gap: 20px;
+}
+
+.product-image {
+  position: relative;
+}
+
+.product-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.sale-tag {
+  background-color: #fff;
+  border: 2px #FF7E9A dashed;
+  color: #FF7E9A;
+  border-radius: 5px;
+  padding: 2px 5px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  font-size: 0.8em;
+}
+
+.product-info h3, .product-prices {
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+.product-info h3{
+  margin-top:30px;
+}
+.product-rating {
+  color: #ffc107;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.new-price {
+  color: #FF961A;
+  font-weight: bold;
+}
+
+.product-section h2 {
+  font-size: 36px;
+  font-weight: 900;
+  font-family: "Nunito", sans-serif;
+  color: #423127;
+  margin-top:0;
+}
+
+a.product-link {
+  text-decoration: none;
+}
+@media screen and (max-width: 425px) {
+  .product-section h2{
+    font-size:20px;
+    margin:0;
+  }
+  .product-image img{
+    width:100%;
+  }
+  .product-item{
+    padding:0;
+    display:grid;
+  }
+  .product-grid{
+   grid-template-columns: repeat(2, 1fr);
+    gap:10px;
+  }
+  .product-info h3{
+    margin:0;
+  }
+  .product-info h3, .product-prices{
+    font-size:14px;
+  }
+   .container {
+    width: 100%; /* Đảm bảo container rộng 100% màn hình */
+    padding: 0 10px; /* Giảm padding cho màn hình nhỏ */
+  }
+}

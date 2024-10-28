@@ -1,0 +1,54 @@
+
+<link rel="stylesheet" href="{{ 'banner_about.css' | asset_url }}">
+<section class="banner-bg">
+    <div class="container page_heading">
+        <div class="img-banner-bg">
+            <img src="{{ section.settings.background_image | image_url }}" alt="">
+        </div>
+        <div class="text-banner-bg">
+            <h2>{{ section.settings.heading_text }}</h2>
+            <p>{{ section.settings.description_text }}</p>
+            <div class="signature-banner-bg">
+                <img src="{{ section.settings.signature_image | image_url }}" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Banner About",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background Image"
+      },
+      {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading Text",
+      "default": "Happy, healthy babies and this is at the heart of everything we do"
+    },
+    {
+      "type": "textarea",
+      "id": "description_text",
+      "label": "Description Text",
+      "default": "Sed cursus nunc ac pellentesque porttitor. Pellentesque at congue ipsum. In nec aliquam sapien. Sed vel purus pulvinar, tincidunt ligula vel, dapibus nunc. Quisque scelerisque ligulaq"
+    },
+    {
+      "type": "image_picker",
+      "id": "signature_image",
+      "label": "Signature Image"
+    }
+      
+    ],
+    "blocks": [],
+  "presets": [
+    {
+      "name": "Banner Section",
+      "category": "Custom sections"
+    }
+  ]
+  }
+{% endschema %}

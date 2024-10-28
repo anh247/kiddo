@@ -1,0 +1,25 @@
+.inner.skeleton-item img{
+  width:100%;
+}
+.ratio{
+padding-top:0;
+}
+img.main-image.js-image-30134821322909.lazyload{
+  width:100%;
+}
+.ratio img{
+  width:100%;
+}
+.grid-slider {
+   display: grid;
+    gap: 10px;
+}
+i.bx.bxs-heart,i.bx.bx-refresh {
+    font-size: 23px;
+}
+.widget.widget-product {
+    display: none;
+}
+.shopify-payment-button__skeleton {
+    display: none;
+}
