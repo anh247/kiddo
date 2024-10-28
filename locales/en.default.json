@@ -692,6 +692,14 @@
       "view_addresses": "View addresses",
       "return": "Return to Account details"
     },
+    "activate_account": {
+      "title": "Activate Account",
+      "subtext": "Create your password to activate your account.",
+      "password": "Password",
+      "password_confirm": "Confirm Password",
+      "submit": "Activate Account",
+      "cancel": "Decline Invitation"
+    },
      "login": {
       "title": "Login",
       "button": "Login"
