@@ -704,6 +704,7 @@
       "account_details": "Account details:",
        "address": "Address:",
       "address2": "Address 2:",
+       "btn_view_addresses": "Addresses",
     "return": "Return to Account details"
     },
     "activate_account": {
