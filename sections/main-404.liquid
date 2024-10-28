@@ -1,0 +1,310 @@
+{% liquid
+    assign sid = section.id
+    assign content_width = section.settings.content_width
+    assign container = section.settings.container
+    assign space = section.settings.space
+    assign image = section.settings.image
+    assign image_width = section.settings.image_width
+    assign title = section.settings.title
+    assign desc = section.settings.desc
+    assign button = section.settings.button
+%}
+
+<section id="{{ sid }}" class="error-404-page space-{{ space }}">
+    <div class="{{ content_width }}" style="{% if container != blank %}--container:{{ container }}{% endif %}">
+        <div class="section-inner">
+            {% if image != blank %}
+                <figure class="image">
+                    <img src="{{ image | img_url }}" alt="404-error" style="{% if image_width != blank %}width:{{ image_width }}{% endif %}">
+                </figure>
+            {% else %}
+                <h2 class="text">404</h2>
+            {% endif %}
+            {% if title != blank %}
+                <h1 class="title">{{ title }}</h1>
+            {% endif %}
+            {% if desc != blank %}
+                <h5 class="desc">{{ desc }}</h5>
+            {% endif %}
+            <a class="button" href="{{ routes.root_url }}">{{ button }} </a>
+        </div>
+    </div>
+</section>
+
+{%- render 'section_style' -%}
+
+{% schema %}
+{
+    "name": "404 Error",
+    "class": "alz-section section-main-404",
+    "settings": [
+        {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "full-width",
+                    "label": "Full Width"
+                },
+                {
+                    "value": "full-width-pd",
+                    "label": "Full Width no Padding"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "container",
+            "label": "Container width",
+            "info": "Example: 1410px, 70%, 70vw"
+        },
+        {
+            "type": "text",
+            "id": "space",
+            "label": "Space",
+            "info": "Example:10,20,30,40,50,60,70,80,90,100"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "image_width",
+            "label": "Image width",
+            "info": "Example: 400px"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Oops...Page not found."
+        },
+        {
+            "type": "text",
+            "id": "desc",
+            "label": "Subtitle",
+            "default": "We are very sorry for the inconvenience.<br> It looks like you are trying to access a page that has been deleted or never even existed."
+        },
+        {
+            "type": "text",
+            "id": "button",
+            "label": "Button",
+            "default": "Back to homepage"
+        },
+        {
+            "type": "header",
+            "content": "== Section settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "for_inner",
+            "label": "Settings apply for inner"
+        },
+        {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "bg_position",
+            "label": "Background position",
+            "info": "Example: center/top/bottom center/left/right, 100% 100%, 100px 100px",
+            "default": "center center"
+        },
+        {
+            "type": "text",
+            "id": "bg_size",
+            "label": "Background size",
+            "info": "Example: cover, contain, 100% 100%, 100px 100px",
+            "default": "cover"
+        },
+        {
+            "type": "text",
+            "id": "bg_repeat",
+            "label": "Background repeat",
+            "info": "Example: no-repeat, repeat, repeat-x, repeat-y",
+            "default": "no-repeat"
+        },
+        {
+            "type": "checkbox",
+            "id": "bg_fixed",
+            "label": "Background fixed",
+            "info": "For desktop (resolution > 1200px)"
+        },
+        {
+            "type": "color_background",
+            "id": "bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "color",
+            "id": "bg_cl",
+            "label": "Background color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl",
+            "label": "Main color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl_t",
+            "label": "Main color - text inside"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl",
+            "label": "Dark color"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_2",
+            "label": "Dark color 2"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_3",
+            "label": "Dark color 3"
+        },
+        {
+            "type": "color",
+            "id": "light_cl",
+            "label": "Light color"
+        },
+        {
+            "type": "color",
+            "id": "light_cl_2",
+            "label": "Light color 2"
+        },
+        {
+            "type": "color",
+            "id": "line_cl",
+            "label": "Line color"
+        },
+        {
+            "type": "text",
+            "id": "fz",
+            "label": "Font size",
+            "info": "Example: 16px"
+        },
+        {
+            "type": "text",
+            "id": "lh",
+            "label": "Line Height",
+            "info": "Example: 24px, 1.4em"
+        },
+        {
+            "type": "text",
+            "id": "ls",
+            "label": "Letter spacing",
+            "info": "Example: 1px, 0.1em"
+        },
+        {
+            "type": "text",
+            "id": "fw",
+            "label": "Font weight",
+            "info": "Example: 100, 200, 300, 400, 500, 600, 700, 800"
+        },
+        {
+            "type": "text",
+            "id": "tt",
+            "label": "Text transform",
+            "info": "Example: none, uppercase, lowercase, capitalize"
+        },
+        {
+            "type": "color",
+            "id": "bd_color",
+            "label": "Border color"
+        },
+        {
+            "type": "text",
+            "id": "bd_style",
+            "label": "Border style",
+            "info": "Example: solid, dotted, dashed, double, groove, ridge, outset"
+        },
+        {
+            "type": "text",
+            "id": "bd_width",
+            "label": "Border width",
+            "info": "Example: 1px, 1px 0, 1px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 1200px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_1200",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_1200",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_1200",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 992px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_992",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_992",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_992",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 768px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_768",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_768",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_768",
+            "label": "Padding"
+        }
+    ]
+}
+{% endschema %}

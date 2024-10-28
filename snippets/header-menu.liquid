@@ -1,0 +1,184 @@
+{% assign index = 1 %}
+<div class="box-header-nav">
+    <div class="popup-head">
+        <h3 class="popup-title">{{ 'general.menu_mobile.title' | t }}</h3>
+        <span class="popup-close menu-mobile-close"></span>
+    </div>
+    <ul id="menu-main-menu" class="main-menu">
+        <!-- vertical menu (for mobile) -->
+        {% assign v_links = linklists[section.settings.v_menu].links %}
+        {% assign v_title = section.settings.v_title %}
+        {% if v_links.size > 0 %}
+            <li class="menu-item type-vertical menu-item-has-children position-relative">
+                <a href="javascript:void(0)">
+                    <span class="icon alz-icon-menu"><span class="inner"><span></span><span></span><span></span></span></span>
+                    {{ v_title }}
+                    <span class="caret"></span>
+                </a>
+                <ul class="submenu">
+                    {%- for link in v_links -%}
+                        {% render 'header-menu-item', link: link, depth: 2 %}
+                    {%- endfor -%}
+                </ul>
+            </li>
+        {% endif %}
+        <!-- main menu -->
+        {%- for block in section.blocks -%}
+            {% if block.type == 'item' or block.type == 'mega' %}
+                {% liquid
+                    assign title = block.settings.title
+                    assign url = block.settings.url
+                    assign open_link = block.settings.open_link
+                    assign title_cl = block.settings.title_cl
+                    assign lb = block.settings.lb
+                    assign lb_cl = block.settings.lb_cl
+                    assign lb_bg = block.settings.lb_bg
+                    assign float_end = block.settings.float_end
+                    assign relative = block.settings.relative
+                    assign menu = block.settings.menu
+                    assign links = linklists[menu].links
+                    assign width = block.settings.width
+                    assign bg_image = block.settings.bg_image
+                    assign bg_position = block.settings.bg_position
+                    assign bg_size = block.settings.bg_size
+                    assign bg_repeat = block.settings.bg_repeat
+                    assign bg_gradient = block.settings.bg_gradient
+                    assign bg_cl = block.settings.bg_cl
+                    assign main_cl = block.settings.main_cl
+                    assign main_cl_t = block.settings.main_cl_t
+                    assign dark_cl = block.settings.dark_cl
+                    assign dark_cl_2 = block.settings.dark_cl_2
+                    assign dark_cl_3 = block.settings.dark_cl_3
+                    assign light_cl = block.settings.light_cl
+                    assign light_cl_2 = block.settings.light_cl_2
+                    assign line_cl = block.settings.line_cl
+                    assign class = 'menu-item type_' | append: block.type
+                    if links.size > 0 or block.type == 'mega'
+                        assign class = class | append: ' menu-item-has-children'
+                    endif
+                    if float_end == true
+                        assign class = class | append: ' float-end'
+                    endif
+                    if relative == true
+                        assign class = class | append: ' position-relative'
+                    endif
+                %}
+                <li id="item_{{ block.id }}" class="{{ class }}" {{ block.shopify_attributes }}>
+                    <a class="apply-header-css" href="{{ url }}" target="{{ open_link }}">
+                        {%- render 'icon', icon: block.settings.icon, icon_img: block.settings.icon_img, icon_svg: block.settings.icon_svg -%}
+                        {{ title }}
+                        {% if lb != blank %}<span class="label">{{ lb }}</span>{% endif -%}
+                        <span class="caret"></span>
+                    </a>
+                    {% if block.type == 'item' %}
+                        {% assign index = index | plus: 1 %}
+                        {%- if links.size > 0 %}
+                            <ul class="submenu">
+                                {%- for link in links -%}
+                                    {% render 'header-menu-item', link: link, depth: 2 %}
+                                {%- endfor -%}
+                            </ul>
+                        {% endif %}
+                    {% else %}
+                        {% assign content_width = block.settings.content_width %}
+                        {% assign container = block.settings.container %}
+                        <div class="submenu megamenu {% if content_width == 'container' %}has-container{% endif %}">
+                            <div class="{{ content_width }}" style="{% if container != blank %}--container:{{ container }}{% endif %}">
+                                <div class="grid-box">
+                                    {% for block in section.blocks offset: index %}
+                                        {% assign index = index | plus: 1 %}
+                                        {% assign col = block.settings.col | default: '20%' %}
+                                        {%- case block.type -%}
+                                            {% when 'link' %}
+                                                {% assign links = linklists[block.settings.menu].links %}
+                                                {%- if links.size > 0 -%}
+                                                    <div id="bk_{{ block.id }}" class="megamenu-item megamenu-{{ block.type }}" style="width:{{ col }}">
+                                                        {%- if block.settings.title != blank %}
+                                                            <h3 class="heading"><a href="{{ block.settings.url }}" target="{{ block.settings.open_link }}">{{ block.settings.title }}</a></h3>
+                                                        {% endif -%}
+                                                        <ul class="menu">
+                                                            {%- for link in links -%}
+                                                                {% render 'header-menu-item', link: link %}
+                                                            {%- endfor -%}
+                                                        </ul>
+                                                    </div>
+                                                {%- endif -%}
+                                            {% when 'product' %}
+                                                {%- liquid
+                                                    assign product = block.settings.product
+                                                    assign product_style = block.settings.product_style
+                                                    if block.settings.ratio > 0
+                                                        assign aspect_ratio = block.settings.ratio
+                                                    endif
+                                                -%}
+                                                {% if product != blank %}
+                                                    <div id="bk_{{ block.id }}" class="megamenu-item megamenu-{{ block.type }}" style="width:{{ col }}">
+                                                        {% render 'product-style', product_style: product_style, product: product, aspect_ratio: aspect_ratio %}
+                                                    </div>
+                                                {% endif %}
+                                            {% when 'cat' %}
+                                                {%- liquid
+                                                    assign collection = collections[block.settings.collection]
+                                                    assign collection_style = block.settings.collection_style
+                                                    if block.settings.ratio > 0
+                                                        assign aspect_ratio = block.settings.ratio
+                                                    endif
+                                                -%}
+                                                <div id="bk_{{ block.id }}" class="megamenu-item megamenu-{{ block.type }}" style="width:{{ col }}">
+                                                    {% render 'collection-style', collection_style: collection_style, collection: collection, aspect_ratio: aspect_ratio %}
+                                                </div>
+                                            {% else %}
+                                                {% break %}
+                                        {%- endcase -%}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {%- capture style -%}
+                        #item_{{ block.id }} > a{
+                        {% if title_cl != blank and title_cl.alpha != 0.0 %}--link-cl:{{ title_cl }};{% endif %}
+                        {% if lb_cl != blank and lb_cl.alpha != 0.0 %}--label-cl:{{ lb_cl }};{% endif %}
+                        {% if lb_bg != blank and lb_bg.alpha != 0.0 %}--label-bg:{{ lb_bg }};{% endif %}
+                        }
+                        #item_{{ block.id }} > .submenu{
+                        {% if width != blank %}width:{{ width }};{% endif %}
+                        {% if bg_image != blank %}
+                            background-image: url('{{ bg_image | img_url: "1920x" }}');
+                            background-position:{{ bg_position }};
+                            background-size:{{ bg_size }};
+                            background-repeat:{{ bg_repeat }};
+                        {% endif %}
+                        {% if bg_gradient != blank %}background-image:{{ bg_gradient }};{% endif %}
+                        {% if bg_cl != blank and bg_cl.alpha != 0.0 %}background-color:{{ bg_cl }};{% endif %}
+                        {% if main_cl != blank and main_cl.alpha != 0.0 %}--main-cl:{{ main_cl }};{% endif %}
+                        {% if main_cl_t != blank and main_cl_t.alpha != 0.0 %}--main-cl-t:{{ main_cl_t }};{% endif %}
+                        {% if dark_cl != blank and dark_cl.alpha != 0.0 %}--dark-cl:{{ dark_cl }};{% endif %}
+                        {% if dark_cl_2 != blank and dark_cl_2.alpha != 0.0 %}--dark-cl-2:{{ dark_cl_2 }};{% endif %}
+                        {% if dark_cl_3 != blank and dark_cl_3.alpha != 0.0 %}--dark-cl-3:{{ dark_cl_3 }};{% endif %}
+                        {% if light_cl != blank and light_cl.alpha != 0.0 %}--light-cl:{{ light_cl }};{% endif %}
+                        {% if light_cl_2 != blank and light_cl_2.alpha != 0.0 %}--light-cl-2:{{ light_cl_2 }};{% endif %}
+                        {% if line_cl != blank and line_cl.alpha != 0.0 %}--line-cl:{{ line_cl }};{% endif %}
+                        }
+                    {% endcapture %}
+                    {%- style -%}{{ style | strip_newlines | remove: "  " }}{%- endstyle -%}
+                </li>
+            {% endif %}
+        {%- endfor -%}
+    </ul>
+    <!-- language, currency, social (for mobile) -->
+    <div class="popup-foot">
+        <div class="popup-block">
+            {% if settings.mobile_show_language %}
+                <div class="header-language">{% render 'header-language' %}</div>
+            {% endif %}
+            {% if settings.mobile_show_currency %}
+                <div class="header-currency">{% render 'header-currency' %}</div>
+            {% endif %}
+        </div>
+        {% if settings.mobile_show_social %}
+            <div class="header-social">{% render 'social_link' %}</div>
+        {% endif %}
+    </div>
+</div>
+

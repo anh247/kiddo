@@ -1,0 +1,5 @@
+<div class="post-meta post-date">
+    <strong class="day">{{ article.created_at | date: "%d" | default: 18 }}</strong>
+    <span class="month">{{ article.created_at | date: "%b" | default: 'Aug' }}</span>,
+    <span class="year">{{ article.created_at | date: "%Y" | default: 2018 }}</span>
+</div>

@@ -1,0 +1,63 @@
+{% liquid
+    assign cols = cols_number | default: section.settings.cols_number | remove: ' ' | split: ','
+    assign arrows = section.settings.arrows
+    assign dots = section.settings.dots
+%}
+
+{% capture configScreen %}
+    1500=>{{ cols[1] | default: 5 }},
+    1200=>{{ cols[2] | default: 4 }},
+    992=>{{ cols[3] | default: 3 }},
+    768=>{{ cols[4] | default: 3 }},
+    480=>{{ cols[5] | default: 2 }},
+    1=>1
+{% endcapture %}
+
+{% capture configSlick %}
+    adaptive-Height,
+    append-Arrows,
+    append-Dots,
+    autoplay,
+    autoplay-Speed,
+    arrows,
+    center-Mode,
+    dots,
+    fade,
+    infinite,
+    padding,
+    rows,
+    slides-To-Show,
+    slides-To-Scroll,
+    speed,
+    vertical,
+    vertical-Swiping
+{% endcapture %}
+
+{% assign gridSlider = '' %}
+{% assign configSlick = configSlick | strip_newlines | replace: " ", "" | split: "," %}
+{% for opt in configSlick %}
+    {% assign value = section.settings[opt] %}
+    {% if opt == 'vertical-Swiping' %}
+        {% assign value = section.settings['vertical'] %}
+    {% endif %}
+    {% if opt == 'slides-To-Show' %}
+        {% assign value = cols[0] | default: 5 %}
+    {% endif %}
+    {% if value != blank or value == true or value == false %}
+        {% capture gridSlider %}{{ gridSlider }} data-{{ opt }}='{{ value }}'{% endcapture %}
+    {% endif %}
+{% endfor %}
+
+{% assign configScreen = configScreen | strip_newlines | replace: " ", "" | split: "," %}
+{% assign responsive = '[' %}
+{% for cfg in configScreen %}
+    {% assign size = cfg | split: '=>' | first | strip %}
+    {% assign name = cfg | split: '=>' | last | strip %}
+    {% if forloop.last == true %}
+        {% capture responsive %}{{ responsive }}{"breakpoint": 1, "settings": {"slidesToShow": 1 }}]{% endcapture %}
+    {% else %}
+        {% capture responsive %}{{ responsive }}{"breakpoint": {{ size }}, "settings": {"slidesToShow": {{ name }} }},{% endcapture %}
+    {% endif %}
+{% endfor %}
+
+{{ gridSlider }} data-responsive='{{ responsive }}'

@@ -1,0 +1,37 @@
+<div id="registerForm">
+    <h2 class="title">{{ 'customer.register.title' | t }}</h2>
+    {% form 'create_customer', class: 'register' %}
+        {{ form.errors | default_errors }}
+        <div class="row">
+            <p class="form-field col-6">
+                <label for="RegisterForm-FirstName">{{ 'customer.general.first_name' | t }} <span class="required">*</span></label>
+                <input id="RegisterForm-FirstName" type="text" name="customer[first_name]" required
+                       {% if form.first_name %}value="{{ form.first_name }}"{% endif %}>
+            </p>
+            <p class="form-field col-6">
+                <label for="RegisterForm-LastName">{{ 'customer.general.last_name' | t }} <span class="required">*</span></label>
+                <input id="RegisterForm-LastName" type="text" name="customer[last_name]" required
+                       {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+            </p>
+        </div>
+        <p class="form-field">
+            <label for="RegisterForm-email">{{ 'customer.general.email' | t }} <span class="required">*</span></label>
+            <input id="RegisterForm-email" type="email" name="customer[email]" required
+                   spellcheck="false"
+                   aria-required="true"
+                   {% if form.errors contains 'email' %}aria-invalid="true" aria-describedby="RegisterForm-email-error"{% endif %}>
+        </p>
+        <p class="form-field">
+            <label for="CreatePassword">{{ 'customer.general.password' | t }} <span class="required">*</span></label>
+            <input id="CreatePassword" type="password" name="customer[password]" required>
+        </p>
+        <p class="form-field">
+            <label for="PasswordConfirmation">{{ 'customer.general.confirm_password' | t }} <span class="required">*</span></label>
+            <input id="PasswordConfirmation" type="password" name="customer[password_confirmation]" required>
+        </p>
+        <p class="group-button">
+            <input type="submit" class="button" value="{{ 'customer.register.button' | t }}"/>
+        </p>
+    {% endform %}
+    <a href="{{ routes.root_url }}account/login" class="go-login link">{{ 'customer.general.go_login' | t }}</a>
+</div>

@@ -1,0 +1,182 @@
+{%- capture htmlContent -%}
+    <!doctype html>
+    <html class="no-js" lang="{{ shop.locale }}">
+
+    <!-- HEAD -->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="theme-color" content="{{ settings.color_button }}">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        {%- if canonical_url != blank -%}
+            <link rel="canonical" href="{{ canonical_url }}">
+        {%- endif -%}
+        <link rel="prefetch" as="document" href="https://{{ shop.domain }}">
+        <link rel="preconnect" href="//{{ shop.permanent_domain }}" crossorigin>
+        <link rel="preconnect" href="//shopify.com" crossorigin>
+        {% capture seo_title %}
+            {{ page_title }}
+            {% if current_tags %}{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}{% endif %}
+            {% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+            {% unless page_title contains shop.name %}&ndash; {{ shop.name }}{% endunless %}
+        {% endcapture %}
+        <title>{{ seo_title | strip_newlines | remove: "  " }}</title>
+        {% if page_description %}
+            <meta name="description" content="{{ page_description | escape }}">
+        {% endif %}
+        {%- if settings.favicon != blank %}
+            <link rel="shortcut icon" type="image/png" href="{{ settings.favicon | img_url: '32x' }}">{% endif -%}
+        {%- if settings.favicon_apple != blank %}
+            <link rel="apple-touch-icon-precomposed" type="image/png" sizes="152x152" href="{{ settings.favicon_apple | img_url: '152x' }}">{% endif -%}
+        <meta name="theme-color" content="{{ settings.color_primary }}">
+        {% render 'head-stylesheets' %}
+        {% render 'head-fonts' %}
+        {% render 'head-scripts' %}
+        <script>
+            var theme = {
+                moneyFormat: {{ shop.money_format | json }},
+                moneyFormatWithCurrency: {{ shop.money_with_currency_format | json }},
+                {% if customer %}customer: {id: {{ customer.id }}, name: '{{ customer.name }}'}{% endif %}};
+            document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+            const page_type = "{{ request.page_type }}", t_cartCount = 1, t_shop_currency = "USD",
+                t_moneyFormat = "\u003cspan class='money'\u003e${{ amount }}\u003c\/span\u003e",
+                t_cart_url = "\/cart",
+                pr_re_url = "\/recommendations\/products";
+            $(window).on('load', function () {
+                $("html:not(.no-js) .page-load").fadeOut("slow");
+                $("html:not(.no-js) body").removeClass("skeleton-page");
+            });
+        </script>
+        {{ content_for_header }}
+    </head>
+    <!-- END HEAD -->
+
+    <!-- BODY -->
+    {% liquid
+        assign body_class = 'skeleton-page'
+        assign page_type = request.page_type
+        assign page_suffix = template.suffix
+
+        if content_for_header contains "previewBarInjector.init();"
+            assign body_class = body_class | append: ' preview-mode'
+        elsif content_for_header contains "Shopify.designMode"
+            assign body_class = body_class | append: ' customizer-mode'
+        else
+            assign body_class = body_class | append: ' live-mode'
+        endif
+
+        if settings.rtl
+            assign body_class = body_class | append: ' rtl'
+        endif
+        assign rtlCountries = settings.rtl_code | downcase | split: ' '
+        for code in rtlCountries
+            assign code = code | strip
+            if shop.locale == code
+                assign body_class = body_class | append: ' rtl'
+            endif
+        endfor
+
+        if customer
+            assign body_class = body_class | append: ' logged-in'
+        endif
+    %}
+    <body id="{{ page_title | handle }}" class="template-{{ page_type }} template-{{ page_suffix }} {{ body_class }}">
+    {% if settings.show_load_page %}
+        <div class="page-load circle-loading"><span></span></div>
+    {% endif %}
+    <div class="main" style="transform: none;">
+
+        <!-- HEADER -->
+        {% liquid
+            assign select_header = settings.select_header | plus: 0
+            assign mobile_logo_position = settings.mobile_logo_position
+            assign mobile_hide_contact = settings.mobile_hide_contact
+        %}
+        <header id="header" class="header {{ mobile_logo_position }} {% if mobile_hide_contact %}mobile-hide-contact{% endif %}">
+            {% section 'running-01' %}
+            {% section 'header-top' %}
+            {% case select_header %}
+                {% when 1 %}
+                    {% section 'header-01' %}
+                {% when 2 %}
+                    {% section 'header-02' %}
+                {% when 3 %}
+                    {% section 'header-03' %}
+            {% endcase %}
+        </header>
+        <!-- END HEADER -->
+
+        <main id="MainContent">
+            {% if page_type == 'index' %}
+                {% assign home_sidebar = settings.home_sidebar %}
+                {% assign home_sidebar_pd = settings.home_sidebar_pd %}
+                {% if home_sidebar != 'full' %}
+                    {% sections 'home-template-top' %}
+                    <div class="container sidebar-{{ home_sidebar }}">
+                        {% render 'sidebar-mobile-btn' %}
+                        <div class="site-inner">
+                            <div class="site-main">{{ content_for_layout }}</div>
+                            <aside class="sidebar js-sidebar-mobile-content" style="padding-top:{{ home_sidebar_pd }};">
+                                <h3 class="sidebar-head">{{ 'general.sidebar.name' | t }}<span class="js-close-sidebar close-sidebar-btn"></span></h3>
+                                <div class="sidebar-content">{% sections 'home-sidebar' %}</div>
+                            </aside>
+                        </div>
+                    </div>
+                    {% sections 'home-template-bot' %}
+                {% else %}
+                    {{ content_for_layout }}
+                {% endif %}
+            {% else %}
+                {{ content_for_layout }}
+            {% endif %}
+        </main>
+
+        <!-- FOOTER -->
+        {% section 'newsletter-01' %}
+        {% render 'footer' %}
+        <!-- END FOOTER -->
+
+        <a class="back-to-top btn" href="#">
+            <span class="icon main-icon-up-double"></span>
+        </a>
+        {% if settings.show_button_rtl %}
+            <a class="switch-rtl btn" href="javascript:void(0)">
+                <span class="rtl-text">{{ 'homepage.onboarding.rtl' | t }}</span>
+                <span class="ltr-text">{{ 'homepage.onboarding.ltr' | t }}</span>
+            </a>
+        {% endif %}
+        {% liquid
+            if page_type == 'product' and product.available
+                section 'sticky_add_to_cart'
+            endif
+            section 'popup-notification'
+            section 'popup-product'
+            if page_type == "index"
+                section 'popup-newsletter'
+            endif
+            render 'popups'
+            section 'mobile-menu-bottom'
+        %}
+    </div>
+
+    <script>
+        window.shopUrl = '{{ request.origin }}';
+        window.routes = {
+            cart_add_url: '{{ routes.cart_add_url }}',
+            cart_change_url: '{{ routes.cart_change_url }}',
+            cart_update_url: '{{ routes.cart_update_url }}',
+            cart_url: '{{ routes.cart_url }}',
+            predictive_search_url: '{{ routes.predictive_search_url }}'
+        };
+    </script>
+
+    {%- if settings.predictive_search_enabled -%}
+        <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    </body>
+    <!-- END BODY -->
+
+    </html>
+{%- endcapture -%}
+{%- render 'minify-code', htmlContent: htmlContent -%}

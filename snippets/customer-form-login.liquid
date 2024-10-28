@@ -1,0 +1,30 @@
+<div id="loginForm">
+    <h2 class="title">{{ 'customer.login.title' | t }}</h2>
+    {% form 'customer_login', class: 'login' %}
+        {{ form.errors | default_errors }}
+        <p class="form-field">
+            <label for="CustomerEmail">{{ 'customer.general.email' | t }} <span class="required">*</span></label>
+            <input id="CustomerEmail" type="email" name="customer[email]" autocomplete="email" required
+                   {% if form.errors contains 'form' %}aria-invalid="true"{% endif %}>
+        </p>
+        {% if form.password_needed %}
+            <p class="form-field">
+                <label for="CustomerPassword">{{ 'customer.general.password' | t }} <span class="required">*</span></label>
+                <input id="CustomerPassword" type="password" name="customer[password]" autocomplete="current-password" required
+                       {% if form.errors contains 'form' %}aria-invalid="true"{% endif %}>
+            </p>
+        {% endif %}
+        <p class="label-text check">
+        <span class="check-box">
+            <input class="login-check" type="checkbox" id="login-check" name="rememberme" value="forever"><label class="text-label" for="login-check"> Remember me </label>
+        </span>
+            {% if form.password_needed %}
+                <a href="javascript:void(0)" class="forgot-password">{{ 'customer.general.forgot_password' | t }}</a>
+            {% endif %}
+        </p>
+        <p class="group-button">
+            <input type="submit" class="button" name="login" value="{{ 'customer.login.button' | t }}"/>
+        </p>
+    {% endform %}
+    <a href="{{ routes.root_url }}account/register" class="go-register link">{{ 'customer.general.go_register' | t }}</a>
+</div>

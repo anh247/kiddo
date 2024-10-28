@@ -1,0 +1,3 @@
+{%- if product.compare_at_price > product.price -%}
+    {%- render 'countdown', style: style, title: title, days_text: days_text, hrs_text: hrs_text, mins_text: mins_text, secs_text: secs_text -%}
+{%- endif -%}

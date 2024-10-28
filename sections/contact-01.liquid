@@ -1,0 +1,584 @@
+{% liquid
+    assign sid = section.id
+    assign content_width = section.settings.content_width
+    assign container = section.settings.container
+    assign space = section.settings.space
+%}
+
+<section id="{{ sid }}" class="alz-contact style-01 space-{{ space }}">
+    <div class="{{ content_width }}" style="{% if container != blank %}--container:{{ container }}{% endif %}">
+        <div class="section-inner">
+            <div class="contact-info">
+                {% if section.settings.info_title %}
+                    <h2 class="title">{{ section.settings.info_title }}</h2>
+                {% endif %}
+                {% if section.settings.info_desc %}
+                    <div class="desc paragraph">{{ section.settings.info_desc }}</div>
+                {% endif %}
+                <div class="footer-list">
+                    {%- for block in section.blocks -%}
+                        {% if block.settings.title != blank %}
+                            <h4 class="title">{{ block.settings.title }}</h4>
+                        {% endif %}
+                        {%- case block.type -%}
+                            {%- when 'menu' -%}
+                                {% assign links = linklists[block.settings.menu].links %}
+                                {% if links.size > 0 %}
+                                    <ul class="alz-menu">
+                                        {%- for link in links -%}
+                                            {% render 'header-menu-item', link: link %}
+                                        {%- endfor -%}
+                                    </ul>
+                                {% endif %}
+                            {%- when 'list' -%}
+                                <ul class="alz-list alz-menu paragraph">
+                                    {% if block.settings.text_1 != blank %}
+                                        <li>{{ block.settings.text_1 }}<span>{{ block.settings.desc_1 }}</span></li>
+                                    {% endif %}
+                                    {% if block.settings.text_2 != blank %}
+                                        <li>{{ block.settings.text_2 }}<span>{{ block.settings.desc_2 }}</span></li>
+                                    {% endif %}
+                                    {% if block.settings.text_3 != blank %}
+                                        <li>{{ block.settings.text_3 }}<span>{{ block.settings.desc_3 }}</span></li>
+                                    {% endif %}
+                                    {% if block.settings.text_4 != blank %}
+                                        <li>{{ block.settings.text_4 }}<span>{{ block.settings.desc_4 }}</span></li>
+                                    {% endif %}
+                                    {% if block.settings.text_5 != blank %}
+                                        <li>{{ block.settings.text_5 }}<span>{{ block.settings.desc_5 }}</span></li>
+                                    {% endif %}
+                                    {% if block.settings.text_6 != blank %}
+                                        <li>{{ block.settings.text_6 }}<span>{{ block.settings.desc_6 }}</span></li>
+                                    {% endif %}
+                                    {% if block.settings.text_7 != blank %}
+                                        <li>{{ block.settings.text_7 }}<span>{{ block.settings.desc_7 }}</span></li>
+                                    {% endif %}
+                                    {% if block.settings.text_8 != blank %}
+                                        <li>{{ block.settings.text_8 }}<span>{{ block.settings.desc_8 }}</span></li>
+                                    {% endif %}
+                                    {% if block.settings.text_9 != blank %}
+                                        <li>{{ block.settings.text_9 }}<span>{{ block.settings.desc_9 }}</span></li>
+                                    {% endif %}
+                                    {% if block.settings.text_10 != blank %}
+                                        <li>{{ block.settings.text_10 }}<span>{{ block.settings.desc_10 }}</span></li>
+                                    {% endif %}
+                                </ul>
+                            {%- when 'text' -%}
+                                {% if block.settings.text != blank %}
+                                    <div class="alz-text paragraph">{{ block.settings.text }}</div>
+                                {% endif %}
+                        {%- endcase -%}
+                    {%- endfor -%}
+                </div>
+            </div>
+            <div class="contact-form">
+                {% if section.settings.form_title %}
+                    <h2 class="title">{{ section.settings.form_title }}</h2>
+                {% endif %}
+                {% if section.settings.form_desc %}
+                    <div class="desc paragraph">{{ section.settings.form_desc }}</div>
+                {% endif %}
+                {% form 'contact', class: 'form-contact', id: 'contact-form' %}
+                    {% if form.posted_successfully? %}
+                        <div class="successForm feedback">{{ 'contact.form.post_success' | t }}</div>
+                    {% endif %}
+                    {% if form.errors %}
+                        <div class="errorForm feedback">
+                            <p>Your contact form has {{ form.errors | size | pluralize: "an error", "a few errors" }}. To submit your form, make the following changes and try again:</p>
+                            {% for field in form.errors %}
+                                <p>The {{ field | capitalize | replace: 'Body', 'Message' }}field {{ form.errors.messages[field] }}.</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <label class="form-field col-xs-6">
+                            {% assign name_attr = 'contact.form.name' | t | handle %}
+                            <input id="name" name="contact[{{ name_attr }}]" type="text" placeholder="{{ 'contact.form.name' | t }} *" required
+                                   value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.first_name }}{% endif %}"/>
+                        </label>
+                        <label class="form-field col-xs-6">
+                            <input id="email" name="contact[email]" type="text" placeholder="{{ 'contact.form.email' | t }} *" required
+                                   value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"/>
+                        </label>
+                    </div>
+                    <label class="form-field">
+                        <input id="ContactForm-phone" name="contact[{{ 'contact.form.phone' | t }}]" type="tel" placeholder="{{ 'contact.form.phone' | t }} *" autocomplete="tel" pattern="[0-9\-]*" required
+                               value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                    </label>
+                    <label class="form-field">
+                        <textarea placeholder="{{ 'contact.form.message' | t }} *" rows="8" class="input-note" name="contact[body]" required id="message">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                    </label>
+                    <label class="form-field form-submit">
+                        <button class="btn button submit" type="submit">{{ 'contact.form.submit' | t }}</button>
+                    </label>
+                {% endform %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{%- render 'section_style' -%}
+
+{% schema %}
+{
+    "name": "Contact 01",
+    "class": "alz-section section-contact animate--slide-in",
+    "settings": [
+        {
+            "type": "number",
+            "id": "z_index",
+            "label": "Z-Index"
+        },
+        {
+            "type": "select",
+            "id": "hidden_mobile",
+            "label": "Hide Section on mobile",
+            "options": [
+                {
+                    "value": "",
+                    "label": "No"
+                },
+                {
+                    "value": "hide_1200",
+                    "label": "(resolution < 1200px)"
+                },
+                {
+                    "value": "hide_992",
+                    "label": "(resolution < 992px)"
+                },
+                {
+                    "value": "hide_768",
+                    "label": "(resolution < 768px)"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "full-width",
+                    "label": "Full Width"
+                },
+                {
+                    "value": "full-width-pd",
+                    "label": "Full Width no Padding"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "container",
+            "label": "Container width",
+            "info": "Example: 1410px, 70%, 70vw"
+        },
+        {
+            "type": "text",
+            "id": "space",
+            "label": "Space",
+            "info": "Example:10,20,30,40,50,60,70,80,90,100"
+        },
+        {
+            "type": "header",
+            "content": "== Contact information"
+        },
+        {
+            "type": "text",
+            "id": "info_title",
+            "label": "Title",
+            "default": "Here to Help"
+        },
+        {
+            "type": "textarea",
+            "id": "info_desc",
+            "label": "Description",
+            "default": "Have a question? You may find an answer in our FAQs or contact us:"
+        },
+        {
+            "type": "header",
+            "content": "== Contact form"
+        },
+        {
+            "type": "text",
+            "id": "form_title",
+            "label": "Title",
+            "default": "Get in touch"
+        },
+        {
+            "type": "textarea",
+            "id": "form_desc",
+            "label": "Description",
+            "default": "We'd love to hear from you about our entire service. Your comments and suggestions will be highly appreciated. Please complete the form below."
+        },
+        {
+            "type": "header",
+            "content": "== Section settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "for_inner",
+            "label": "Settings apply for inner"
+        },
+        {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "bg_position",
+            "label": "Background position",
+            "info": "Example: center/top/bottom center/left/right, 100% 100%, 100px 100px",
+            "default": "center center"
+        },
+        {
+            "type": "text",
+            "id": "bg_size",
+            "label": "Background size",
+            "info": "Example: cover, contain, 100% 100%, 100px 100px",
+            "default": "cover"
+        },
+        {
+            "type": "text",
+            "id": "bg_repeat",
+            "label": "Background repeat",
+            "info": "Example: no-repeat, repeat, repeat-x, repeat-y",
+            "default": "no-repeat"
+        },
+        {
+            "type": "checkbox",
+            "id": "bg_fixed",
+            "label": "Background fixed",
+            "info": "For desktop (resolution > 1200px)"
+        },
+        {
+            "type": "color_background",
+            "id": "bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "color",
+            "id": "bg_cl",
+            "label": "Background color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl",
+            "label": "Main color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl_t",
+            "label": "Main color - text inside"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl",
+            "label": "Dark color"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_2",
+            "label": "Dark color 2"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_3",
+            "label": "Dark color 3"
+        },
+        {
+            "type": "color",
+            "id": "light_cl",
+            "label": "Light color"
+        },
+        {
+            "type": "color",
+            "id": "light_cl_2",
+            "label": "Light color 2"
+        },
+        {
+            "type": "color",
+            "id": "line_cl",
+            "label": "Line color"
+        },
+        {
+            "type": "text",
+            "id": "fz",
+            "label": "Font size",
+            "info": "Example: 16px"
+        },
+        {
+            "type": "text",
+            "id": "lh",
+            "label": "Line Height",
+            "info": "Example: 24px, 1.4em"
+        },
+        {
+            "type": "text",
+            "id": "ls",
+            "label": "Letter spacing",
+            "info": "Example: 1px, 0.1em"
+        },
+        {
+            "type": "text",
+            "id": "fw",
+            "label": "Font weight",
+            "info": "Example: 100, 200, 300, 400, 500, 600, 700, 800"
+        },
+        {
+            "type": "text",
+            "id": "tt",
+            "label": "Text transform",
+            "info": "Example: none, uppercase, lowercase, capitalize"
+        },
+        {
+            "type": "color",
+            "id": "bd_color",
+            "label": "Border color"
+        },
+        {
+            "type": "text",
+            "id": "bd_style",
+            "label": "Border style",
+            "info": "Example: solid, dotted, dashed, double, groove, ridge, outset"
+        },
+        {
+            "type": "text",
+            "id": "bd_width",
+            "label": "Border width",
+            "info": "Example: 1px, 1px 0, 1px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "bd_radius",
+            "label": "Border radius",
+            "info": "Example: 10px, 20px 10px, 20px 20px 10px 10px, 10%"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 1200px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_1200",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_1200",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_1200",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 992px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_992",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_992",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_992",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 768px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_768",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_768",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_768",
+            "label": "Padding"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "menu",
+            "name": "Information - Menu",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Information"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu",
+                    "label": "Menu"
+                }
+            ]
+        },
+        {
+            "type": "list",
+            "name": "Information - List",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "text",
+                    "id": "text_1",
+                    "label": "Text 1"
+                },
+                {
+                    "type": "text",
+                    "id": "desc_1",
+                    "label": "Desc 1"
+                },
+                {
+                    "type": "text",
+                    "id": "text_2",
+                    "label": "Text 2"
+                },
+                {
+                    "type": "text",
+                    "id": "desc_2",
+                    "label": "Desc 2"
+                },
+                {
+                    "type": "text",
+                    "id": "text_3",
+                    "label": "Text 3"
+                },
+                {
+                    "type": "text",
+                    "id": "desc_3",
+                    "label": "Desc 3"
+                },
+                {
+                    "type": "text",
+                    "id": "text_4",
+                    "label": "Text 4"
+                },
+                {
+                    "type": "text",
+                    "id": "desc_4",
+                    "label": "Desc 4"
+                },
+                {
+                    "type": "text",
+                    "id": "text_5",
+                    "label": "Text 5"
+                },
+                {
+                    "type": "text",
+                    "id": "desc_5",
+                    "label": "Desc 5"
+                },
+                {
+                    "type": "text",
+                    "id": "text_6",
+                    "label": "Text 6"
+                },
+                {
+                    "type": "text",
+                    "id": "desc_6",
+                    "label": "Desc 6"
+                },
+                {
+                    "type": "text",
+                    "id": "text_7",
+                    "label": "Text 7"
+                },
+                {
+                    "type": "text",
+                    "id": "desc_7",
+                    "label": "Desc 7"
+                },
+                {
+                    "type": "text",
+                    "id": "text_8",
+                    "label": "Text 8"
+                },
+                {
+                    "type": "text",
+                    "id": "desc_8",
+                    "label": "Desc 8"
+                },
+                {
+                    "type": "text",
+                    "id": "text_9",
+                    "label": "Text 9"
+                },
+                {
+                    "type": "text",
+                    "id": "desc_9",
+                    "label": "Desc 9"
+                },
+                {
+                    "type": "text",
+                    "id": "text_10",
+                    "label": "Text 10"
+                },
+                {
+                    "type": "text",
+                    "id": "desc_10",
+                    "label": "Desc 10"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "name": "Information - Text",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Contact 01"
+        }
+    ]
+}
+{% endschema %}

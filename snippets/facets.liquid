@@ -1,0 +1,190 @@
+{%- liquid
+    assign total_active_values = 0
+-%}
+<h3 class="sidebar-head">
+    {{ 'collections.filters.title_tags' | t }}
+    <span class="js-close-sidebar close-sidebar-btn"></span>
+</h3>
+<div class="sidebar-content">
+    {% if section.blocks.size > 0 %}
+        {%- for block in section.blocks -%}
+            {%- capture Heading -%}
+                {%- if block.settings.title != blank -%}
+                    <h3 class="widget-title">{{ block.settings.title }}<span class="icon alz-icon-plus"></span></h3>
+                {% endif %}
+            {%- endcapture -%}
+            {%- case block.type -%}
+                {% when 'menu' %}
+                    <div class="widget widget-menu active">
+                        {{ Heading | strip_newlines | remove: "  " }}
+                        {% if block.settings.menu %}
+                            <ul class="widget-content">
+                                {%- for link in linklists[block.settings.menu].links -%}
+                                    {% render 'header-menu-item', link: link, depth: 2, count: true %}
+                                {%- endfor -%}
+                            </ul>
+                        {% endif %}
+                    </div>
+            {% endcase %}
+        {% endfor %}
+    {% endif %}
+    <facet-filters-form class="facets">
+        <form id="FacetFiltersForm">
+            {%- if collection.terms -%}
+                <input type="hidden" name="q" value="{{ collection.terms | escape }}">
+                <input name="options[prefix]" type="hidden" value="last">
+            {%- endif -%}
+            {%- for filter in collection.filters -%}
+                {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
+                {% case filter.type %}
+                    {% when 'boolean' or 'list' %}
+                        <div class="widget filter-{{ filter.label }} js-filter active"
+                             data-index="{{ forloop.index }}"{% if forloop.index == 1 %} open{% endif %}>
+                            <h3 class="widget-title facets__summary" aria-label="{{ filter.label }} ({{ 'products.facets.filters_selected.one' | t: count: filter.active_values.size }})">
+                                {{ filter.label | escape }}
+                                <span class="facets__selected no-js-hidden {% if filter.active_values.size == 0 %}hidden{% endif %}">({{ filter.active_values.size }})</span>
+                                <span class="icon alz-icon-plus"></span>
+                            </h3>
+                            <div class="widget-content parent-display">
+                                <legend class="visually-hidden">{{ filter.label | escape }}</legend>
+                                <ul class="facets__list no-js-hidden" role="list">
+                                    {%- for value in filter.values -%}
+                                        <li class="list-menu__item facets__item {% if forloop.index > 6 and filter.label != 'Color' %}facets__item-more{% endif %}">
+                                            <label for="Filter-{{ filter.label | escape }}-{{ forloop.index }}" class="facet-checkbox{% if value.count == 0 and value.active == false %} facet-checkbox--disabled{% endif %}">
+                                                <input id="Filter-{{ filter.label | escape }}-{{ forloop.index }}" type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"
+                                                       {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                                                <span class="square"></span>
+                                                <span aria-hidden="true">{{ value.label | escape }} <span class="count">({{ value.count }})</span></span>
+                                                <span class="visually-hidden">{{ value.label | escape }} ({% if value.count == 1 %}{{ 'products.facets.product_count_simple.one' | t: count: value.count }}{% else %}{{ 'products.facets.product_count_simple.other' | t: count: value.count }}{% endif %})</span>
+                                                {% if filter.label == 'Color' %}
+                                                    <span class="item-color tooltip-wrap item-color-{{ value.label | handleize }} {{ value.label | handleize }}" style="background-color:{{ value.label | handleize }};">
+                                                        <span class="tooltip-text">{{ value.label }}</span>
+                                                    </span>
+                                                {% endif %}
+                                            </label>
+                                        </li>
+                                    {%- endfor -%}
+                                </ul>
+                                <ul class="facets__list no-js" role="list">
+                                    {%- for value in filter.values -%}
+                                        <li class="list-menu__item facets__item">
+                                            <label for="Filter-{{ filter.label | escape }}-{{ forloop.index }}" class="facet-checkbox{% if value.count == 0 and value.active == false %} facet-checkbox--disabled{% endif %}">
+                                                <input id="Filter-{{ filter.label | escape }}-{{ forloop.index }}" type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"
+                                                       {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                                                <svg width="1.6rem" height="1.6rem" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                                                    <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
+                                                </svg>
+                                                <span aria-hidden="true">{{ value.label | escape }} <span class="count">({{ value.count }})</span></span>
+                                                <span class="visually-hidden">{{ value.label | escape }} ({% if value.count == 1 %}{{ 'products.facets.product_count_simple.one' | t: count: value.count }}{% else %}{{ 'products.facets.product_count_simple.other' | t: count: value.count }}{% endif %})</span>
+                                                {% if filter.label == 'Color' %}
+                                                    <span class="label-color {{ value.label | escape }}" style="background-color:{{ value.label | escape }};"></span>
+                                                {% endif %}
+                                            </label>
+                                        </li>
+                                    {%- endfor -%}
+                                </ul>
+                                {%- if filter.values.size > 6 and filter.label != 'Color' -%}
+                                    <button class="button-show-more" type="button">
+                                        <span class="more">{{ 'products.facets.show_more' | t }}</span>
+                                        <span class="less">{{ 'products.facets.show_less' | t }}</span>
+                                    </button>
+                                {%- endif %}
+                            </div>
+                        </div>
+                    {% when 'price_range' %}
+                        {% liquid
+                            assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND' | split: ','
+                            assign uses_comma_decimals = false
+                            if currencies_using_comma_decimals contains cart.currency.iso_code
+                                assign uses_comma_decimals = true
+                            endif
+                        %}
+                        <div class="widget filter-{{ filter.label }} js-filter active"
+                             data-index="{{ forloop.index }}"{% if forloop.index == 1 %} open{% endif %}>
+                            <h3 class="widget-title facets__summary">{{ filter.label | escape }}<span class="icon alz-icon-plus"></span></h3>
+                            <div class="widget-content">
+                                <price-range class="facets__price">
+                                    <span class="field-currency">{{ cart.currency.symbol }}</span>
+                                    <div class="field">
+                                        <input id="Filter-{{ filter.label | escape }}-GTE" class="field__input" name="{{ filter.min_value.param_name }}" type="number" placeholder="0" min="0"
+                                            {%- if filter.min_value.value -%}
+                                                {%- if uses_comma_decimals -%}value="{{ filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}" {%- else -%}value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"{% endif %}
+                                            {%- endif -%}
+                                        {%- if uses_comma_decimals -%}max="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}" {%- else -%}max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"{% endif %}>
+                                        <label class="field__label" for="Filter-{{ filter.label | escape }}-GTE">{{ 'products.facets.from' | t }}</label>
+                                    </div>
+                                    <span class="field-currency">{{ cart.currency.symbol }}</span>
+                                    <div class="field">
+                                        <input id="Filter-{{ filter.label | escape }}-LTE" class="field__input" name="{{ filter.max_value.param_name }}" type="number" min="0"
+                                               {%- if filter.max_value.value -%}{%- if uses_comma_decimals -%}value="{{ filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+                                               {%- else -%}value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"{% endif %}{%- endif -%}
+                                        {%- if uses_comma_decimals -%}
+                                            placeholder="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+                                            max="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+                                        {%- else -%}
+                                            placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                            {% endif %}>
+                                        <label class="field__label" for="Filter-{{ filter.label | escape }}-LTE">{{ 'products.facets.to' | t }}</label>
+                                    </div>
+                                </price-range>
+                            </div>
+                        </div>
+                {% endcase %}
+            {%- endfor -%}
+            <noscript>
+                <button type="submit" class="facets__button-no-js button button--secondary">{{ 'products.facets.filter_button' | t }}</button>
+            </noscript>
+            {% if collection.current_vendor or collection.current_type %}
+                <input type="hidden" name="q" value="{{ collection.current_vendor }}{{ collection.current_type }}">
+            {% endif %}
+        </form>
+    </facet-filters-form>
+    {% if section.blocks.size > 0 and sidebar != 'dropdown' %}
+        {%- for block in section.blocks -%}
+            {%- capture Heading -%}
+                {%- if block.settings.title != blank -%}
+                    <h3 class="widget-title">{{ block.settings.title }}<span class="icon alz-icon-plus"></span></h3>
+                {% endif %}
+            {%- endcapture -%}
+            {%- case block.type -%}
+                {% when 'product' %}
+                    <div class="widget widget-product active">
+                        {%- liquid
+                            assign limit = block.settings.limit | default: 3
+                            assign products = collections[block.settings.collection].products
+                            if block.settings.product_list != blank
+                                assign products = block.settings.product_list
+                            endif
+                            assign product_style = block.settings.product_style
+                            assign ratio = block.settings.ratio
+                            if ratio > 0
+                                assign aspect_ratio = ratio
+                            endif
+                        -%}
+                        {{ Heading | strip_newlines | remove: "  " }}
+                        <div class="widget-content border-image">
+                            {% for product in products limit: limit %}
+                                {% render 'product-style', product_style: product_style, product: product, aspect_ratio: aspect_ratio %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {%- when 'image' -%}
+                    <div class="widget widget-image active">
+                        {%- assign img_url = block.settings.image | img_url: '' -%}
+                        {%- assign url = block.settings.link -%}
+                        {%- assign open_link = block.settings.open_link -%}
+                        {% if url %}
+                            <a class="widget-content" href="{{ url }}" target="{{ open_link }}">
+                                <img class="lazyload" src="{{ img_url }}" data-src="{{ img_url }}" alt=""/>
+                            </a>
+                        {% else %}
+                            <div class="widget-content">
+                                <img class="lazyload" src="{{ img_url }}" data-src="{{ img_url }}" alt=""/>
+                            </div>
+                        {% endif %}
+                    </div>
+            {% endcase %}
+        {% endfor %}
+    {%- endif -%}
+</div>

@@ -1,0 +1,28 @@
+{% assign language_flag = settings.language_flag %}
+{% if localization.available_languages.size > 1 %}
+    <localization-form>
+        {% form 'localization', id: 'language-form', class: 'localization-form' %}
+            <div class="disclosure">
+                <button type="button" class="disclosure__button apply-header-css" aria-expanded="false" aria-controls="LanguageList">
+                    {% if language_flag %}
+                        <img alt="{{ shop.locale | upcase }}" class="flag" src="{{ shop.locale | prepend: 'flag_' | append: '.png' | asset_url }}" data-src="{{ shop.locale | prepend: 'flag_' | append: '.png' | asset_url }}"/>
+                    {% endif %}
+                    {{ localization.language.endonym_name | capitalize }}
+                </button>
+                <ul id="LanguageList" role="list" class="disclosure__list">
+                    {% for language in localization.available_languages %}
+                        <li class="disclosure__item {% if language.iso_code == localization.language.iso_code %}current{% endif %}" tabindex="-1">
+                            <a href="#" hreflang="{{ language.iso_code }}" lang="{{ language.iso_code }}" data-value="{{ language.iso_code }}">
+                                {% if language_flag %}
+                                    <img alt="{{ language.endonym_name }}" class="flag" src="{{ language.iso_code | prepend: 'flag_' | append: '.png' | asset_url }}" data-src="{{ language.iso_code | prepend: 'flag_' | append: '.png' | asset_url }}"/>
+                                {% endif %}
+                                {{ language.endonym_name | capitalize }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <input type="hidden" name="language_code" value="{{ localization.language.iso_code }}">
+            </div>
+        {% endform %}
+    </localization-form>
+{% endif %}

@@ -1,0 +1,11 @@
+<div class="product-excerpt paragraph skeleton-item">
+    {% if product != '' %}
+        {% if product.metafields.custom.excerpt != blank %}
+            {{ product.metafields.custom.excerpt }}
+        {% else %}
+            {{ product.content | strip_html }}
+        {% endif %}
+    {% else %}
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+    {% endif %}
+</div>

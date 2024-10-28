@@ -1,0 +1,807 @@
+{%- liquid
+    assign sid = section.id
+    assign content_width = section.settings.content_width
+    assign container = section.settings.container
+    assign layout = section.settings.layout
+%}
+<section id="{{ sid }}" class="alz-footer footer-01 {{ layout }}">
+    <div class="{{ content_width }}" style="{%- if container != blank -%}--container:{{ container }}{%- endif -%}">
+        <div class="section-inner">
+            <div class="row">
+                {%- if layout == 'static-info' -%}
+                    {%- for block in section.blocks -%}
+                        {%- if block.type == 'info' -%}
+                            {%- render 'footer-info', block: block -%}
+                        {%- endif -%}
+                    {%- endfor -%}
+                    <div class="footer-wrap row">
+                        {%- for block in section.blocks -%}
+                            {%- case block.type -%}
+                                {%- when 'menu' -%}
+                                    {%- render 'footer-menu', block: block -%}
+                                {%- when 'newsletter' -%}
+                                    {%- render 'footer-newsletter', block: block -%}
+                            {%- endcase -%}
+                        {%- endfor -%}
+                    </div>
+                {%- else -%}
+                    {%- for block in section.blocks -%}
+                        {%- case block.type -%}
+                            {%- when 'info' -%}
+                                {%- render 'footer-info', block: block -%}
+                            {%- when 'menu' -%}
+                                {%- render 'footer-menu', block: block -%}
+                            {%- when 'newsletter' -%}
+                                {%- render 'footer-newsletter', block: block -%}
+                        {%- endcase -%}
+                    {%- endfor -%}
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</section>
+
+{%- render 'section_style' -%}
+
+{%- schema -%}
+{
+    "name": "Footer 01",
+    "class": "alz-section section-footer",
+    "settings": [
+        {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "full-width",
+                    "label": "Full Width"
+                },
+                {
+                    "value": "full-width-pd",
+                    "label": "Full Width no Padding"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "container",
+            "label": "Container width",
+            "info": "Example: 1410px, 70%, 70vw"
+        },
+        {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout",
+            "options": [
+                {
+                    "value": "",
+                    "label": "Default"
+                },
+                {
+                    "value": "static-info",
+                    "label": "Static Information"
+                }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "== Section settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "for_inner",
+            "label": "Settings apply for inner"
+        },
+        {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "bg_position",
+            "label": "Background position",
+            "info": "Example: center/top/bottom center/left/right, 100% 100%, 100px 100px",
+            "default": "center center"
+        },
+        {
+            "type": "text",
+            "id": "bg_size",
+            "label": "Background size",
+            "info": "Example: cover, contain, 100% 100%, 100px 100px",
+            "default": "cover"
+        },
+        {
+            "type": "text",
+            "id": "bg_repeat",
+            "label": "Background repeat",
+            "info": "Example: no-repeat, repeat, repeat-x, repeat-y",
+            "default": "no-repeat"
+        },
+        {
+            "type": "checkbox",
+            "id": "bg_fixed",
+            "label": "Background fixed",
+            "info": "For desktop (resolution > 1200px)"
+        },
+        {
+            "type": "color_background",
+            "id": "bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "color",
+            "id": "bg_cl",
+            "label": "Background color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl",
+            "label": "Main color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl_t",
+            "label": "Main color - text inside"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl",
+            "label": "Dark color"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_2",
+            "label": "Dark color 2"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_3",
+            "label": "Dark color 3"
+        },
+        {
+            "type": "color",
+            "id": "light_cl",
+            "label": "Light color"
+        },
+        {
+            "type": "color",
+            "id": "light_cl_2",
+            "label": "Light color 2"
+        },
+        {
+            "type": "color",
+            "id": "line_cl",
+            "label": "Line color"
+        },
+        {
+            "type": "text",
+            "id": "fz",
+            "label": "Font size",
+            "info": "Example: 16px"
+        },
+        {
+            "type": "text",
+            "id": "lh",
+            "label": "Line Height",
+            "info": "Example: 24px, 1.4em"
+        },
+        {
+            "type": "text",
+            "id": "ls",
+            "label": "Letter spacing",
+            "info": "Example: 1px, 0.1em"
+        },
+        {
+            "type": "text",
+            "id": "fw",
+            "label": "Font weight",
+            "info": "Example: 100, 200, 300, 400, 500, 600, 700, 800"
+        },
+        {
+            "type": "text",
+            "id": "tt",
+            "label": "Text transform",
+            "info": "Example: none, uppercase, lowercase, capitalize"
+        },
+        {
+            "type": "color",
+            "id": "bd_color",
+            "label": "Border color"
+        },
+        {
+            "type": "text",
+            "id": "bd_style",
+            "label": "Border style",
+            "info": "Example: solid, dotted, dashed, double, groove, ridge, outset"
+        },
+        {
+            "type": "text",
+            "id": "bd_width",
+            "label": "Border width",
+            "info": "Example: 1px, 1px 0, 1px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "bd_radius",
+            "label": "Border radius",
+            "info": "Example: 10px, 20px 10px, 20px 20px 10px 10px, 10%"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 1200px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_1200",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_1200",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_1200",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 992px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_992",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_992",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_992",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 768px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_768",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_768",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_768",
+            "label": "Padding"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "info",
+            "name": "Information",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Contact Information"
+                },
+                {
+                    "type": "header",
+                    "content": "== Logo"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "logo",
+                    "label": "Show logo"
+                },
+                {
+                    "type": "text",
+                    "id": "logo_text_cl",
+                    "label": "Text color"
+                },
+                {
+                    "type": "text",
+                    "id": "logo_text_last_cl",
+                    "label": "Text - last color"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "logo_image",
+                    "label": "Image"
+                },
+                {
+                    "type": "header",
+                    "content": "== Information"
+                },
+                {
+                    "type": "text",
+                    "id": "info_1_title",
+                    "label": "Title 1"
+                },
+                {
+                    "type": "link_list",
+                    "id": "info_1",
+                    "label": "Menu 1"
+                },
+                {
+                    "type": "text",
+                    "id": "info_2_title",
+                    "label": "Title 2"
+                },
+                {
+                    "type": "link_list",
+                    "id": "info_2",
+                    "label": "Menu 2"
+                },
+                {
+                    "type": "text",
+                    "id": "info_3_title",
+                    "label": "Title 3"
+                },
+                {
+                    "type": "link_list",
+                    "id": "info_3",
+                    "label": "Menu 3"
+                },
+                {
+                    "type": "header",
+                    "content": "== Social"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "use_social",
+                    "label": "Social link"
+                },
+                {
+                    "type": "select",
+                    "id": "social_style",
+                    "label": "Social style",
+                    "options": [
+                        {
+                            "value": "style-01",
+                            "label": "Style 01"
+                        },
+                        {
+                            "value": "style-02",
+                            "label": "Style 02"
+                        },
+                        {
+                            "value": "style-03",
+                            "label": "Style 03"
+                        }
+                    ]
+                },
+                {
+                    "type": "color",
+                    "id": "social_icon_cl",
+                    "label": "Social icon color"
+                },
+                {
+                    "type": "color",
+                    "id": "social_icon_bg",
+                    "label": "Social icon background"
+                },
+                {
+                    "type": "header",
+                    "content": "== Payment"
+                },
+                {
+                    "type": "text",
+                    "id": "title_payment",
+                    "label": "Payment title"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "img_payment",
+                    "label": "Payment image"
+                },
+                {
+                    "type": "header",
+                    "content": "== Block settings"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "border_top",
+                    "label": "Border top"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "border_bottom",
+                    "label": "Border bottom"
+                },
+                {
+                    "type": "text",
+                    "id": "width",
+                    "label": "Width",
+                    "info": "Example: 20%, 270px, calc(100% / 3)"
+                },
+                {
+                    "type": "text",
+                    "id": "mg",
+                    "label": "Margin",
+                    "info": "0 0 var(--space-30)"
+                },
+                {
+                    "type": "header",
+                    "content": "== Settings (resolution < 1200px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_1200",
+                    "label": "Width"
+                },
+                {
+                    "type": "text",
+                    "id": "order_1200",
+                    "label": "Order"
+                },
+                {
+                    "type": "text",
+                    "id": "mg_1200",
+                    "label": "Margin"
+                },
+                {
+                    "type": "header",
+                    "content": "== Settings (resolution < 992px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_992",
+                    "label": "Width"
+                },
+                {
+                    "type": "text",
+                    "id": "order_992",
+                    "label": "Order"
+                },
+                {
+                    "type": "text",
+                    "id": "mg_992",
+                    "label": "Margin"
+                },
+                {
+                    "type": "header",
+                    "content": "== Settings (resolution < 768px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_768",
+                    "label": "Width"
+                },
+                {
+                    "type": "text",
+                    "id": "order_768",
+                    "label": "Order"
+                },
+                {
+                    "type": "text",
+                    "id": "mg_768",
+                    "label": "Margin"
+                }
+            ]
+        },
+        {
+            "type": "menu",
+            "name": "Menu",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Quick Links"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu",
+                    "label": "Menu"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "mobile_toggle",
+                    "label": "Menu - Toggle on mobile",
+                    "default": true
+                },
+                {
+                    "type": "header",
+                    "content": "== Block settings"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "border_top",
+                    "label": "Border top"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "border_bottom",
+                    "label": "Border bottom"
+                },
+                {
+                    "type": "text",
+                    "id": "width",
+                    "label": "Width",
+                    "info": "Example: 20%, 270px, calc(100% / 3)"
+                },
+                {
+                    "type": "text",
+                    "id": "mg",
+                    "label": "Margin",
+                    "info": "0 0 var(--space-30)"
+                },
+                {
+                    "type": "header",
+                    "content": "== Settings (resolution < 1200px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_1200",
+                    "label": "Width"
+                },
+                {
+                    "type": "text",
+                    "id": "order_1200",
+                    "label": "Order"
+                },
+                {
+                    "type": "text",
+                    "id": "mg_1200",
+                    "label": "Margin"
+                },
+                {
+                    "type": "header",
+                    "content": "== Settings (resolution < 992px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_992",
+                    "label": "Width"
+                },
+                {
+                    "type": "text",
+                    "id": "order_992",
+                    "label": "Order"
+                },
+                {
+                    "type": "text",
+                    "id": "mg_992",
+                    "label": "Margin"
+                },
+                {
+                    "type": "header",
+                    "content": "== Settings (resolution < 768px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_768",
+                    "label": "Width"
+                },
+                {
+                    "type": "text",
+                    "id": "order_768",
+                    "label": "Order"
+                },
+                {
+                    "type": "text",
+                    "id": "mg_768",
+                    "label": "Margin"
+                }
+            ]
+        },
+        {
+            "type": "newsletter",
+            "name": "Newsletter",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Newsletter Signup"
+                },
+                {
+                    "type": "text",
+                    "id": "desc",
+                    "label": "Description",
+                    "default": "Get all the latest information on Events, Sales and Offers. Sign up for newsletter today."
+                },
+                {
+                    "type": "checkbox",
+                    "id": "desc_inline",
+                    "label": "Description inline"
+                },
+                {
+                    "type": "select",
+                    "id": "form_style",
+                    "label": "Form style",
+                    "options": [
+                        {
+                            "value": "style-01",
+                            "label": "Style 01"
+                        },
+                        {
+                            "value": "style-02",
+                            "label": "Style 02"
+                        },
+                        {
+                            "value": "style-03",
+                            "label": "Style 03"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "form_width",
+                    "label": "Form Width"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "mobile_toggle",
+                    "label": "Newsletter - Toggle on mobile",
+                    "default": true
+                },
+                {
+                    "type": "header",
+                    "content": "== Social"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "use_social",
+                    "label": "Social link"
+                },
+                {
+                    "type": "select",
+                    "id": "social_style",
+                    "label": "Social style",
+                    "options": [
+                        {
+                            "value": "style-01",
+                            "label": "Style 01"
+                        },
+                        {
+                            "value": "style-02",
+                            "label": "Style 02"
+                        },
+                        {
+                            "value": "style-03",
+                            "label": "Style 03"
+                        }
+                    ]
+                },
+                {
+                    "type": "color",
+                    "id": "social_icon_cl",
+                    "label": "Social icon color"
+                },
+                {
+                    "type": "color",
+                    "id": "social_icon_bg",
+                    "label": "Social icon background"
+                },
+                {
+                    "type": "header",
+                    "content": "== Payment"
+                },
+                {
+                    "type": "text",
+                    "id": "title_payment",
+                    "label": "Payment title"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "img_payment",
+                    "label": "Payment image"
+                },
+                {
+                    "type": "header",
+                    "content": "== Block settings"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "border_top",
+                    "label": "Border top"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "border_bottom",
+                    "label": "Border bottom"
+                },
+                {
+                    "type": "text",
+                    "id": "width",
+                    "label": "Width",
+                    "info": "Example: 20%, 270px, calc(100% / 3)"
+                },
+                {
+                    "type": "text",
+                    "id": "mg",
+                    "label": "Margin",
+                    "info": "0 0 var(--space-30)"
+                },
+                {
+                    "type": "header",
+                    "content": "== Settings (resolution < 1200px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_1200",
+                    "label": "Width"
+                },
+                {
+                    "type": "text",
+                    "id": "order_1200",
+                    "label": "Order"
+                },
+                {
+                    "type": "text",
+                    "id": "mg_1200",
+                    "label": "Margin"
+                },
+                {
+                    "type": "header",
+                    "content": "== Settings (resolution < 992px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_992",
+                    "label": "Width"
+                },
+                {
+                    "type": "text",
+                    "id": "order_992",
+                    "label": "Order"
+                },
+                {
+                    "type": "text",
+                    "id": "mg_992",
+                    "label": "Margin"
+                },
+                {
+                    "type": "header",
+                    "content": "== Settings (resolution < 768px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_768",
+                    "label": "Width"
+                },
+                {
+                    "type": "text",
+                    "id": "order_768",
+                    "label": "Order"
+                },
+                {
+                    "type": "text",
+                    "id": "mg_768",
+                    "label": "Margin"
+                }
+            ]
+        }
+    ]
+}
+{%- endschema -%}

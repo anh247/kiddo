@@ -1,0 +1,27 @@
+{% assign currency_flag = settings.currency_flag %}
+{% assign currency_support = settings.currency_support %}
+{% if localization.available_countries.size > 1 %}
+    <localization-form>
+        {% form 'localization', id: 'currency-form', class: 'localization-form' %}
+            <div class="disclosure">
+                <button type="button" class="disclosure__button apply-header-css" aria-expanded="false" aria-controls="CountryList">
+                    {% if currency_flag %}{{ localization.country | image_url: width: 32 | image_tag }}{% endif %}
+                    {{ localization.country.currency.iso_code }} ({{ localization.country.currency.symbol }})
+                </button>
+                <ul id="CountryList" role="list" class="disclosure__list">
+                    {% for country in localization.available_countries %}
+                        {% if currency_support contains country.iso_code %}
+                            <li class="disclosure__item {% if country.iso_code == localization.country.iso_code %}current{% endif %}" tabindex="-1">
+                                <a href="#" data-value="{{ country.iso_code }}">
+                                    {% if currency_flag %}{{ country | image_url: width: 32 | image_tag }}{% endif %}
+                                    {{ country.currency.iso_code }} ({{ country.currency.symbol }})
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+            </div>
+        {% endform %}
+    </localization-form>
+{% endif %}

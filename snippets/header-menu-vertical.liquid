@@ -1,0 +1,73 @@
+{% liquid
+    assign v_menu = section.settings.v_menu
+    assign v_open = section.settings.v_open
+    assign v_always_open = section.settings.v_always_open
+    assign v_links = linklists[v_menu].links
+    assign v_width = section.settings.v_width
+    assign v_height = section.settings.v_height
+    assign v_title = section.settings.v_title
+    assign v_title_width = section.settings.v_title_width
+    assign v_title_cl = section.settings.v_title_cl
+    assign v_title_bg = section.settings.v_title_bg
+    assign v_title_cl_h = section.settings.v_title_cl_h
+    assign v_title_bg_h = section.settings.v_title_bg_h
+    assign v_limit = section.settings.v_limit | default: 8
+    assign v_more = section.settings.v_more
+    assign v_less = section.settings.v_less
+%}
+
+{% if v_links.size > 0 %}
+    <div class="box-header-vertical{% if v_open %} open{% endif %}{% if v_always_open and template contains 'index' %} always-open{% endif %}">
+        <h3 class="vertical-title">
+            <span class="icon alz-icon-menu"><span class="inner"><span></span><span></span><span></span></span></span>
+            <span class="text">{{ v_title }}</span>
+        </h3>
+        <div class="vertical-content">
+            <ul class="vertical-menu">
+                {%- for link in v_links -%}
+                    {% render 'header-menu-item', link: link, depth: 2 %}
+                {%- endfor -%}
+            </ul>
+            {% if v_limit < v_links.size %}
+                <div class="view-all-menu">
+                    <a href="javascript:void(0)" data-items="{{ v_limit }}" data-more="{{ v_more }}" data-less="{{ v_less }}">{{ v_more }}</a>
+                </div>
+            {% endif %}
+        </div>
+        {%- capture style -%}
+            {% if v_width != blank %}:root{--v-menu-width:{{ v_width }};}{% endif %}
+            .box-header-vertical{
+            {% if v_width != blank %}--v-menu-width:{{ v_width }};{% endif %}
+            {% if v_height != blank %}--v-menu-height:{{ v_height }};{% endif %}
+            {% if v_title_width != blank %}--v-menu-title-width:{{ v_title_width }};{% endif %}
+            {% if v_title_cl != blank and v_title_cl.alpha != 0.0 %}--v-menu-title-cl:{{ v_title_cl }};{% endif %}
+            {% if v_title_bg != blank and v_title_bg.alpha != 0.0 %}--v-menu-title-bg:{{ v_title_bg }};{% endif %}
+            {% if v_title_cl_h != blank and v_title_cl_h.alpha != 0.0 %}--v-menu-title-cl-h:{{ v_title_cl_h }};{% endif %}
+            {% if v_title_bg_h != blank and v_title_bg_h.alpha != 0.0 %}--v-menu-title-bg-h:{{ v_title_bg_h }};{% endif %}
+            }
+            {% if v_limit > 0 and v_limit < v_links.size %}
+                .vertical-menu > .menu-item:nth-child(n+{{ v_limit | plus: 1 }}){display:none}
+            {% endif %}
+        {% endcapture %}
+        {%- style -%}{{ style | strip_newlines | remove: "  " }}{%- endstyle -%}
+        <script type="text/javascript">
+            $(document).on('click', '.vertical-title', function () {
+                $(this).closest('.box-header-vertical').toggleClass('open');
+                return false;
+            });
+            {% if v_limit > 0 and v_limit < v_links.size %}
+            $(document).on('click', '.view-all-menu a', function () {
+                var _this = $(this);
+                _this.closest('.box-header-vertical').find('.menu-item:nth-child(n+{{ v_limit | plus: 1 }})').slideToggle('fast');
+                _this.toggleClass('open');
+                if (_this.hasClass('open')){
+                    _this.html(_this.data('less'));
+                } else {
+                    _this.html(_this.data('more'));
+                }
+                return false;
+            });
+            {% endif %}
+        </script>
+    </div>
+{% endif %}

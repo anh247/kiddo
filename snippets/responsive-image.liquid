@@ -1,0 +1,49 @@
+{%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+{%- comment -%} Limit image widths to valid options based on image.width {%- endcomment -%}
+{%- assign image_widths = '180,360,540,720,900,1080,1296,1512,1728,1944,2160,2376,2592,2808,3024' | split: ',' -%}
+{%- capture image_widths -%}
+  {%- for width in image_widths -%}
+    {%- comment -%} Check if image width is less or equal to width {%- endcomment -%}
+    {%- assign width_num = width | plus: 0 | round -%}
+    {%- if image.width >= width_num -%}{{ width_num }},{%- endif -%}
+  {%- endfor -%}
+  {{ image.width }}
+{%- endcapture -%}
+{%- assign image_widths = image_widths | strip -%}
+
+{%- capture style -%}
+  {% assign ratio = image.aspect_ratio %}
+  {% if aspect_ratio and aspect_ratio > 0 %}
+    {% assign ratio = aspect_ratio %}
+  {% endif %}
+  --ratio-percent: {{ 1.0 | divided_by: ratio | times: 100 }}%;
+  {% if bd_radius != blank %}--alz-border-radius:{{ bd_radius }};{% endif %}
+{%- endcapture -%}
+<div
+  data-image-id="{{ image.id }}"
+  class="alz-image ratio {{ image_class }} overflow-hidden alz-border-radius"
+  style="{{ style | strip | strip_newlines }}"
+>
+  {% if url %} <a class="block h-full" href="{{url}}" target="{{open_link}}" title="">{% endif %}
+  <img
+    class="lazyload effect-obj {{ image_class }}"
+    {% comment %}
+      src="{{ image | img_url: '100x' }}"
+    {% endcomment %}
+    data-src="{{ img_url }}"
+    data-widths="[{{ image_widths }}]"
+    data-aspectratio="{{ image.aspect_ratio }}"
+    data-sizes="auto"
+    alt="{{ alt | default: image.alt | escape }}"
+    {{ image_attributes }}
+    data-image
+  >
+  <noscript>
+    <img
+      class="{{ image_class }}"
+      src="{{ image | img_url: '2048x2048' }}"
+      alt="{{ alt | default: image.alt | escape }}"
+    >
+  </noscript>
+  {% if url %} </a>{% endif %}
+</div>

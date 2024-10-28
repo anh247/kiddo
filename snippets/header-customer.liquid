@@ -1,0 +1,14 @@
+<div class="header-customer apply-header-css">
+    {% unless customer %}
+        {%- assign page_type = request.page_type | handle -%}
+        <a class="push_side" href="{{ routes.root_url }}account/login" {% if page_type != 'customers-login' %}data-id="#login-popup"{% endif %}>
+            <span class="icon main-icon-account"></span>
+            <span class="text">{{ 'general.customer.title' | t }}</span>
+        </a>
+    {% else %}
+        <a class="push_side" href="{{ routes.account_url }}">
+            <span class="icon main-icon-account"></span>
+            <span class="text">{{ 'general.customer.title' | t }}</span>
+        </a>
+    {% endunless %}
+</div>

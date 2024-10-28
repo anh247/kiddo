@@ -1,0 +1,129 @@
+<aside class="sidebar js-sidebar-mobile-content js-stickySidebar">
+    <h3 class="sidebar-head">{{ 'general.sidebar.name' | t }}<span class="js-close-sidebar close-sidebar-btn"></span></h3>
+    <div class="sidebar-content">
+        {%- for block in section.blocks -%}
+            {%- capture Heading -%}
+                {%- if block.settings.title != blank -%}
+                    <h3 class="widget-title">{{ block.settings.title }}</h3>
+                {% endif %}
+            {%- endcapture -%}
+            {%- case block.type -%}
+                {%- when 'search' -%}
+                    <div class="widget widget-search">
+                        {{ Heading | strip_newlines | remove: "  " }}
+                        <form id="searchForm" method="get" class="search-form widget-content" action="/search" role="search">
+                            <label class="search-inner">
+                                <input type="text" class="search-info" placeholder="{{ block.settings.placeholder }}" name="q" {% if search.performed %} value="{{ search.terms | escape | downcase }}"{% endif %}>
+                                <input type="hidden" name="type" value="article"/>
+                                <a id="btn_submit_search" href="javascript:void(0)" class="button">
+                                    <span class="icon main-icon-search"></span>
+                                </a>
+                            </label>
+                        </form>
+                    </div>
+                {%- when 'menu' -%}
+                    <div class="widget widget-menu">
+                        {{ Heading | strip_newlines | remove: "  " }}
+                        <ul class="widget-content">
+                            {% for link in linklists[block.settings.menu].links %}
+                                {% render 'header-menu-item', link: link, depth: 2, count: true %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {%- when 'post' -%}
+                    <div class="widget widget-post">
+                        {%- liquid
+                            assign limit = block.settings.limit | default: 3
+                            assign post_style = block.settings.post_style
+                            assign ratio = block.settings.ratio
+                            if ratio > 0
+                                assign aspect_ratio = ratio
+                            endif
+                        -%}
+                        {{ Heading | strip_newlines | remove: "  " }}
+                        <div class="widget-content">
+                            {% for article in blogs[block.settings.blog].articles limit: limit %}
+                                {% if article_id != article.id %}
+                                    {% render 'post-style', post_style: post_style, article: article, aspect_ratio: aspect_ratio %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {%- when 'product' -%}
+                    <div class="widget widget-product">
+                        {%- liquid
+                            assign limit = block.settings.limit | default: 3
+                            assign products = collections[block.settings.collection].products
+                            if block.settings.product_list != blank
+                                assign products = block.settings.product_list
+                            endif
+                            assign product_style = block.settings.product_style
+                            assign ratio = block.settings.ratio
+                            if ratio > 0
+                                assign aspect_ratio = ratio
+                            endif
+                        -%}
+                        {{ Heading | strip_newlines | remove: "  " }}
+                        <div class="widget-content border-image">
+                            {% for product in products limit: limit %}
+                                {% render 'product-style', product_style: product_style, product: product, aspect_ratio: aspect_ratio %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {%- when 'tag' -%}
+                    <div class="widget widget-tag">
+                        {{ Heading | strip_newlines | remove: "  " }}
+                        <div class="alz-tag widget-content">
+                            <ul>
+                                {% for tag in blog.all_tags %}
+                                    {% if current_tags contains tag %}
+                                        <li class="{{ tag | handleize }} current">{{ tag | link_to_tag: tag }}</li>
+                                    {% else %}
+                                        <li class="{{ tag | handleize }}">{{ tag | link_to_tag: tag }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {%- when 'social' -%}
+                    <div class="widget widget-social">
+                        {{ Heading | strip_newlines | remove: "  " }}
+                        {% assign social_style = block.settings.social_style | append: ' widget-content' %}
+                        {% render 'social_link', class: social_style, icon_cl: block.settings.social_icon_cl, icon_bg: block.settings.social_icon_bg %}
+                    </div>
+                {%- when 'image' -%}
+                    <div class="widget widget-image skeleton-list">
+                        {%- assign img_url = block.settings.image | img_url: '' -%}
+                        {%- assign url = block.settings.link -%}
+                        {%- assign open_link = block.settings.open_link -%}
+                        {%- assign hover_effect = block.settings.hover_effect -%}
+                        {% if url %}
+                            <a class="widget-content effect {{ hover_effect }}" href="{{ url }}" target="{{ open_link }}">
+                                <img class="lazyload effect-obj" src="{{ img_url }}" data-src="{{ img_url }}" alt=""/>
+                            </a>
+                        {% else %}
+                            <div class="widget-content effect {{ hover_effect }}">
+                                <img class="lazyload effect-obj" src="{{ img_url }}" data-src="{{ img_url }}" alt=""/>
+                            </div>
+                        {% endif %}
+                    </div>
+            {%- endcase -%}
+        {%- endfor -%}
+    </div>
+</aside>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("#btn_submit_search").on('click', function (e) {
+            $("#searchForm").submit();
+        })
+        $(".js-mobile-sidebar").on('click', function (e) {
+            $(".js-mobile-sidebar-panel").addClass('active');
+            $(".js-sidebar-mobile-content").addClass('active');
+        })
+        $(".js-close-sidebar").on('click', function () {
+            $(".js-mobile-sidebar-panel").removeClass('active');
+            $(".js-sidebar-mobile-content").removeClass('active');
+        })
+    })
+</script>

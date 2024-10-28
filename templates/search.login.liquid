@@ -1,0 +1,13 @@
+{%- layout none -%}
+<span class="popup-close close_popup_ajax"></span>
+{% unless customer %}
+    <div class="popup-head flex">
+        <h3 class="popup-title title-login active">{{ 'customer.login.title' | t }}</h3>
+        <h3 class="popup-title title-register">{{ 'customer.register.title' | t }}</h3>
+    </div>
+    <div class="wrapper_tab-content">
+        {% render 'customer-form-login' %}
+        {% render 'customer-form-recover' %}
+        {% render 'customer-form-register' %}
+    </div>
+{% endunless %}

@@ -1,0 +1,11 @@
+<div class="header-wishlist apply-header-css">
+    <a class="push_side" href="{{ routes.root_url }}pages/wishlist" {% if page_title != 'wishlist' %}data-id="#wishlist_popup"{% endif %}>
+        <span class="icon main-icon-heart">
+            <span class="header-count" data-js-wishlist-count="0">0</span>
+        </span>
+        <span class="text">
+            {{ 'general.wishlist.title' | t }}
+            <span class="count" data-js-wishlist-count="0">0</span>
+        </span>
+    </a>
+</div>

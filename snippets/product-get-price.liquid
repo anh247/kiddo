@@ -1,0 +1,23 @@
+{% if product != '' %}
+    {% assign price = product.price %}
+    {% assign compare = product.compare_at_price %}
+    {% if product.price_varies %}
+        {% assign prd_price_type = prd_price_type | default: settings.prd_price_type %}
+        <div class="price" data-js-product-price>
+            {% if prd_price_type == 'price-from' %}
+                <span class="from">{{ 'products.product.from' | t }}</span> {{ product.price_min | money }}
+            {% else %}
+                {{ product.price_min | money }} – {{ product.price_max | money }}
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="price{% if compare > product.price %} price--sale{% endif %}" data-js-product-price>
+            {{ price | money }}
+            {% if compare > product.price %}
+                <span class="compare">{{ compare | money | default: '$999.99' }}</span>
+            {% endif %}
+        </div>
+    {% endif %}
+{% else %}
+    <div class="price"><span class="from">From</span>$999.99</div>
+{% endif %}

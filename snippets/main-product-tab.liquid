@@ -1,0 +1,94 @@
+{% liquid
+    assign tab_layout = tab_layout | default: section.settings.tab_layout
+    assign desc = section.settings.tab_desc
+    assign desc_title = section.settings.tab_desc_title
+    assign review = section.settings.tab_review
+    assign review_title = section.settings.tab_review_title
+    assign custom = section.settings.tab_custom
+    assign custom_title = section.settings.tab_custom_title
+    assign custom_text = section.settings.tab_custom_text
+    assign custom_page = section.settings.tab_custom_page
+%}
+
+<div id="tab_product" class="product-tabs tab-{{ tab_layout }}">
+    {% if tab_layout == 'switch' %}
+        <ul class="tab-nav">
+            {% if desc %}
+                <li class="active">
+                    <a href="#tab_des">{{ desc_title }}</a>
+                </li>
+            {% endif %}
+            {% if review %}
+                <li>
+                    <a href="#tab_review">{{ review_title }}</a>
+                </li>
+            {% endif %}
+            {% if custom %}
+                <li>
+                    <a href="#tab_custom">{{ custom_title }}</a>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+    <div class="tab-content">
+        {% if desc %}
+            <div id="tab_des" class="tab-panel active">
+                <h3 class="panel-title">
+                    <span class="text">{{ desc_title }}</span>
+                    <span class="icon alz-icon-plus"></span>
+                </h3>
+                <div class="panel-desc paragraph">
+                    {{ product.description }}
+                </div>
+            </div>
+        {% endif %}
+        {% if review %}
+            <div id="tab_review" class="tab-panel{% if tab_layout == 'show-all' %} active{% endif %}">
+                <h3 class="panel-title">
+                    <span class="text">{{ review_title }}</span>
+                    <span class="icon alz-icon-plus"></span>
+                </h3>
+                <div class="panel-desc" style="{% unless tab_layout == 'show-all' %}display:none{% endunless %}">
+                    {% if settings.product_review_widget != blank %}{{ settings.product_review_widget }}{% endif %}
+                </div>
+            </div>
+        {% endif %}
+        {% if custom %}
+            <div id="tab_custom" class="tab-panel{% if tab_layout == 'show-all' %} active{% endif %}">
+                <h3 class="panel-title">
+                    <span class="text">{{ custom_title }}</span>
+                    <span class="icon alz-icon-plus"></span>
+                </h3>
+                <div class="panel-desc paragraph" style="{% unless tab_layout == 'show-all' %}display:none{% endunless %}">
+                    {{ custom_text }}
+                    {{ pages[custom_page].content }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).on('click', '.tab-panel .panel-title', function (e) {
+        $(this).next(".panel-desc").slideToggle();
+        $(this).closest('.tab-panel').toggleClass('active');
+    });
+</script>
+{% if tab_layout == 'switch' %}
+    <script type="text/javascript">
+        $(document).on('click', '.product-tabs .tab-nav a', function (e) {
+            e.preventDefault();
+            var _this = $(this);
+            var all_tab = $('.tab-panel');
+            var this_tab = $(_this.attr('href'));
+            if (!_this.closest('li').hasClass('active')) {
+                _this.closest('ul').find("li").removeClass("active");
+                _this.closest('li').addClass("active");
+                all_tab.removeClass("active");
+                all_tab.find('.panel-desc').hide();
+                this_tab.addClass("active");
+                this_tab.find('.panel-desc').show();
+            }
+        });
+    </script>
+{% endif %}

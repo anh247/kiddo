@@ -1,0 +1,6 @@
+{% if icon != blank or icon_img != blank or icon_svg != blank %}
+    <span class="icon {{ icon }} effect-obj">
+        {%- if icon_img != blank -%}<img class="lazyload" src="{{ icon_img | img_url: '' }}" loading="lazy" alt="{{ icon_img.alt | escape }}"/>{%- endif -%}
+        {%- if icon_svg != blank -%}{{ icon_svg }}{%- endif -%}
+    </span>
+{% endif %}

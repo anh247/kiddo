@@ -1,0 +1,77 @@
+{% liquid
+    assign border_top = block.settings.border_top
+    assign border_bottom = block.settings.border_bottom
+%}
+<div id="b_{{ block.id }}" class="section-block footer-info {% if border_top %}border-top{% endif %} {% if border_bottom %}border-bottom{% endif %}" {{ block.shopify_attributes }}>
+    {%- render 'section_style_block', block: block -%}
+    {%- assign title = block.settings.title -%}
+    {%- if title != blank -%}
+        {%- if block.settings.mobile_toggle -%}
+            <h3 class="widget-title js-mobile-toggle">{{ title }}<span class="icon alz-icon-plus"></span></h3>
+        {%- else -%}
+            <h3 class="widget-title">{{ title }}</h3>
+        {%- endif -%}
+    {%- endif -%}
+    {%- if block.settings.logo -%}
+        {%- liquid
+            assign logo_text_cl = block.settings.logo_text_cl
+            assign logo_text_last_cl = block.settings.logo_text_last_cl
+            assign logo_image = block.settings.logo_image
+        -%}
+        {%- render 'header-logo', logo_text_cl: logo_text_cl, logo_text_last_cl: logo_text_last_cl, logo_image: logo_image -%}
+    {%- endif -%}
+    {%- liquid
+        assign info_1_title = block.settings.info_1_title
+        assign links_1 = linklists[block.settings.info_1].links
+        assign info_2_title = block.settings.info_2_title
+        assign links_2 = linklists[block.settings.info_2].links
+        assign info_3_title = block.settings.info_3_title
+        assign links_3 = linklists[block.settings.info_3].links
+    -%}
+    {%- if links_1.size > 0 or links_1.size > 2 or links_1.size > 3 -%}
+        <div class="footer-list">
+            {%- if links_1.size > 0 -%}
+                {%- if info_1_title != blank -%}
+                    <h4 class="title">{{ info_1_title }}</h4>
+                {%- endif -%}
+                <ul class="alz-menu">
+                    {%- for link in links_1 -%}
+                        {%- render 'header-menu-item', link: link -%}
+                    {%- endfor -%}
+                </ul>
+            {%- endif -%}
+            {%- if links_2.size > 0 -%}
+                {%- if info_2_title != blank -%}
+                    <h4 class="title">{{ info_2_title }}</h4>
+                {%- endif -%}
+                <ul class="alz-menu">
+                    {%- for link in links_2 -%}
+                        {%- render 'header-menu-item', link: link -%}
+                    {%- endfor -%}
+                </ul>
+            {%- endif -%}
+            {%- if links_3.size > 0 -%}
+                {%- if info_3_title != blank -%}
+                    <h4 class="title">{{ info_3_title }}</h4>
+                {%- endif -%}
+                <ul class="alz-menu">
+                    {%- for link in links_3 -%}
+                        {%- render 'header-menu-item', link: link -%}
+                    {%- endfor -%}
+                </ul>
+            {%- endif -%}
+        </div>
+    {%- endif -%}
+    {%- if block.settings.use_social -%}
+        <div class="footer-social">
+            {%- render 'social_link', class: block.settings.social_style, icon_cl: block.settings.social_icon_cl, icon_bg: block.settings.social_icon_bg -%}
+        </div>
+    {%- endif -%}
+    {%- if block.settings.img_payment != blank -%}
+        {%- assign img_payment_url = block.settings.img_payment | img_url: '' -%}
+        <div class="footer-payment">
+            <h4 class="title">{{ block.settings.title_payment }}</h4>
+            <img class="lazyload" src="{{ img_payment_url }}" data-src="{{ img_payment_url }}" loading="lazy" alt="{{ section.settings.img_payment }}"/>
+        </div>
+    {%- endif -%}
+</div>

@@ -1,0 +1,49 @@
+{%- liquid
+    assign bid = block.id
+    assign width = block.settings.width
+    assign mg = block.settings.mg
+    assign width_1200 = block.settings.width_1200
+    assign order_1200 = block.settings.order_1200
+    assign mg_1200 = block.settings.mg_1200
+    assign width_992 = block.settings.width_992
+    assign order_992 = block.settings.order_992
+    assign mg_992 = block.settings.mg_992
+    assign width_768 = block.settings.width_768
+    assign order_768 = block.settings.order_768
+    assign mg_768 = block.settings.mg_768
+-%}
+
+{%- capture style -%}
+    #b_{{ bid }}{
+    {%- if width != blank -%}width:{{ width }};{%- endif -%}
+    {%- if mg != blank -%}margin:{{ mg }};{%- endif -%}
+    }
+    {%- if width_1200 != blank or order_1200 != blank or mg_1200 != blank -%}
+        @media (max-width: 1199px){
+        #b_{{ bid }}{
+        {%- if width_1200 != blank -%}width:{{ width_1200 }};{%- endif -%}
+        {%- if order_1200 != blank -%}order:{{ order_1200 }};{%- endif -%}
+        {%- if mg_1200 != blank -%}order:{{ mg_1200 }};{%- endif -%}
+        }
+        }
+    {%- endif -%}
+    {%- if width_992 != blank or order_992 != blank or mg_992 != blank -%}
+        @media (max-width: 991px){
+        #b_{{ bid }}{
+        {%- if width_992 != blank -%}width:{{ width_992 }};{%- endif -%}
+        {%- if order_992 != blank -%}order:{{ order_992 }};{%- endif -%}
+        {%- if mg_992 != blank -%}margin:{{ mg_992 }};{%- endif -%}
+        }
+        }
+    {%- endif -%}
+    {%- if width_768 != blank or order_768 != blank or mg_768 != blank -%}
+        @media (max-width: 767px){
+        #b_{{ bid }}{
+        {%- if width_768 != blank -%}width:{{ width_768 }};{%- endif -%}
+        {%- if order_768 != blank -%}order:{{ order_768 }};{%- endif -%}
+        {%- if mg_768 != blank -%}margin:{{ mg_768 }};{%- endif -%}
+        }
+        }
+    {%- endif -%}
+{%- endcapture -%}
+{%- style -%}{{ style | strip_newlines | remove: "  " }}{%- endstyle -%}

@@ -1,0 +1,11 @@
+{%liquid
+    if blog == blank
+        assign split_1 = article.url | split: '/blogs/'
+        assign split_2 = split_1[1] | split: '/'
+        assign handle = split_2[0] | strip
+        assign blog = blogs[handle]
+    endif
+%}
+<div class="post-meta post-blog">
+    <a href="{{ blog.url }}">{{ 'blogs.article.in' | t }}: <strong>{{ blog.title }}</strong></a>
+</div>

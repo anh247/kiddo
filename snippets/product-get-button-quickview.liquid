@@ -1,0 +1,8 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<div class="product-btn-quickview">
+    <a href="{{ product.url | within: collection }}" data-pid="{{ current_variant.id }}" class="js_quick_view button-quick-view" data-js-popup-button="quick-view">
+        <span class="icon main-icon-eye"></span>
+        <span class="circle-loading"></span>
+        <span class="text">{{ 'products.product.quick_view' | t }}</span>
+    </a>
+</div>

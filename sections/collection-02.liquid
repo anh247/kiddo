@@ -1,0 +1,621 @@
+{%- liquid
+    assign sid = section.id
+    assign content_width = section.settings.content_width
+    assign container = section.settings.container
+    assign space = section.settings.space
+    assign limit = section.settings.limit | default: 8
+    assign collection_style = section.settings.collection_style
+    assign ratio = section.settings.ratio
+    if ratio > 0
+        assign aspect_ratio = ratio
+    endif
+    assign count = section.settings.count
+    assign item_border = section.settings.item_border
+    assign stretch_thumb = section.settings.stretch_thumb
+    assign use-slider = section.settings.use-slider
+    if use-slider
+        assign arrows_style = section.settings.arrows_style
+    endif
+    assign title_style = section.settings.title_style
+    assign title = section.settings.title
+    assign title_width = section.settings.title_width
+    assign title_bd = section.settings.title_bd
+    assign title_space = section.settings.title_space | default: 0
+-%}
+
+{%- capture s_style -%}
+    {% if use-slider %}--arrows-offset:var(--space-{{ title_space }});{% endif %}
+{%- endcapture -%}
+
+<section id="{{ sid }}" class="alz-collection style-02 space-{{ space }} {{ arrows_style }}" style="{{ s_style | strip_newlines | remove: "  " }}">
+    <div class="{{ content_width }}" style="{% if container != blank %}--container:{{ container }}{% endif %}">
+        <div class="section-inner">
+            {% if title != blank %}
+                <div class="alz-heading {{ title_style }} {% if title_bd %}title-border{% endif %} space-{{ title_space }}">
+                    <h2 class="title" {% if title_width != blank %}style="width:{{ title_width }}"{% endif %}><span class="text">{{ title }}</span></h2>
+                </div>
+            {% endif %}
+            <div class="slick-carousel {{ item_border }} {% unless use-slider %}grid-box-wrap{% endunless %} {% if stretch_thumb %}stretch-thumb{% endif %}">
+                {% assign target = section.settings.target %}
+                <div id="{{ id }}" class="product-list {% if use-slider %}grid-slider js_carousel{% else %}grid-box{% endif %}" data-sorting-items="true" {% if use-slider %}{%- render 'grid-slider' -%}{% endif %}>
+                    {%- if section.blocks.size > 0 -%}
+                        {%- for block in section.blocks -%}
+                            {%- liquid
+                                assign collection = block.settings.collection
+                                assign title = block.settings.title | default: collection.title | default: 'Collection Title'
+                                assign image = block.settings.image | default: collection.image | default: collection.products[0].featured_image
+                                assign collection_list = block.settings.collection_list
+                            -%}
+                            <div class="item">
+                                <div class="inner">
+                                    <div class="thumb">
+                                        {%- if image != blank -%}
+                                            {% render 'responsive-image', image: image, url: collection.url, aspect_ratio: aspect_ratio %}
+                                        {%- else -%}
+                                            <div class="image-card__img">
+                                                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                                {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg w-full h-full' }}
+                                            </div>
+                                        {%- endif -%}
+                                    </div>
+                                    <div class="info">
+                                        <h2 class="title"><a href="{{ collection.url | default: '/admin/collections' }}">{{ title }}</a></h2>
+                                        <ul class="collection-list">
+                                            {% if collection_list != blank %}
+                                                {% for collection in collection_list %}
+                                                    <li><a href="{{ collection.url | default: '/admin/collections' }}">{{ collection.title }} <span class="count">({{ collection.all_products_count }})</span></a></li>
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for i in (1..4) %}
+                                                    <li><a href="javascript:void(0)">Sub Collection Title <span class="count">(18)</span></a></li>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {%- else -%}
+                        <h5 class="not-found">{{ 'blogs.article.not_select' | t }}</h5>
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{%- render 'section_style' -%}
+{%- render 'section_style_box' -%}
+
+{%- schema -%}
+{
+    "name": "Collections 02",
+    "class": "alz-section section-collection animate--slide-in",
+    "settings": [
+        {
+            "type": "number",
+            "id": "z_index",
+            "label": "Z-Index"
+        },
+        {
+            "type": "select",
+            "id": "hidden_mobile",
+            "label": "Hide Section on mobile",
+            "options": [
+                {
+                    "value": "",
+                    "label": "No"
+                },
+                {
+                    "value": "hide_1200",
+                    "label": "(resolution < 1200px)"
+                },
+                {
+                    "value": "hide_992",
+                    "label": "(resolution < 992px)"
+                },
+                {
+                    "value": "hide_768",
+                    "label": "(resolution < 768px)"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "full-width",
+                    "label": "Full Width"
+                },
+                {
+                    "value": "full-width-pd",
+                    "label": "Full Width no Padding"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "container",
+            "label": "Container width",
+            "info": "Example: 1410px, 70%, 70vw"
+        },
+        {
+            "type": "text",
+            "id": "space",
+            "label": "Space",
+            "info": "Example:10,20,30,40,50,60,70,80,90,100"
+        },
+        {
+            "type": "header",
+            "content": "== Title settings"
+        },
+        {
+            "type": "select",
+            "id": "title_style",
+            "label": "Title style",
+            "options": [
+                {
+                    "value": "style-01",
+                    "label": "Style 01"
+                },
+                {
+                    "value": "style-02",
+                    "label": "Style 02"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Hot Collections"
+        },
+        {
+            "type": "text",
+            "id": "title_width",
+            "label": "Title width",
+            "info": "For style 01"
+        },
+        {
+            "type": "checkbox",
+            "id": "title_bd",
+            "label": "Title border",
+            "info": "For style 02"
+        },
+        {
+            "type": "text",
+            "id": "title_space",
+            "label": "Space",
+            "info": "Example:10,20,30,40,50,60,70,80,90,100",
+            "default": "30"
+        },
+        {
+            "type": "header",
+            "content": "== Item settings"
+        },
+        {
+            "type": "number",
+            "id": "ratio",
+            "label": "Image ratio",
+            "info": "Ratio = width / height. Example: 1, 1.2, 0.8"
+        },
+        {
+            "type": "checkbox",
+            "id": "count",
+            "label": "Product count"
+        },
+        {
+            "type": "select",
+            "id": "item_border",
+            "label": "Item border",
+            "info": "If Full, Columns gap & Rows gap is 0",
+            "options": [
+                {
+                    "value": "",
+                    "label": "None"
+                },
+                {
+                    "value": "border-item",
+                    "label": "Item"
+                },
+                {
+                    "value": "border-between",
+                    "label": "Between"
+                },
+                {
+                    "value": "border-full",
+                    "label": "Full"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "stretch_thumb",
+            "label": "Stretch Thumbnail",
+            "info": "For item border: item, full",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "== Loop settings"
+        },
+        {
+            "type": "text",
+            "id": "cols_number",
+            "label": "Columns (6 screen resolutions)",
+            "info": "Desktop,<1500,<1200,<992,<768,<480",
+            "default": "4,4,4,3,2,1"
+        },
+        {
+            "type": "text",
+            "id": "cols_gap",
+            "label": "Columns gap (6 screen resolutions)",
+            "info": "Desktop,<1500,<1200,<992,<768,<480",
+            "default": "30px,30px,20px,20px,16px,10px"
+        },
+        {
+            "type": "text",
+            "id": "rows_gap",
+            "label": "Rows gap (6 screen resolutions)",
+            "info": "Desktop,<1500,<1200,<992,<768,<480",
+            "default": "30px,30px,20px,20px,16px,10px"
+        },
+        {
+            "type": "checkbox",
+            "id": "use-slider",
+            "label": "Use slider?",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "slides-To-Scroll",
+            "label": "Slide to scroll",
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "range",
+            "id": "rows",
+            "label": "Rows",
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "checkbox",
+            "id": "arrows",
+            "label": "Arrows",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "arrows_style",
+            "label": "Arrows style",
+            "options": [
+                {
+                    "value": "",
+                    "label": "Default"
+                },
+                {
+                    "value": "arrow-top",
+                    "label": "On top"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "dots",
+            "label": "Dots"
+        },
+        {
+            "type": "text",
+            "id": "speed",
+            "label": "Speed",
+            "default": "300",
+            "info": "Speed in milliseconds"
+        },
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Autoplay"
+        },
+        {
+            "type": "text",
+            "id": "autoplay-Speed",
+            "label": "Autoplay Speed",
+            "default": "3000",
+            "info": "Autoplay Speed in milliseconds"
+        },
+        {
+            "type": "checkbox",
+            "id": "fade",
+            "label": "Fade",
+            "info": "Only use for 1 column"
+        },
+        {
+            "type": "checkbox",
+            "id": "center-Mode",
+            "label": "Center Mode"
+        },
+        {
+            "type": "checkbox",
+            "id": "adaptive-Height",
+            "label": "Adaptive Height"
+        },
+        {
+            "type": "checkbox",
+            "id": "infinite",
+            "label": "Infinite"
+        },
+        {
+            "type": "checkbox",
+            "id": "vertical",
+            "label": "Vertical"
+        },
+        {
+            "type": "header",
+            "content": "== Section settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "for_inner",
+            "label": "Settings apply for inner"
+        },
+        {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "bg_position",
+            "label": "Background position",
+            "info": "Example: center/top/bottom center/left/right, 100% 100%, 100px 100px",
+            "default": "center center"
+        },
+        {
+            "type": "text",
+            "id": "bg_size",
+            "label": "Background size",
+            "info": "Example: cover, contain, 100% 100%, 100px 100px",
+            "default": "cover"
+        },
+        {
+            "type": "text",
+            "id": "bg_repeat",
+            "label": "Background repeat",
+            "info": "Example: no-repeat, repeat, repeat-x, repeat-y",
+            "default": "no-repeat"
+        },
+        {
+            "type": "checkbox",
+            "id": "bg_fixed",
+            "label": "Background fixed",
+            "info": "For desktop (resolution > 1200px)"
+        },
+        {
+            "type": "color_background",
+            "id": "bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "color",
+            "id": "bg_cl",
+            "label": "Background color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl",
+            "label": "Main color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl_t",
+            "label": "Main color - text inside"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl",
+            "label": "Dark color"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_2",
+            "label": "Dark color 2"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_3",
+            "label": "Dark color 3"
+        },
+        {
+            "type": "color",
+            "id": "light_cl",
+            "label": "Light color"
+        },
+        {
+            "type": "color",
+            "id": "light_cl_2",
+            "label": "Light color 2"
+        },
+        {
+            "type": "color",
+            "id": "line_cl",
+            "label": "Line color"
+        },
+        {
+            "type": "text",
+            "id": "fz",
+            "label": "Font size",
+            "info": "Example: 16px"
+        },
+        {
+            "type": "text",
+            "id": "lh",
+            "label": "Line Height",
+            "info": "Example: 24px, 1.4em"
+        },
+        {
+            "type": "text",
+            "id": "ls",
+            "label": "Letter spacing",
+            "info": "Example: 1px, 0.1em"
+        },
+        {
+            "type": "text",
+            "id": "fw",
+            "label": "Font weight",
+            "info": "Example: 100, 200, 300, 400, 500, 600, 700, 800"
+        },
+        {
+            "type": "text",
+            "id": "tt",
+            "label": "Text transform",
+            "info": "Example: none, uppercase, lowercase, capitalize"
+        },
+        {
+            "type": "color",
+            "id": "bd_color",
+            "label": "Border color"
+        },
+        {
+            "type": "text",
+            "id": "bd_style",
+            "label": "Border style",
+            "info": "Example: solid, dotted, dashed, double, groove, ridge, outset"
+        },
+        {
+            "type": "text",
+            "id": "bd_width",
+            "label": "Border width",
+            "info": "Example: 1px, 1px 0, 1px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 1200px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_1200",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_1200",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_1200",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 992px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_992",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_992",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_992",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 768px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_768",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_768",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_768",
+            "label": "Padding"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "item",
+            "name": "Item",
+            "settings": [
+                {
+                    "type": "collection",
+                    "id": "collection",
+                    "label": "Collection"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Custom Title"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Custom Image"
+                },
+                {
+                    "type": "collection_list",
+                    "id": "collection_list",
+                    "label": "Sub Collections"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Collection 02",
+            "category": "Collections",
+            "blocks": [
+                {
+                    "type": "item"
+                },
+                {
+                    "type": "item"
+                },
+                {
+                    "type": "item"
+                },
+                {
+                    "type": "item"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,18 @@
+<div id="recoverPassword" class="d-none">
+    {% form 'recover_customer_password' %}
+        <h2 class="title">{{ 'customer.recover.title' | t }}</h2>
+        <p class="subtext">{{ 'customer.recover.subtext' | t }}</p>
+        {{ form.errors | default_errors }}
+        {% if form.posted_successfully? %}
+            <span class="reset-password-success">{{ 'customer.recover.success' | t }}</span>
+        {% endif %}
+        <p class="form-field">
+            <label for="RecoverEmail">{{ 'customer.general.email' | t }}<span class="required">*</span></label>
+            <input id="RecoverEmail" type="email" name="email" required>
+        </p>
+        <p class="group-button">
+            <input type="submit" class="button" value="{{ 'customer.recover.button' | t }}">
+        </p>
+    {% endform %}
+    <a href="javascript:void(0)" class="back-login link">{{ 'customer.general.back_login' | t }}</a>
+</div>

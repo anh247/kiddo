@@ -1,0 +1,801 @@
+{% liquid
+    assign sid = section.id
+    assign content_width = section.settings.content_width
+    assign container = section.settings.container
+    assign space = section.settings.space
+    assign sidebar = section.settings.sidebar
+    assign show_tag = section.settings.show_tag
+    assign show_share = section.settings.show_share
+    assign article_id = article.id
+    assign pageUrl = content_for_header | split: '"pageurl":"' | last | split: '"' | first | split: '.myshopify.com' | last | replace: '\/', '/' | replace: '%20', ' ' | replace: '\u0026', '&'
+    if pageUrl contains "?"
+        assign query_string = pageUrl | split: '?' | last
+        assign query_parts = query_string | split: '&'
+        for part in query_parts
+            assign key_and_value = part | split: '='
+            case key_and_value[0]
+                when 'layout'
+                    assign layout = key_and_value[1]
+                when 'sidebar'
+                    assign sidebar = key_and_value[1]
+            endcase
+        endfor
+    endif
+%}
+
+<section id="{{ sid }}" class="post-page space-{{ space }}">
+    <div class="{{ content_width }} sidebar-{{ sidebar }}" style="{% if container != blank %}--container:{{ container }}{% endif %}">
+        {% if sidebar != 'full' %}{% render 'sidebar-mobile-btn' %}{% endif %}
+        <div class="section-inner">
+            <div class="site-main">
+                {% if article.image != blank %}
+                    {% assign img_url = article.image.src | img_url: '' %}
+                    <div class="post-thumb">
+                        <img class="lazyload" src="{{ img_url }}" data-src="{{ img_url }}" loading="lazy" alt="{{ image.alt | escape }}"/>
+                    </div>
+                {% endif %}
+                <div class="post-single">
+                    <div class="post-info">
+                        <h1 class="post-title">{{ article.title }}</h1>
+                        <div class="post-metas">
+                            {% render 'post-get-author', article: article %}
+                            {% render 'post-get-blog', article: article %}
+                            {% render 'post-get-date', article: article %}
+                            {% render 'post-get-comment-count', article: article %}
+                        </div>
+                        <div class="post-content paragraph">{{ article.content }}</div>
+                        {% if show_tag or show_share %}
+                            <div class="post-bottom">
+                                {% if show_tag and article.tags.size > 0 %}
+                                    <div class="post-tag alz-tag">
+                                        <h4 class="title">{{ 'blogs.article.tags' | t }}: </h4>
+                                        <ul>
+                                            {% for tag in article.tags %}
+                                                <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                                {% if show_share %}{% render 'social-sharing', article: article %}{% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% if section.settings.show_pagination %}
+                        <div class="pagination-post">
+                            {% if blog.previous_article %}
+                                <div class="item prev">
+                                    <a href="{{ blog.previous_article }}">
+                                        <span class="text">{{ 'blogs.article.older_post' | t }}</span>
+                                        <span class="title">{{ blog.previous_article.title }}</span>
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% if blog.next_article %}
+                                <div class="item next">
+                                    <a href="{{ blog.next_article }}">
+                                        <span class="text">{{ 'blogs.article.newer_post' | t }}</span>
+                                        <span class="title">{{ blog.next_article.title }}</span>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% if section.settings.show_related %}
+                        {% liquid
+                            assign limit = section.settings.related_limit | default: 6
+                            if section.settings.related_ratio > 0
+                                assign aspect_ratio = section.settings.related_ratio
+                            endif
+                        %}
+                        <div class="related-post">
+                            {% if section.settings.related_title != blank %}
+                                <h2 class="title">{{ section.settings.related_title }}</h2>
+                            {% endif %}
+                            {%- if blog.articles.size > 1 -%}
+                                <div class="slick-carousel">
+                                    <div class="post-list grid-slider js_carousel" data-arrows="true" data-slides-to-show="3"
+                                         data-responsive='[{"breakpoint": 1500, "settings": {"slidesToShow": 3 }},{"breakpoint": 1200, "settings": {"slidesToShow": 3 }},{"breakpoint": 992, "settings": {"slidesToShow": 3 }},{"breakpoint": 768, "settings": {"slidesToShow": 2 }},{"breakpoint": 480, "settings": {"slidesToShow": 1 }},{"breakpoint": 1, "settings": {"slidesToShow": 1 }}]'>
+                                        {%- for article in blog.articles limit: limit -%}
+                                            {% if article_id != article.id %}
+                                                {% render 'post-style-01', blog: blog, article: article, aspect_ratio: aspect_ratio %}
+                                            {% endif %}
+                                        {%- endfor -%}
+                                    </div>
+                                </div>
+                            {%- else -%}
+                                <h5 class="not-found">{{ 'blogs.article.not_select' | t }}</h5>
+                            {%- endif -%}
+                        </div>
+                    {% endif %}
+                    {% if section.settings.show_comment and blog.comments_enabled? %}
+                        {% assign comment_per_page = section.settings.comment_per_page | default: 2 %}
+                        <div class="post-comment">
+                            {% if article.comments_count > 0 %}
+                                <h2 class="title">
+                                    {% if article.comments_count > 1 %}
+                                        {{ 'blogs.comments.comments_with_count.other' | t: count: article.comments_count }}
+                                    {% else %}
+                                        {{ 'blogs.comments.comments_with_count.one' | t: count: article.comments_count }}
+                                    {% endif %}
+                                </h2>
+                            {% endif %}
+                            {% paginate article.comments by comment_per_page %}
+                                {% if comment and comment.created_at %}
+                                    <p class="note form-success">
+                                        {% if blog.moderated? %}
+                                            {{ 'blogs.comments.success_moderated' | t }}
+                                        {% else %}
+                                            {{ 'blogs.comments.success' | t }}
+                                        {% endif %}
+                                    </p>
+                                {% endif %}
+                                {% if article.comments_count > 0 %}
+                                    <div class="comment-list">
+                                        {% for comment in article.comments %}
+                                            <div class="comment-item">
+                                                <div class="comment-avatar">
+                                                    <span class="icon main-icon-account"></span>
+                                                </div>
+                                                <div class="comment-content">
+                                                    <div class="comment-metas">
+                                                        <strong class="comment-author">{{ comment.author }}</strong>
+                                                        <div class="comment-date">
+                                                            <strong class="day">{{ comment.created_at | date: "%d" }}</strong>
+                                                            <span class="month">{{ comment.created_at | date: "%b" }}</span>,
+                                                            <span class="year">{{ comment.created_at | date: "%Y" }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <p class="comment-text">{{ comment.content | strip_html }}</p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% if paginate.pages > 1 %}
+                                    {% render 'pagination', paginate: paginate %}
+                                {% endif %}
+                            {% endpaginate %}
+                            <div class="comment-respond">
+                                <h2 class="title">{{ 'blogs.comments.respond-title' | t }}</h2>
+                                {% form 'new_comment', article %}
+                                    {{ form.errors | default_errors }}
+                                    <div class="row">
+                                        <p class="col-sm-6 form-field">
+                                            <label for="name"><input type="text" placeholder="{{ 'blogs.comments.name' | t }}*" id="name" name="comment[author]"></label>
+                                        </p>
+                                        <p class="col-sm-6 form-field">
+                                            <label for="email"><input type="text" placeholder="{{ 'blogs.comments.email' | t }}*" id="email" name="comment[email]"></label>
+                                        </p>
+                                    </div>
+                                    <p class="form-field">
+                                        <label for="message"><textarea rows="6" class="input-note" placeholder="{{ 'blogs.comments.message' | t }}*" id="message" name="comment[body]"></textarea></label>
+                                    </p>
+                                    {% if blog.moderated? %}
+                                        <p class="label-text">{{ 'blogs.comments.moderated' | t }}</p>
+                                    {% endif %}
+                                    <div class="form-submit">
+                                        <button class="button submit" type="submit">{{ 'blogs.comments.submit' | t }}</button>
+                                    </div>
+                                {% endform %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% if sidebar != 'full' %}{% render 'sidebar' %}{% endif %}
+        </div>
+    </div>
+</section>
+
+{%- render 'section_style' -%}
+
+{% schema %}
+{
+    "name": "Article",
+    "class": "alz-section section-main-article",
+    "settings": [
+        {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "full-width",
+                    "label": "Full Width"
+                },
+                {
+                    "value": "full-width-pd",
+                    "label": "Full Width no Padding"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "container",
+            "label": "Container width",
+            "info": "Example: 1410px, 70%, 70vw"
+        },
+        {
+            "type": "text",
+            "id": "space",
+            "label": "Space",
+            "info": "Example:10,20,30,40,50,60,70,80,90,100"
+        },
+        {
+            "type": "select",
+            "id": "sidebar",
+            "label": "Sidebar",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "No sidebar"
+                },
+                {
+                    "value": "start",
+                    "label": "Start"
+                },
+                {
+                    "value": "end",
+                    "label": "End"
+                }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "== Article elements"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_tag",
+            "label": "Tag",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_share",
+            "label": "Share",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_pagination",
+            "label": "Pagination",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_related",
+            "label": "Related",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "related_title",
+            "label": "Related Title",
+            "default": "Related Posts"
+        },
+        {
+            "type": "number",
+            "id": "related_limit",
+            "label": "Related Limit posts",
+            "default": 6
+        },
+        {
+            "type": "number",
+            "id": "related_ratio",
+            "label": "Related Image ratio",
+            "info": "Ratio = width / height. Example: 1, 1.2, 0.8"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_comment",
+            "label": "Comment",
+            "default": true
+        },
+        {
+            "type": "number",
+            "id": "comment_per_page",
+            "label": "Comments per page",
+            "default": 2
+        },
+        {
+            "type": "header",
+            "content": "== Section settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "for_inner",
+            "label": "Settings apply for inner"
+        },
+        {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "bg_position",
+            "label": "Background position",
+            "info": "Example: center/top/bottom center/left/right, 100% 100%, 100px 100px",
+            "default": "center center"
+        },
+        {
+            "type": "text",
+            "id": "bg_size",
+            "label": "Background size",
+            "info": "Example: cover, contain, 100% 100%, 100px 100px",
+            "default": "cover"
+        },
+        {
+            "type": "text",
+            "id": "bg_repeat",
+            "label": "Background repeat",
+            "info": "Example: no-repeat, repeat, repeat-x, repeat-y",
+            "default": "no-repeat"
+        },
+        {
+            "type": "checkbox",
+            "id": "bg_fixed",
+            "label": "Background fixed",
+            "info": "For desktop (resolution > 1200px)"
+        },
+        {
+            "type": "color_background",
+            "id": "bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "color",
+            "id": "bg_cl",
+            "label": "Background color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl",
+            "label": "Main color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl_t",
+            "label": "Main color - text inside"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl",
+            "label": "Dark color"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_2",
+            "label": "Dark color 2"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_3",
+            "label": "Dark color 3"
+        },
+        {
+            "type": "color",
+            "id": "light_cl",
+            "label": "Light color"
+        },
+        {
+            "type": "color",
+            "id": "light_cl_2",
+            "label": "Light color 2"
+        },
+        {
+            "type": "color",
+            "id": "line_cl",
+            "label": "Line color"
+        },
+        {
+            "type": "text",
+            "id": "fz",
+            "label": "Font size",
+            "info": "Example: 16px"
+        },
+        {
+            "type": "text",
+            "id": "lh",
+            "label": "Line Height",
+            "info": "Example: 24px, 1.4em"
+        },
+        {
+            "type": "text",
+            "id": "ls",
+            "label": "Letter spacing",
+            "info": "Example: 1px, 0.1em"
+        },
+        {
+            "type": "text",
+            "id": "fw",
+            "label": "Font weight",
+            "info": "Example: 100, 200, 300, 400, 500, 600, 700, 800"
+        },
+        {
+            "type": "text",
+            "id": "tt",
+            "label": "Text transform",
+            "info": "Example: none, uppercase, lowercase, capitalize"
+        },
+        {
+            "type": "color",
+            "id": "bd_color",
+            "label": "Border color"
+        },
+        {
+            "type": "text",
+            "id": "bd_style",
+            "label": "Border style",
+            "info": "Example: solid, dotted, dashed, double, groove, ridge, outset"
+        },
+        {
+            "type": "text",
+            "id": "bd_width",
+            "label": "Border width",
+            "info": "Example: 1px, 1px 0, 1px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 1200px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_1200",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_1200",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_1200",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 992px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_992",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_992",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_992",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 768px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_768",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_768",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_768",
+            "label": "Padding"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "search",
+            "name": "Sidebar: Search",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Search"
+                },
+                {
+                    "type": "text",
+                    "id": "placeholder",
+                    "label": "Placeholder",
+                    "default": "Search..."
+                }
+            ]
+        },
+        {
+            "type": "menu",
+            "name": "Sidebar: Menu",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Blogs"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu",
+                    "label": "Add menu"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "count",
+                    "label": "Count",
+                    "default": true
+                }
+            ]
+        },
+        {
+            "type": "post",
+            "name": "Sidebar: Latest post",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Latest posts"
+                },
+                {
+                    "type": "blog",
+                    "id": "blog",
+                    "label": "Blog"
+                },
+                {
+                    "type": "number",
+                    "id": "limit",
+                    "label": "Limit posts",
+                    "default": 3
+                },
+                {
+                    "type": "select",
+                    "id": "post_style",
+                    "label": "Post style",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": "Style 01"
+                        },
+                        {
+                            "value": "2",
+                            "label": "Style 02"
+                        },
+                        {
+                            "value": "3",
+                            "label": "Style 03"
+                        }
+                    ],
+                    "default": "2"
+                },
+                {
+                    "type": "number",
+                    "id": "ratio",
+                    "label": "Image ratio",
+                    "info": "Ratio = width / height. Example: 1, 1.2, 0.8",
+                    "default": 1
+                }
+            ]
+        },
+        {
+            "type": "product",
+            "name": "Sidebar: Product list",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Featured products"
+                },
+                {
+                    "type": "collection",
+                    "id": "collection",
+                    "label": "Collection"
+                },
+                {
+                    "type": "product_list",
+                    "id": "product_list",
+                    "label": "Product list"
+                },
+                {
+                    "type": "number",
+                    "id": "limit",
+                    "label": "Limit products",
+                    "default": 3
+                },
+                {
+                    "type": "select",
+                    "id": "product_style",
+                    "label": "Product style",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": "Style 01"
+                        },
+                        {
+                            "value": "2",
+                            "label": "Style 02"
+                        },
+                        {
+                            "value": "3",
+                            "label": "Style 03"
+                        },
+                        {
+                            "value": "4",
+                            "label": "Style 04"
+                        },
+                        {
+                            "value": "5",
+                            "label": "Style 05"
+                        }
+                    ],
+                    "default": "2"
+                },
+                {
+                    "type": "number",
+                    "id": "ratio",
+                    "label": "Image ratio",
+                    "info": "Ratio = width / height. Example: 1, 1.2, 0.8"
+                }
+            ]
+        },
+        {
+            "type": "tag",
+            "name": "Sidebar: Tag",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Tags"
+                }
+            ]
+        },
+        {
+            "type": "social",
+            "name": "Sidebar: Social",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Socials"
+                },
+                {
+                    "type": "select",
+                    "id": "social_style",
+                    "label": "Social style",
+                    "options": [
+                        {
+                            "value": "style-01",
+                            "label": "Style 01"
+                        },
+                        {
+                            "value": "style-02",
+                            "label": "Style 02"
+                        },
+                        {
+                            "value": "style-03",
+                            "label": "Style 03"
+                        }
+                    ]
+                },
+                {
+                    "type": "color",
+                    "id": "social_icon_cl",
+                    "label": "Social icon color"
+                },
+                {
+                    "type": "color",
+                    "id": "social_icon_bg",
+                    "label": "Social icon background"
+                }
+            ]
+        },
+        {
+            "type": "image",
+            "name": "Sidebar: Image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link"
+                },
+                {
+                    "type": "select",
+                    "id": "open_link",
+                    "options": [
+                        {
+                            "value": "_self",
+                            "label": "Current window (_self)"
+                        },
+                        {
+                            "value": "_blank",
+                            "label": "New window (_blank)"
+                        }
+                    ],
+                    "label": "Open link in"
+                },
+                {
+                    "type": "select",
+                    "id": "hover_effect",
+                    "label": "Hover Effect",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "None"
+                        },
+                        {
+                            "value": "image-zoom",
+                            "label": "Image zoom"
+                        },
+                        {
+                            "value": "image-overlay",
+                            "label": "Image overlay"
+                        },
+                        {
+                            "value": "plus-zoom",
+                            "label": "Plus zoom"
+                        },
+                        {
+                            "value": "overlay-plus",
+                            "label": "Overlay Plus"
+                        },
+                        {
+                            "value": "overlay-cross",
+                            "label": "Overlay Cross"
+                        },
+                        {
+                            "value": "overlay-horizontal",
+                            "label": "Overlay Horizontal"
+                        },
+                        {
+                            "value": "overlay-vertical",
+                            "label": "Overlay Vertical"
+                        },
+                        {
+                            "value": "border-zoom",
+                            "label": "Border Zoom"
+                        },
+                        {
+                            "value": "border-plus",
+                            "label": "Border Plus"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

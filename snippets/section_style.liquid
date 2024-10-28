@@ -1,0 +1,127 @@
+{%- liquid
+    assign sid = section.id
+    assign z_index = section.settings.z_index
+    assign hidden_mobile = section.settings.hidden_mobile
+    assign vertical_offset = section.settings.vertical_offset
+    assign vertical_offset_gap = section.settings.vertical_offset_gap | default: '0px'
+    if section.settings.for_inner
+        assign section_inner = ' .section-inner'
+    else
+        assign section_inner = ''
+    endif
+    assign bg_image = section.settings.bg_image
+    assign bg_position = section.settings.bg_position
+    assign bg_size = section.settings.bg_size
+    assign bg_repeat = section.settings.bg_repeat
+    assign bg_fixed = section.settings.bg_fixed
+    assign bg_gradient = section.settings.bg_gradient
+    assign bg_cl = section.settings.bg_cl
+    assign main_cl = section.settings.main_cl
+    assign main_cl_t = section.settings.main_cl_t
+    assign dark_cl = section.settings.dark_cl
+    assign dark_cl_2 = section.settings.dark_cl_2
+    assign dark_cl_3 = section.settings.dark_cl_3
+    assign light_cl = section.settings.light_cl
+    assign light_cl_2 = section.settings.light_cl_2
+    assign line_cl = section.settings.line_cl
+    assign fz = section.settings.fz
+    assign lh = section.settings.lh
+    assign ls = section.settings.ls
+    assign fw = section.settings.fw
+    assign tt = section.settings.tt
+    assign bd_style = section.settings.bd_style
+    assign bd_width = section.settings.bd_width
+    assign bd_radius = section.settings.bd_radius
+    assign bd_color = section.settings.bd_color
+    assign height = section.settings.height
+    assign mg = section.settings.mg
+    assign pd = section.settings.pd
+    assign bd_width_1200 = section.settings.bd_width_1200
+    assign height_1200 = section.settings.height_1200
+    assign mg_1200 = section.settings.mg_1200
+    assign pd_1200 = section.settings.pd_1200
+    assign bd_width_992 = section.settings.bd_width_992
+    assign height_992 = section.settings.height_992
+    assign mg_992 = section.settings.mg_992
+    assign pd_992 = section.settings.pd_992
+    assign bd_width_768 = section.settings.bd_width_768
+    assign mg_768 = section.settings.mg_768
+    assign pd_768 = section.settings.pd_768
+    assign height_768 = section.settings.height_768
+-%}
+
+{%- capture style -%}
+    {% if z_index > 0 %}#shopify-section-{{ sid }}{z-index:{{ z_index }}}{% endif %}
+    {% if vertical_offset %}
+        @media (min-width: 1200px){#{{ sid }} .section-inner{
+        margin-inline-start: calc(var(--v-menu-width) + {{ vertical_offset_gap }})
+        }}
+    {% endif %}
+    #{{ sid }}{{ section_inner }}{
+    {% if bg_image != blank %}
+        background-image: url('{{ bg_image | img_url: "1920x" }}');
+        background-position:{{ bg_position }};
+        background-size:{{ bg_size }};
+        background-repeat:{{ bg_repeat }};
+    {% endif %}
+    {% if bg_gradient != blank %}background-image:{{ bg_gradient }};{% endif %}
+    {% if bg_cl != blank and bg_cl.alpha != 0.0 %}background-color:{{ bg_cl }};{% endif %}
+    {% if main_cl != blank and main_cl.alpha != 0.0 %}--main-cl:{{ main_cl }};{% endif %}
+    {% if main_cl_t != blank and main_cl_t.alpha != 0.0 %}--main-cl-t:{{ main_cl_t }};{% endif %}
+    {% if dark_cl != blank and dark_cl.alpha != 0.0 %}--dark-cl:{{ dark_cl }};{% endif %}
+    {% if dark_cl_2 != blank and dark_cl_2.alpha != 0.0 %}--dark-cl-2:{{ dark_cl_2 }};{% endif %}
+    {% if dark_cl_3 != blank and dark_cl_3.alpha != 0.0 %}--dark-cl-3:{{ dark_cl_3 }};{% endif %}
+    {% if light_cl != blank and light_cl.alpha != 0.0 %}--light-cl:{{ light_cl }};{% endif %}
+    {% if light_cl_2 != blank and light_cl_2.alpha != 0.0 %}--light-cl-2:{{ light_cl_2 }};{% endif %}
+    {% if line_cl != blank and line_cl.alpha != 0.0 %}--line-cl:{{ line_cl }};{% endif %}
+    {% if fz != blank %}font-size:{{ fz }};{% endif %}
+    {% if lh != blank %}line-height:{{ lh }};{% endif %}
+    {% if ls != blank %}letter-spacing:{{ ls }};{% endif %}
+    {% if fw != blank %}font-weight:{{ fw }};{% endif %}
+    {% if tt != blank %}text-transform:{{ tt }};{% endif %}
+    {% if bd_style != blank %}border-style:{{ bd_style }};{% endif %}
+    {% if bd_width != blank %}border-width:{{ bd_width }};{% endif %}
+    {% if bd_radius != blank %}border-radius:{{ bd_radius }};{% endif %}
+    {% if bd_color != blank and bd_color.alpha != 0.0 %}border-color:{{ bd_color }};{% endif %}
+    {% if height != blank %}min-height:{{ height }};{% endif %}
+    {% if mg != blank %}margin:{{ mg }};{% endif %}
+    {% if pd != blank %}padding:{{ pd }};{% endif %}
+    }
+    {%- if bg_fixed == true -%}
+        @media (min-width: 1200px){#{{ sid }}{{ section_inner }}{background-attachment:fixed}}
+    {%- endif -%}
+    {%- if hidden_mobile == 'hide_1200' or bd_width_1200 != blank or height_1200 != blank or mg_1200 != blank or pd_1200 != blank -%}
+        @media (max-width: 1199px){
+        #{{ sid }}{{ section_inner }}{
+        {% if hidden_mobile == 'hide_1200' %}display:none !important;{% endif %}
+        {% if bd_width_1200 != blank %}border-width:{{ bd_width_1200 }};{% endif %}
+        {% if height_1200 != blank %}min-height:{{ height_1200 }};{% endif %}
+        {% if mg_1200 != blank %}margin:{{ mg_1200 }};{% endif %}
+        {% if pd_1200 != blank %}padding:{{ pd_1200 }};{% endif %}
+        }
+        }
+    {%- endif -%}
+    {%- if hidden_mobile == 'hide_992' or bd_width_992 != blank or height_992 != blank or mg_992 != blank or pd_992 != blank -%}
+        @media (max-width: 991px){
+        #{{ sid }}{{ section_inner }}{
+        {% if hidden_mobile == 'hide_992' %}display:none !important;{% endif %}
+        {% if bd_width_992 != blank %}border-width:{{ bd_width_992 }};{% endif %}
+        {% if height_992 != blank %}min-height:{{ height_992 }};{% endif %}
+        {% if mg_992 != blank %}margin:{{ mg_992 }};{% endif %}
+        {% if pd_992 != blank %}padding:{{ pd_992 }};{% endif %}
+        }
+        }
+    {%- endif -%}
+    {%- if hidden_mobile == 'hide_768' or bd_width_768 != blank or height_768 != blank or mg_768 != blank or pd_768 != blank -%}
+        @media (max-width: 767px){
+        #{{ sid }}{{ section_inner }}{
+        {% if hidden_mobile == 'hide_768' %}display:none !important;{% endif %}
+        {% if bd_width_768 != blank %}border-width:{{ bd_width_768 }};{% endif %}
+        {% if height_768 != blank %}min-height:{{ height_768 }};{% endif %}
+        {% if mg_768 != blank %}margin:{{ mg_768 }};{% endif %}
+        {% if pd_768 != blank %}padding:{{ pd_768 }};{% endif %}
+        }
+        }
+    {%- endif -%}
+{%- endcapture -%}
+{%- style -%}{{ style | strip_newlines | remove: "  " }}{%- endstyle -%}

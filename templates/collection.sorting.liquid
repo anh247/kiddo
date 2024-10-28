@@ -1,0 +1,28 @@
+{% layout none %}
+{% assign pageUrl = content_for_header | split: '"pageurl":"' | last | split: '"' | first | split: '.myshopify.com' | last | replace: '\/', '/' | replace: '%20', ' ' | replace: '\u0026', '&' %}
+{% liquid
+    if pageUrl contains "?"
+        assign query_string = pageUrl | split: '?' | last
+        assign query_parts = query_string | split: '&'
+        for part in query_parts
+            assign key_and_value = part | split: '='
+            if key_and_value.size > 1
+                case key_and_value[0]
+                    when 'product_style'
+                        assign product_style = key_and_value[1]
+                    when 'aspect_ratio'
+                        assign aspect_ratio = key_and_value[1] | plus: 0
+                    when 'limit'
+                        assign limit = key_and_value[1] | plus: 0
+                endcase
+            endif
+        endfor
+    endif
+%}
+{% assign animation_order = 0 %}
+{% for product in collections[collection.handle].products limit: limit %}
+    <div data-lazy-product-load class="productLazyload lazyload">
+        {% render 'product-style', product_style: product_style, product: product, aspect_ratio: aspect_ratio, animation_order: animation_order %}
+    </div>
+    {% assign animation_order = animation_order | plus: 1 %}
+{% endfor %}

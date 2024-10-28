@@ -1,0 +1,22 @@
+{%- capture fonts -%}
+    {% assign body_font = settings.body_font %}
+    {% assign body_font_url = body_font.family | remove: '"' | replace: ' ', '+' %}
+    {% assign enable_heading_font = settings.enable_heading_font %}
+    {% assign heading_font = settings.heading_font %}
+    {% assign heading_font_url = heading_font.family | remove: '"' | replace: ' ', '+' %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family={{ body_font_url }}:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    {% if enable_heading_font %}
+        <link href="https://fonts.googleapis.com/css2?family={{ heading_font_url }}:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    {% endif %}
+    {% style %}
+        :root{
+        --main-ff: {{ body_font.family }}{% if body_font.fallback_families %}, {{ body_font.fallback_families }}{% endif %};
+        {% if enable_heading_font %}
+            --heading-ff: {{ heading_font.family }}{% if heading_font.fallback_families %}, {{ heading_font.fallback_families }}{% endif %};
+        {% endif %}
+        }
+    {% endstyle %}
+{%- endcapture -%}
+{{ fonts | strip_newlines | remove: "  " }}

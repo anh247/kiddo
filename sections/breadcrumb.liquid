@@ -1,0 +1,421 @@
+{%- if template == 'index' or section.settings.hidden %}{% break %}{% endif -%}
+{% liquid
+    assign sid = section.id
+    assign content_width = section.settings.content_width
+    assign container = section.settings.container
+    assign space = section.settings.space
+    assign page_title = section.settings.page_title
+    assign text_align = section.settings.text_align
+%}
+
+<section id="{{ sid }}" class="alz-breadcrumb breadcrumbs space-{{ space }}">
+    <div class="{{ content_width }}" style="{% if container != blank %}--container:{{ container }}{% endif %}">
+        <div class="section-inner {{ text_align }}">
+            {% unless section.settings.hide_page_title == true %}
+                {%- if page_title != blank -%}
+                    {% assign name = page_title %}
+                {%- elsif template contains 'collections' -%}
+                    {% assign name = 'layout.breadcrumbs.collections' | t %}
+                {%- elsif template contains 'cart' -%}
+                    {% assign name = 'layout.breadcrumbs.cart' | t %}
+                {%- elsif template contains 'page' -%}
+                    {% assign name = page.title %}
+                {%- elsif template contains 'product' -%}
+                    {%- if collection.url -%}
+                        {% assign name = collection.title %}
+                    {%- endif -%}
+                {%- elsif template contains 'collection' and collection.handle -%}
+                    {% assign name = collection.title %}
+                {%- elsif template == 'blog' -%}
+                    {% assign name = blog.title %}
+                {%- elsif template == 'article' -%}
+                    {% assign name = article.title %}
+                {%- elsif template contains 'reset_password' -%}
+                    {% assign name = 'customer.reset_password.page_title' | t %}
+                {%- else -%}
+                    {% assign name = template %}
+                    {% if name contains '/' %}
+                        {% assign arr = name | split: '/' | last %}
+                        {% assign name = arr %}
+                    {% endif %}
+                {%- endif -%}
+                {% if template contains 'article' or template contains 'product' %}
+                    <h2 class="page-title">{{ name }}</h2>
+                {% else %}
+                    <h1 class="page-title">{{ name }}</h1>
+                {% endif %}
+            {% endunless %}
+            <ul>
+                <li><a href="{{ routes.root_url }}">{{ 'layout.breadcrumbs.home' | t }}</a></li>
+                {%- if template contains 'page' -%}
+                    <li><span>{{ page.title }}</span></li>
+                {%- elsif template contains 'collections' -%}
+                    <li><span>{{ 'layout.breadcrumbs.collections' | t }}</span></li>
+                {%- elsif template contains 'cart' -%}
+                    <li><span>{{ 'layout.breadcrumbs.cart' | t }}</span></li>
+                {%- elsif template contains 'product' -%}
+                    {%- if collection.url -%}
+                        <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+                    {%- endif -%}
+                    <li><span>{{ product.title }}</span></li>
+                {%- elsif template contains 'collection' and collection.handle -%}
+                    {%- if current_tags -%}
+                        {%- assign exceptions_filters = 'custom-filter|only_available=|page=' | split: '|' -%}
+                        {%- assign correct_filters = 'page=|tag=|vendor=|type=|title=|price=' | split: '|' -%}
+                        {%- assign filtered_current_tags = '' -%}
+                        {%- for tag in current_tags -%}
+                            {%- assign changed_tag = tag -%}
+                            {%- for filter in exceptions_filters -%}
+                                {%- if changed_tag contains filter -%}
+                                    {%- assign changed_tag = null -%}
+                                    {%- break -%}
+                                {%- endif -%}
+                            {%- endfor -%}
+                            {%- for filter in correct_filters -%}
+                                {%- if changed_tag contains filter -%}
+                                    {%- assign changed_tag = changed_tag | remove: filter -%}
+                                    {%- break -%}
+                                {%- endif -%}
+                            {%- endfor -%}
+                            {%- if changed_tag != null -%}
+                                {% capture filtered_current_tags %}{{ filtered_current_tags }}{% if filtered_current_tags != '' %}|{% endif %}{{ changed_tag }}{% endcapture %}
+                            {%- endif -%}
+                        {%- endfor -%}
+                        {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+                        <li>{{ collection.title | link_to: url }}</li>
+                        {%- if filtered_current_tags != '' -%}
+                            {%- assign filtered_current_tags = filtered_current_tags | split: '|' -%}
+                            <li><span>{{ filtered_current_tags | join: ' + ' }}</span></li>
+                        {%- endif -%}
+                    {%- else -%}
+                        <li><span>{{ collection.title }}</span></li>
+                    {%- endif -%}
+                {%- elsif template == 'blog' -%}
+                    {%- if current_tags -%}
+                        <li>{{ template | link_to: '/blogs/news' }}</li>
+                        <li><span>{{ current_tags | join: ' + ' }}</span></li>
+                    {%- else -%}
+                        <li>{{ 'layout.breadcrumbs.blog' | t | link_to: '/blogs/news' }}</li>
+                        <li><span>{{ blog.title }}</span></li>
+                    {%- endif -%}
+                {%- elsif template == 'customers/account' -%}
+                    <li><span>{{ 'layout.breadcrumbs.account' | t }}</span></li>
+                {%- elsif template == 'customers/addresses' -%}
+                    <li><span>{{ 'layout.breadcrumbs.addresses' | t }}</span></li>
+                {%- elsif template == 'article' -%}
+                    <li>{{ blog.title | link_to: blog.url }}</li>
+                    <li><span>{{ article.title }}</span></li>
+                {%- elsif template == 'customers/login' -%}
+                    <li><span>{{ 'layout.breadcrumbs.login' | t }}</span></li>
+                {%- elsif template == 'customers/register' -%}
+                    <li><span>{{ 'layout.breadcrumbs.register' | t }}</span></li>
+                {%- else -%}
+                    {% if template contains '/' %}
+                        {% assign arr = name | split: '/' | last %}
+                        {% assign name = arr %}
+                    {% else %}
+                        {% assign name = template %}
+                    {% endif %}
+                    <li><span>{{ name }}</span></li>
+                {%- endif -%}
+            </ul>
+        </div>
+    </div>
+</section>
+
+{%- render 'section_style' -%}
+
+{% schema %}
+{
+    "name": "Breadcrumb",
+    "class": "alz-section section-breadcrumb",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "hidden",
+            "label": "Hide Section"
+        },
+        {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "full-width",
+                    "label": "Full Width"
+                },
+                {
+                    "value": "full-width-pd",
+                    "label": "Full Width no Padding"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "container",
+            "label": "Container width",
+            "info": "Example: 1410px, 70%, 70vw"
+        },
+        {
+            "type": "text",
+            "id": "space",
+            "label": "Space",
+            "info": "Example:10,20,30,40,50,60,70,80,90,100"
+        },
+        {
+            "type": "checkbox",
+            "id": "hide_page_title",
+            "label": "Hide page title",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "page_title",
+            "label": "Custom page title"
+        },
+        {
+            "type": "select",
+            "id": "text_align",
+            "label": "Text align",
+            "options": [
+                {
+                    "value": "",
+                    "label": "Default"
+                },
+                {
+                    "value": "text-start",
+                    "label": "Start"
+                },
+                {
+                    "value": "text-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "text-end",
+                    "label": "End"
+                }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "== Section settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "for_inner",
+            "label": "Settings apply for inner"
+        },
+        {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "bg_position",
+            "label": "Background position",
+            "info": "Example: center/top/bottom center/left/right, 100% 100%, 100px 100px",
+            "default": "center center"
+        },
+        {
+            "type": "text",
+            "id": "bg_size",
+            "label": "Background size",
+            "info": "Example: cover, contain, 100% 100%, 100px 100px",
+            "default": "cover"
+        },
+        {
+            "type": "text",
+            "id": "bg_repeat",
+            "label": "Background repeat",
+            "info": "Example: no-repeat, repeat, repeat-x, repeat-y",
+            "default": "no-repeat"
+        },
+        {
+            "type": "checkbox",
+            "id": "bg_fixed",
+            "label": "Background fixed",
+            "info": "For desktop (resolution > 1200px)"
+        },
+        {
+            "type": "color_background",
+            "id": "bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "color",
+            "id": "bg_cl",
+            "label": "Background color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl",
+            "label": "Main color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl_t",
+            "label": "Main color - text inside"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl",
+            "label": "Dark color"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_2",
+            "label": "Dark color 2"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_3",
+            "label": "Dark color 3"
+        },
+        {
+            "type": "color",
+            "id": "light_cl",
+            "label": "Light color"
+        },
+        {
+            "type": "color",
+            "id": "light_cl_2",
+            "label": "Light color 2"
+        },
+        {
+            "type": "color",
+            "id": "line_cl",
+            "label": "Line color"
+        },
+        {
+            "type": "text",
+            "id": "fz",
+            "label": "Font size",
+            "info": "Example: 16px"
+        },
+        {
+            "type": "text",
+            "id": "lh",
+            "label": "Line Height",
+            "info": "Example: 24px, 1.4em"
+        },
+        {
+            "type": "text",
+            "id": "ls",
+            "label": "Letter spacing",
+            "info": "Example: 1px, 0.1em"
+        },
+        {
+            "type": "text",
+            "id": "fw",
+            "label": "Font weight",
+            "info": "Example: 100, 200, 300, 400, 500, 600, 700, 800"
+        },
+        {
+            "type": "text",
+            "id": "tt",
+            "label": "Text transform",
+            "info": "Example: none, uppercase, lowercase, capitalize"
+        },
+        {
+            "type": "text",
+            "id": "height",
+            "label": "Height",
+            "default": "60px"
+        },
+        {
+            "type": "color",
+            "id": "bd_color",
+            "label": "Border color"
+        },
+        {
+            "type": "text",
+            "id": "bd_style",
+            "label": "Border style",
+            "info": "Example: solid, dotted, dashed, double, groove, ridge, outset"
+        },
+        {
+            "type": "text",
+            "id": "bd_width",
+            "label": "Border width",
+            "info": "Example: 1px, 1px 0, 1px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "bd_radius",
+            "label": "Border radius",
+            "info": "Example: 10px, 20px 10px, 20px 20px 10px 10px, 10%"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 1200px)"
+        },
+        {
+            "type": "text",
+            "id": "height_1200",
+            "label": "Height",
+            "default": "56px"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_1200",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "pd_1200",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 992px)"
+        },
+        {
+            "type": "text",
+            "id": "height_992",
+            "label": "Height",
+            "default": "52px"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_992",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "pd_992",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 768px)"
+        },
+        {
+            "type": "text",
+            "id": "height_768",
+            "label": "Height",
+            "default": "48px"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_768",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "pd_768",
+            "label": "Padding"
+        }
+    ]
+}
+{% endschema %}

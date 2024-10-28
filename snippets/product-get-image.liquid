@@ -1,0 +1,59 @@
+{% liquid
+    assign ratio = product.featured_media.aspect_ratio
+    assign aspect_ratio = aspect_ratio | default: settings.product_ratio
+    if aspect_ratio and aspect_ratio > 0
+        assign ratio = aspect_ratio
+    endif
+    assign show_secondary_image = settings.prd_second_image
+    assign limit = 4
+%}
+<div class="media skeleton-item {% if show_secondary_image %}secondary_image_hover{% else %}zoom_img{% endif %}">
+    <a class="ratio" href="{{ product.url | within: collection }}" style="--ratio-percent: {{ 1.0 | divided_by: ratio | times: 100 }}%;" data-js-product-image>
+        {% if product != '' and product.featured_media %}
+            <img class="default_media lazyload" src="{{ product.featured_media | image_url }}" data-src="{{ product.featured_media | image_url }}" alt="{{ product.featured_media.alt | escape }}">
+            {% if product.media[1] != blank and show_secondary_image %}
+                <img class="secondary_image lazyload" src="{{ product.media[1] | image_url }}" data-src="{{ product.media[1] | image_url }}" alt="{{ product.media[1].alt | escape }}">
+            {% endif %}
+        {% else %}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg w-full h-full object-cover' }}
+        {% endif %}
+    </a>
+</div>
+{% if show_gallery %}
+    <div class="media-nav" style="--prd-thumb-number:{{ limit }}">
+        {% if product.media != blank %}
+            {% for media in product.media limit: limit %}
+                <div class="media-nav-item skeleton-item {% if media.id == product.media[0].id %}active{% endif %}">
+                    <a class="{{ media.media_type }}" href="javascript:void(0)">
+                        {% case media.media_type %}
+                            {% when 'image' %}
+                                {% assign image = media %}
+                            {% when 'video' or 'external_video' or 'model' %}
+                                {% assign image = media.preview_image %}
+                        {% endcase %}
+                        {% if image != blank %}
+                            <span class="ratio" style="padding-top:{{ 1.0 | divided_by: ratio | times: 100 }}%;">
+                                <img class="lazyload" src="{{ image.src | img_url: '140x' }}" data-image="{{ image.src | img_url: '' }}" alt="{{ image.src.alt | escape }}">
+                            </span>
+                            {% if media.media_type == 'video' or media.media_type == 'external_video' %}
+                                <span class="icon main-icon-cube-2"></span>
+                            {% elsif media.media_type == 'model' %}
+                                <span class="icon main-icon-play-2"></span>
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            {% for i in (1..limit) %}
+                <div class="media-nav-item skeleton-item">
+                    <a href="javascript:void(0)">
+                        <span class="ratio" style="padding-top:{{ 1.0 | divided_by: ratio | times: 100 }}%;">
+                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg w-full h-full object-cover' }}
+                        </span>
+                    </a>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endif %}

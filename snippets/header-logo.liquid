@@ -1,0 +1,45 @@
+{%- liquid
+    assign logo_text = settings.logo_text
+    assign logo_text_last = settings.logo_text_last
+    assign logo_text_fz = settings.logo_text_fz
+    assign logo_text_lh = settings.logo_text_lh
+    assign logo_text_ls = settings.logo_text_ls
+    assign logo_text_fw = settings.logo_text_fw
+    assign logo_text_cl = logo_text_cl | default: settings.logo_text_cl
+    assign logo_text_last_cl = logo_text_last_cl | default: settings.logo_text_last_cl
+    assign logo_image = logo_image | default: settings.logo_image
+    assign logo_width = settings.logo_width
+    assign logo_width_mobile = settings.logo_width_mobile
+-%}
+
+<div class="header-logo apply-header-css">
+    {%- capture logo_html -%}
+        {%- if logo_image != blank -%}
+            <a href="{{ routes.root_url }}" class="logo-image">
+                <img src="{{ logo_image | img_url: '' }}" alt="{{ logo_image.alt | default: shop.name }}" style="max-width: {{ settings.logo_width }}px;">
+            </a>
+        {%- else -%}
+            <a href="{{ routes.root_url }}" class="logo-text">{{ logo_text }}<span class="last">{{ logo_text_last }}</span></a>
+        {%- endif -%}
+    {%- endcapture -%}
+
+    {%- if template contains 'index' and tag_h1 -%}
+        <h1 class="logo">{{ logo_html }}</h1>
+    {%- else -%}
+        <h2 class="logo">{{ logo_html }}</h2>
+    {%- endif -%}
+
+    {%- capture style -%}
+        .logo .logo-text{
+        {%- if logo_text_fz != blank -%}font-size:{{ logo_text_fz }};{%- endif -%}
+        {%- if logo_text_lh != blank -%}line-height:{{ logo_text_lh }};{%- endif -%}
+        {%- if logo_text_ls != blank -%}letter-spacing:{{ logo_text_ls }};{%- endif -%}
+        {%- if logo_text_fw != blank -%}font-weight:{{ logo_text_fw }};{%- endif -%}
+        {%- if logo_text_cl != blank and logo_text_cl.alpha != 0.0 -%}--dark-cl:{{ logo_text_cl }};{%- endif -%}
+        {%- if logo_text_last_cl != blank and logo_text_last_cl.alpha != 0.0 -%}--main-cl:{{ logo_text_last_cl }};{%- endif -%}
+        }
+        {%- if logo_width != blank -%}.logo-image{max-width:{{ logo_width }};}{%- endif -%}
+        {%- if logo_width_mobile != blank -%}@media (max-width: 1199px){.logo-image{max-width:{{ logo_width_mobile }};}}{%- endif -%}
+    {%- endcapture -%}
+    {%- style -%}{{ style | strip_newlines | remove: "  " }}{%- endstyle -%}
+</div>

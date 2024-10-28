@@ -1,0 +1,1282 @@
+{% liquid
+    assign sid = section.id
+    assign content_width = section.settings.content_width
+    assign container = section.settings.container
+    assign space = section.settings.space
+    assign limit = section.settings.limit | default: 8
+    assign product_style = section.settings.product_style
+    assign ratio = section.settings.ratio
+    if ratio > 0
+        assign aspect_ratio = ratio
+    endif
+    assign title_line = section.settings.title_line
+    assign title_equal = section.settings.title_equal
+    assign excerpt_line = section.settings.excerpt_line
+    assign item_border = section.settings.item_border
+    assign stretch_thumb = section.settings.stretch_thumb
+    assign target = section.settings.target
+    assign use-slider = section.settings.use-slider
+    if use-slider
+        assign arrows_style = section.settings.arrows_style
+    endif
+    assign title_style = section.settings.title_style
+    assign title = section.settings.title
+    assign title_width = section.settings.title_width
+    assign title_bd = section.settings.title_bd
+    assign title_space = section.settings.title_space | default: 0
+%}
+
+{%- capture s_style -%}
+    {% if use-slider %}--arrows-offset:var(--space-{{ title_space }});{% endif %}
+    {% if title_line != blank %}--prd-title-line:{{ title_line }};{% endif %}
+    {% if title_equal == '1' %}
+        --prd-title-height:calc(var(--prd-title-line) * var(--prd-title-lh));
+    {% elsif title_equal == '0' %}
+        --prd-title-height:auto;
+    {% endif %}
+    {% if excerpt_line != blank %}--prd-excerpt-line:{{ excerpt_line }};{% endif %}
+{%- endcapture -%}
+
+<section id="{{ sid }}" class="alz-product style-01 space-{{ space }} {% if target == 'recently' %}js-recently-viewed hide{% endif %} {{ arrows_style }}" style="{{ s_style | strip_newlines | remove: "  " }}">
+    <div class="{{ content_width }}" style="{% if container != blank %}--container:{{ container }}{% endif %}">
+        <div class="section-inner">
+            {% if title != blank %}
+                <div class="alz-heading {{ title_style }} {% if title_bd %}title-border{% endif %} space-{{ title_space }}">
+                    <h2 class="title" {% if title_width != blank %}style="width:{{ title_width }}"{% endif %}><span class="text">{{ title }}</span></h2>
+                </div>
+            {% endif %}
+            {% if section.settings.grid_btn and use-slider != true %}
+                {% assign cols_number = cols_number | default: section.settings.cols_number | default: 0 %}
+                {% assign col = cols_number | slice: 0 | plus: 0 %}
+                {% assign max = col %}
+                {% if col < 8 %}
+                    {% assign max = 8 %}
+                {% endif %}
+                <div class="grid-btn alz-dropdown">
+                    <a data-alz="alz-dropdown" href="javascript:void(0)">{{ col }} {{ 'general.grid.columns' | t }}</a>
+                    <div class="sub-menu">
+                        {% for i in (2..max) %}
+                            <a href="javascript:void(0)" data-col="{{ i }}" class="{% if col == i %}active{% endif %}">{{ i }} {{ 'general.grid.columns' | t }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="slick-carousel {{ item_border }} {% unless use-slider %}grid-box-wrap{% endunless %} {% if stretch_thumb %}stretch-thumb{% endif %} {% if section.blocks.size > 0 %}trending-wrap{% endif %}">
+                {% if section.blocks.size > 0 %}
+                    {% for block in section.blocks %}
+                        {% liquid
+                            assign hidden_mobile = block.settings.hidden_mobile
+                            assign position = block.settings.position
+                            assign column = block.settings.column
+                        %}
+                        <div class="trending-box trending-{{ block.type }} {{ hidden_mobile }} {{ position }} {{ column }}">
+                            {% case block.type %}
+                                {% when 'product' %}
+                                    {% assign product = block.settings.product %}
+                                    {% if product != blank %}
+                                        {% render 'product-style-03', product: product %}
+                                    {% else %}
+                                        {% render 'product-style-03', product: '' %}
+                                    {% endif %}
+                                {% when 'banner_top' %}
+                                    {% liquid
+                                        assign height = block.settings.height | default: '70px'
+                                        assign image_1 = block.settings.image_1
+                                        assign img_url_1 = image_1 | img_url: ''
+                                        assign link_1 = block.settings.link_1 | default: '#'
+                                        assign image_2 = block.settings.image_2
+                                        assign img_url_2 = image_2 | img_url: ''
+                                        assign link_2 = block.settings.link_2 | default: '#'
+                                        assign image_3 = block.settings.image_3
+                                        assign img_url_3 = image_3 | img_url: ''
+                                        assign link_3 = block.settings.link_3 | default: '#'
+                                        assign hover_effect = block.settings.hover_effect
+                                    %}
+                                    <div class="image-list" style="--banner-height:{{ height }}">
+                                        {% if image_1 != blank %}
+                                            <a class="effect {{ hover_effect }}" href="{{ link_1 }}">
+                                                <img class="effect-obj lazyload pr_lazy_img" src="{{ img_url_1 }}" data-src="{{ img_url_1 }}" loading="lazy" alt="{{ image_1.alt | escape }}"/>
+                                            </a>
+                                        {% endif %}
+                                        {% if image_2 != blank %}
+                                            <a class="effect {{ hover_effect }}" href="{{ link_2 }}">
+                                                <img class="effect-obj lazyload pr_lazy_img" src="{{ img_url_2 }}" data-src="{{ img_url_2 }}" loading="lazy" alt="{{ image_2.alt | escape }}"/>
+                                            </a>
+                                        {% endif %}
+                                        {% if image_3 != blank %}
+                                            <a class="effect {{ hover_effect }}" href="{{ link_3 }}">
+                                                <img class="effect-obj lazyload pr_lazy_img" src="{{ img_url_3 }}" data-src="{{ img_url_3 }}" loading="lazy" alt="{{ image_3.alt | escape }}"/>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                {% when 'banner' %}
+                                    {%- render 'banner-style-01', block: block -%}
+                            {% endcase %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% case target %}
+                    {% when 'collection' or 'products' %}
+                        {% if target == 'collection' %}
+                            {% assign products = collections[section.settings.collection].products %}
+                        {% elsif target == 'products' %}
+                            {% assign products = section.settings.product_list %}
+                        {% endif %}
+                        <div class="product-list {% if use-slider %}grid-slider js_carousel{% else %}grid-box{% endif %}" data-sorting-items="true" {% if use-slider %}{%- render 'grid-slider' -%}{% endif %}>
+                            {% assign animation_order = 0 %}
+                            {% if products != blank %}
+                                {% for product in products limit: limit %}
+                                    {% render 'product-style', product_style: product_style, product: product, aspect_ratio: aspect_ratio, animation_order: animation_order %}
+                                    {% assign animation_order = animation_order | plus: 1 %}
+                                {% endfor %}
+                            {% else %}
+                                {% for i in (1..limit) %}
+                                    {% render 'product-style', product_style: product_style, product: '', aspect_ratio: aspect_ratio, animation_order: animation_order %}
+                                    {% assign animation_order = animation_order | plus: 1 %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% when 'recently' %}
+                        <div class="product-list js_recently_wrapper {% if use-slider %}js_carousel{% else %}grid-box{% endif %}" {% if use-slider %}data-use-slider="true" {%- render 'grid-slider' -%}{% endif %} data-style="{{ product_style }}" {% if ratio > 0 %}data-ratio="{{ aspect_ratio }}"{% endif %} data-limit="{{ limit }}"></div>
+                        {% if content_for_header contains "Shopify.designMode" %}
+                            <h5 class="not-found">{{ 'general.recently.empty' | t }}</h5>
+                        {% endif %}
+                    {% when 'wishlist' %}
+                        <div class="product-list js-collection-wishlist {% if use-slider %}js_carousel{% else %}grid-box{% endif %}" {% if use-slider %}data-use-slider="true" {%- render 'grid-slider' -%}{% endif %} data-style="{{ product_style }}" {% if ratio > 0 %}data-ratio="{{ aspect_ratio }}"{% endif %}></div>
+                        <div class="wishlist-empty text-center" style="display:none">
+                            <span class="icon">
+                                <svg width="119" height="119" viewBox="0 0 119 119" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M26.0346 89.8707C13.6486 78.2693 3 61.7359 3 40.4386C3 23.1205 16.9553 9.10938 34.1613 9.10938C44.3615 9.10938 53.3849 14.0413 59.0455 21.6635C64.706 14.0413 73.7854 9.10938 83.9297 9.10938C90.3749 9.10938 96.3717 11.0707 101.36 14.4895" stroke="#D7DBE0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <path d="M113.633 31.0229C114.586 33.9934 115.091 37.188 115.091 40.4946C115.091 79.7265 78.7732 102.873 62.52 108.478C60.6144 109.15 57.4759 109.15 55.5704 108.478C51.9274 107.245 47.3318 105.115 42.3438 102.145" stroke="#D7DBE0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <path d="M115.091 3L3 115.091" stroke="#D7DBE0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <h5 class="not-found">{{ 'general.wishlist.empty' | t }}</h5>
+                        </div>
+                    {% when 'related' %}
+                        {% assign handle_current = product.handle %}
+                        {% assign handle = product.collections[0].handle %}
+                        {% if handle == '' or handle == blank %}
+                            {% assign handle = 'frontpage' %}
+                        {% endif %}
+                        {% assign products = collections[handle].products %}
+                        {% assign animation_order = 0 %}
+                        <div class="product-list {% if use-slider %}grid-slider js_carousel{% else %}grid-box{% endif %}" data-sorting-items="true" {% if use-slider %}{%- render 'grid-slider' -%}{% endif %}>
+                            {% for product in products limit: limit %}
+                                {% if handle_current != product.handle %}
+                                    {% render 'product-style', product_style: product_style, product: product, aspect_ratio: aspect_ratio, animation_order: animation_order %}
+                                    {% assign animation_order = animation_order | plus: 1 %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                {% endcase %}
+            </div>
+            {% if section.settings.show_view_all %}
+                <p class="product-view-all">
+                    <a class="button" href="{{ routes.root_url }}collections/all">{{ 'collections.general.view_all' | t }}</a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% render 'section_style' %}
+{% render 'section_style_box' %}
+
+{% schema %}
+{
+    "name": "Products 01",
+    "class": "alz-section section-product animate--slide-in",
+    "settings": [
+        {
+            "type": "number",
+            "id": "z_index",
+            "label": "Z-Index"
+        },
+        {
+            "type": "select",
+            "id": "hidden_mobile",
+            "label": "Hide Section on mobile",
+            "options": [
+                {
+                    "value": "",
+                    "label": "No"
+                },
+                {
+                    "value": "hide_1200",
+                    "label": "(resolution < 1200px)"
+                },
+                {
+                    "value": "hide_992",
+                    "label": "(resolution < 992px)"
+                },
+                {
+                    "value": "hide_768",
+                    "label": "(resolution < 768px)"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "content_width",
+            "label": "Content width",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "full-width",
+                    "label": "Full Width"
+                },
+                {
+                    "value": "full-width-pd",
+                    "label": "Full Width no Padding"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "container",
+            "label": "Container width",
+            "info": "Example: 1410px, 70%, 70vw"
+        },
+        {
+            "type": "text",
+            "id": "space",
+            "label": "Space",
+            "info": "Example:10,20,30,40,50,60,70,80,90,100"
+        },
+        {
+            "type": "header",
+            "content": "== Title settings"
+        },
+        {
+            "type": "select",
+            "id": "title_style",
+            "label": "Title style",
+            "options": [
+                {
+                    "value": "style-01",
+                    "label": "Style 01"
+                },
+                {
+                    "value": "style-02",
+                    "label": "Style 02"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "New Arrivals"
+        },
+        {
+            "type": "text",
+            "id": "title_width",
+            "label": "Title width",
+            "info": "For style 01"
+        },
+        {
+            "type": "checkbox",
+            "id": "title_bd",
+            "label": "Title border",
+            "info": "For style 02"
+        },
+        {
+            "type": "text",
+            "id": "title_space",
+            "label": "Space",
+            "info": "Example:10,20,30,40,50,60,70,80,90,100",
+            "default": "30"
+        },
+        {
+            "type": "header",
+            "content": "== Item settings"
+        },
+        {
+            "type": "select",
+            "id": "target",
+            "label": "Target products",
+            "info": "Recently Viewed, Wishlist, Related must be only one on a page",
+            "options": [
+                {
+                    "value": "collection",
+                    "label": "Collection"
+                },
+                {
+                    "value": "products",
+                    "label": "Product list"
+                },
+                {
+                    "value": "recently",
+                    "label": "Recently Viewed"
+                },
+                {
+                    "value": "wishlist",
+                    "label": "Wishlist (for Wishlist page)"
+                },
+                {
+                    "value": "related",
+                    "label": "Related (for Product page)"
+                }
+            ]
+        },
+        {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+        },
+        {
+            "type": "product_list",
+            "id": "product_list",
+            "label": "Product list"
+        },
+        {
+            "type": "number",
+            "id": "limit",
+            "label": "Limit products",
+            "default": 8
+        },
+        {
+            "type": "checkbox",
+            "id": "show_view_all",
+            "label": "Show view all"
+        },
+        {
+            "type": "select",
+            "id": "product_style",
+            "label": "Product style",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "Style 01"
+                },
+                {
+                    "value": "2",
+                    "label": "Style 02"
+                },
+                {
+                    "value": "3",
+                    "label": "Style 03"
+                },
+                {
+                    "value": "4",
+                    "label": "Style 04"
+                },
+                {
+                    "value": "5",
+                    "label": "Style 05"
+                }
+            ]
+        },
+        {
+            "type": "number",
+            "id": "ratio",
+            "label": "Image ratio",
+            "info": "Ratio = width / height. Example: 1, 1.2, 0.8"
+        },
+        {
+            "type": "text",
+            "id": "title_line",
+            "label": "Number of title line"
+        },
+        {
+            "type": "select",
+            "id": "title_equal",
+            "label": "Title of products has equal height",
+            "options": [
+                {
+                    "value": "",
+                    "label": "Inherit"
+                },
+                {
+                    "value": "1",
+                    "label": "True"
+                },
+                {
+                    "value": "0",
+                    "label": "False"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "excerpt_line",
+            "label": "Number of excerpt line",
+            "default": "3"
+        },
+        {
+            "type": "select",
+            "id": "item_border",
+            "label": "Item border",
+            "info": "If Full, Columns gap & Rows gap is 0",
+            "options": [
+                {
+                    "value": "",
+                    "label": "None"
+                },
+                {
+                    "value": "border-image",
+                    "label": "Image"
+                },
+                {
+                    "value": "border-item",
+                    "label": "Item"
+                },
+                {
+                    "value": "border-between",
+                    "label": "Between"
+                },
+                {
+                    "value": "border-full",
+                    "label": "Full"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "stretch_thumb",
+            "label": "Stretch Thumbnail",
+            "info": "For item border: item, full"
+        },
+        {
+            "type": "header",
+            "content": "== Loop settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "grid_btn",
+            "label": "Grid button (not for slider, resolution > 1200px)"
+        },
+        {
+            "type": "text",
+            "id": "cols_number",
+            "label": "Columns (6 screen resolutions)",
+            "info": "Desktop,<1500,<1200,<992,<768,<480",
+            "default": "5,5,4,3,3,2"
+        },
+        {
+            "type": "text",
+            "id": "cols_gap",
+            "label": "Columns gap (6 screen resolutions)",
+            "info": "Desktop,<1500,<1200,<992,<768,<480",
+            "default": "30px,30px,20px,20px,16px,10px"
+        },
+        {
+            "type": "text",
+            "id": "rows_gap",
+            "label": "Rows gap (6 screen resolutions)",
+            "info": "Desktop,<1500,<1200,<992,<768,<480",
+            "default": "30px,30px,20px,20px,16px,10px"
+        },
+        {
+            "type": "checkbox",
+            "id": "use-slider",
+            "label": "Use slider?",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "slides-To-Scroll",
+            "label": "Slide to scroll",
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "range",
+            "id": "rows",
+            "label": "Rows",
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "checkbox",
+            "id": "arrows",
+            "label": "Arrows",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "arrows_style",
+            "label": "Arrows style",
+            "options": [
+                {
+                    "value": "",
+                    "label": "Default"
+                },
+                {
+                    "value": "arrow-top",
+                    "label": "On top"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "dots",
+            "label": "Dots"
+        },
+        {
+            "type": "text",
+            "id": "speed",
+            "label": "Speed",
+            "default": "300",
+            "info": "Speed in milliseconds"
+        },
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Autoplay"
+        },
+        {
+            "type": "text",
+            "id": "autoplay-Speed",
+            "label": "Autoplay Speed",
+            "default": "3000",
+            "info": "Autoplay Speed in milliseconds"
+        },
+        {
+            "type": "checkbox",
+            "id": "fade",
+            "label": "Fade",
+            "info": "Only use for 1 column"
+        },
+        {
+            "type": "checkbox",
+            "id": "center-Mode",
+            "label": "Center Mode"
+        },
+        {
+            "type": "checkbox",
+            "id": "adaptive-Height",
+            "label": "Adaptive Height"
+        },
+        {
+            "type": "checkbox",
+            "id": "infinite",
+            "label": "Infinite"
+        },
+        {
+            "type": "checkbox",
+            "id": "vertical",
+            "label": "Vertical"
+        },
+        {
+            "type": "header",
+            "content": "== Section settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "for_inner",
+            "label": "Settings apply for inner"
+        },
+        {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "bg_position",
+            "label": "Background position",
+            "info": "Example: center/top/bottom center/left/right, 100% 100%, 100px 100px",
+            "default": "center center"
+        },
+        {
+            "type": "text",
+            "id": "bg_size",
+            "label": "Background size",
+            "info": "Example: cover, contain, 100% 100%, 100px 100px",
+            "default": "cover"
+        },
+        {
+            "type": "text",
+            "id": "bg_repeat",
+            "label": "Background repeat",
+            "info": "Example: no-repeat, repeat, repeat-x, repeat-y",
+            "default": "no-repeat"
+        },
+        {
+            "type": "checkbox",
+            "id": "bg_fixed",
+            "label": "Background fixed",
+            "info": "For desktop (resolution > 1200px)"
+        },
+        {
+            "type": "color_background",
+            "id": "bg_gradient",
+            "label": "Background gradient"
+        },
+        {
+            "type": "color",
+            "id": "bg_cl",
+            "label": "Background color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl",
+            "label": "Main color"
+        },
+        {
+            "type": "color",
+            "id": "main_cl_t",
+            "label": "Main color - text inside"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl",
+            "label": "Dark color"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_2",
+            "label": "Dark color 2"
+        },
+        {
+            "type": "color",
+            "id": "dark_cl_3",
+            "label": "Dark color 3"
+        },
+        {
+            "type": "color",
+            "id": "light_cl",
+            "label": "Light color"
+        },
+        {
+            "type": "color",
+            "id": "light_cl_2",
+            "label": "Light color 2"
+        },
+        {
+            "type": "color",
+            "id": "line_cl",
+            "label": "Line color"
+        },
+        {
+            "type": "text",
+            "id": "fz",
+            "label": "Font size",
+            "info": "Example: 16px"
+        },
+        {
+            "type": "text",
+            "id": "lh",
+            "label": "Line Height",
+            "info": "Example: 24px, 1.4em"
+        },
+        {
+            "type": "text",
+            "id": "ls",
+            "label": "Letter spacing",
+            "info": "Example: 1px, 0.1em"
+        },
+        {
+            "type": "text",
+            "id": "fw",
+            "label": "Font weight",
+            "info": "Example: 100, 200, 300, 400, 500, 600, 700, 800"
+        },
+        {
+            "type": "text",
+            "id": "tt",
+            "label": "Text transform",
+            "info": "Example: none, uppercase, lowercase, capitalize"
+        },
+        {
+            "type": "color",
+            "id": "bd_color",
+            "label": "Border color"
+        },
+        {
+            "type": "text",
+            "id": "bd_style",
+            "label": "Border style",
+            "info": "Example: solid, dotted, dashed, double, groove, ridge, outset"
+        },
+        {
+            "type": "text",
+            "id": "bd_width",
+            "label": "Border width",
+            "info": "Example: 1px, 1px 0, 1px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "mg",
+            "label": "Margin",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "text",
+            "id": "pd",
+            "label": "Padding",
+            "info": "Example: 10px, 10px 0, 10px 0 0 0"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 1200px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_1200",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_1200",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_1200",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 992px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_992",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_992",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_992",
+            "label": "Padding"
+        },
+        {
+            "type": "header",
+            "content": "== Settings (resolution < 768px)"
+        },
+        {
+            "type": "text",
+            "id": "bd_width_768",
+            "label": "Border width"
+        },
+        {
+            "type": "text",
+            "id": "mg_768",
+            "label": "Margin"
+        },
+        {
+            "type": "text",
+            "id": "pd_768",
+            "label": "Padding"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "product",
+            "name": "Product",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "hidden_mobile",
+                    "label": "Hidden block on resolution",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "No"
+                        },
+                        {
+                            "value": "hide_1200",
+                            "label": "< 1200px"
+                        },
+                        {
+                            "value": "hide_992",
+                            "label": "< 992px"
+                        },
+                        {
+                            "value": "hide_768",
+                            "label": "< 768px"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "position",
+                    "label": "Position",
+                    "options": [
+                        {
+                            "value": "p-start",
+                            "label": "Start"
+                        },
+                        {
+                            "value": "p-end",
+                            "label": "End"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "column",
+                    "label": "Width",
+                    "options": [
+                        {
+                            "value": "c-2-6",
+                            "label": "2/6"
+                        },
+                        {
+                            "value": "c-2-5",
+                            "label": "2/5"
+                        },
+                        {
+                            "value": "c-2-4",
+                            "label": "2/4"
+                        }
+                    ]
+                },
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                }
+            ]
+        },
+        {
+            "type": "banner_top",
+            "name": "Banner Top",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "hidden_mobile",
+                    "label": "Hidden block on resolution",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "No"
+                        },
+                        {
+                            "value": "hide_1200",
+                            "label": "< 1200px"
+                        },
+                        {
+                            "value": "hide_992",
+                            "label": "< 992px"
+                        },
+                        {
+                            "value": "hide_768",
+                            "label": "< 768px"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "height",
+                    "label": "Height",
+                    "info": "Example: 70px",
+                    "default": "70px"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image_1",
+                    "label": "Image 1"
+                },
+                {
+                    "type": "url",
+                    "id": "link_1",
+                    "label": "Link"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image_2",
+                    "label": "Image 2"
+                },
+                {
+                    "type": "url",
+                    "id": "link_2",
+                    "label": "Link"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image_3",
+                    "label": "Image 3"
+                },
+                {
+                    "type": "url",
+                    "id": "link_3",
+                    "label": "Link"
+                },
+                {
+                    "type": "select",
+                    "id": "hover_effect",
+                    "label": "Hover Effect",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "None"
+                        },
+                        {
+                            "value": "image-zoom",
+                            "label": "Image zoom"
+                        },
+                        {
+                            "value": "image-overlay",
+                            "label": "Image overlay"
+                        },
+                        {
+                            "value": "plus-zoom",
+                            "label": "Plus zoom"
+                        },
+                        {
+                            "value": "overlay-plus",
+                            "label": "Overlay Plus"
+                        },
+                        {
+                            "value": "overlay-cross",
+                            "label": "Overlay Cross"
+                        },
+                        {
+                            "value": "overlay-horizontal",
+                            "label": "Overlay Horizontal"
+                        },
+                        {
+                            "value": "overlay-vertical",
+                            "label": "Overlay Vertical"
+                        },
+                        {
+                            "value": "border-zoom",
+                            "label": "Border Zoom"
+                        },
+                        {
+                            "value": "border-plus",
+                            "label": "Border Plus"
+                        },
+                        {
+                            "value": "border-scale",
+                            "label": "Border Scale"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "banner",
+            "name": "Banner",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "hidden_mobile",
+                    "label": "Hidden block on resolution",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "No"
+                        },
+                        {
+                            "value": "hide_1200",
+                            "label": "< 1200px"
+                        },
+                        {
+                            "value": "hide_992",
+                            "label": "< 992px"
+                        },
+                        {
+                            "value": "hide_768",
+                            "label": "< 768px"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "position",
+                    "label": "Position",
+                    "options": [
+                        {
+                            "value": "p-start",
+                            "label": "Start"
+                        },
+                        {
+                            "value": "p-end",
+                            "label": "End"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "column",
+                    "label": "Width",
+                    "options": [
+                        {
+                            "value": "c-2-6",
+                            "label": "2/6"
+                        },
+                        {
+                            "value": "c-2-5",
+                            "label": "2/5"
+                        },
+                        {
+                            "value": "c-2-4",
+                            "label": "2/4"
+                        }
+                    ]
+                },
+                {
+                    "type": "header",
+                    "content": "== Text settings"
+                },
+                {
+                    "type": "text",
+                    "id": "subtitle",
+                    "label": "Subtitle",
+                    "default": "Subtitle"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "desc",
+                    "label": "Description",
+                    "default": "Description"
+                },
+                {
+                    "type": "text",
+                    "id": "btn",
+                    "label": "Button",
+                    "default": "Shop now"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link"
+                },
+                {
+                    "type": "select",
+                    "id": "open_link",
+                    "label": "Open link in",
+                    "options": [
+                        {
+                            "value": "_self",
+                            "label": "Current window (_self)"
+                        },
+                        {
+                            "value": "_blank",
+                            "label": "New window (_blank)"
+                        }
+                    ]
+                },
+                {
+                    "type": "color",
+                    "id": "subtitle_cl",
+                    "label": "Subtitle color"
+                },
+                {
+                    "type": "color",
+                    "id": "title_cl",
+                    "label": "Title color"
+                },
+                {
+                    "type": "color",
+                    "id": "desc_cl",
+                    "label": "Description color"
+                },
+                {
+                    "type": "select",
+                    "id": "text_align",
+                    "label": "Text align",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "Default"
+                        },
+                        {
+                            "value": "text-start",
+                            "label": "Start"
+                        },
+                        {
+                            "value": "text-center",
+                            "label": "Center"
+                        },
+                        {
+                            "value": "text-end",
+                            "label": "End"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "h_position",
+                    "label": "Content align",
+                    "options": [
+                        {
+                            "value": "justify-start",
+                            "label": "Start"
+                        },
+                        {
+                            "value": "justify-center",
+                            "label": "Center"
+                        },
+                        {
+                            "value": "justify-end",
+                            "label": "End"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "width",
+                    "label": "Content Width",
+                    "info": "Example: 400px, 50%",
+                    "default": "50%"
+                },
+                {
+                    "type": "text",
+                    "id": "pd",
+                    "label": "Content Padding",
+                    "info": "Example: 10px, 10px 0, 10px 0 0 0",
+                    "default": "var(--space-30)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_1200",
+                    "label": "Content Width (resolution < 1200px)"
+                },
+                {
+                    "type": "text",
+                    "id": "pd_1200",
+                    "label": "Content Padding (resolution < 1200px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_992",
+                    "label": "Content Width (resolution < 992px)",
+                    "default": "65%"
+                },
+                {
+                    "type": "text",
+                    "id": "pd_992",
+                    "label": "Content Padding (resolution < 992px)"
+                },
+                {
+                    "type": "text",
+                    "id": "width_768",
+                    "label": "Content Width (resolution < 768px)",
+                    "default": "80%"
+                },
+                {
+                    "type": "text",
+                    "id": "pd_768",
+                    "label": "Content Padding (resolution < 768px)"
+                },
+                {
+                    "type": "header",
+                    "content": "== Background settings"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "bg_image",
+                    "label": "Background image"
+                },
+                {
+                    "type": "text",
+                    "id": "bg_position",
+                    "label": "Background position",
+                    "info": "Example: center/top/bottom center/left/right, 100% 100%, 100px 100px",
+                    "default": "center center"
+                },
+                {
+                    "type": "text",
+                    "id": "bg_size",
+                    "label": "Background size",
+                    "info": "Example: cover, contain, 100% 100%, 100px 100px",
+                    "default": "cover"
+                },
+                {
+                    "type": "text",
+                    "id": "bg_repeat",
+                    "label": "Background repeat",
+                    "info": "Example: no-repeat, repeat, repeat-x, repeat-y",
+                    "default": "no-repeat"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "bg_fixed",
+                    "label": "Background fixed",
+                    "info": "For desktop (resolution > 1200px)"
+                },
+                {
+                    "type": "color_background",
+                    "id": "bg_gradient",
+                    "label": "Background gradient"
+                },
+                {
+                    "type": "color",
+                    "id": "bg_cl",
+                    "label": "Background color"
+                },
+                {
+                    "type": "select",
+                    "id": "hover_effect",
+                    "label": "Hover Effect",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "None"
+                        },
+                        {
+                            "value": "image-zoom",
+                            "label": "Image zoom"
+                        },
+                        {
+                            "value": "image-overlay",
+                            "label": "Image overlay"
+                        },
+                        {
+                            "value": "plus-zoom",
+                            "label": "Plus zoom"
+                        },
+                        {
+                            "value": "overlay-plus",
+                            "label": "Overlay Plus"
+                        },
+                        {
+                            "value": "overlay-cross",
+                            "label": "Overlay Cross"
+                        },
+                        {
+                            "value": "overlay-horizontal",
+                            "label": "Overlay Horizontal"
+                        },
+                        {
+                            "value": "overlay-vertical",
+                            "label": "Overlay Vertical"
+                        },
+                        {
+                            "value": "border-zoom",
+                            "label": "Border Zoom"
+                        },
+                        {
+                            "value": "border-plus",
+                            "label": "Border Plus"
+                        },
+                        {
+                            "value": "border-scale",
+                            "label": "Border Scale"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Product 01",
+            "category": "Product"
+        }
+    ]
+}
+{% endschema %}

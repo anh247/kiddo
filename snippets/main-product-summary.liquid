@@ -1,0 +1,270 @@
+<div {% if sticky == 'summary' %}id="js-stickyProduct"{% endif %} class="product-summary">
+    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        {%- assign current_variant = product.selected_or_first_available_variant -%}
+        <meta itemprop="url" content="{{ product.url }}">
+        <meta itemprop="sku" content="{{ current_variant.sku }}">
+        <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+        <meta itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+        <link itemprop="availability" href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
+        {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            <input type="hidden" name="id" value="{{ current_variant.id }}" data-js-product-variant-input>
+            {{ form | payment_terms }}
+            {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                    {%- when '@app' -%}
+                        <div class="product-app skeleton-item">{% render block %}</div>
+                    {%- when 'name' -%}
+                        {% comment %}-----NAME-----{% endcomment %}
+                        <h1 class="product-name skeleton-item">{{ product.title }}</h1>
+                    {%- when 'review' -%}
+                        {% comment %}-----REVIEW-----{% endcomment %}
+                        {% if settings.product_review_badge != blank %}
+                            <div class="product-review skeleton-item">{{ settings.product_review_badge }}</div>
+                        {% endif %}
+                    {%- when 'sold_ads' -%}
+                        {% comment %}-----SOLD ADS-----{% endcomment %}
+                        {% if product.metafields.custom.sold_ads != blank %}
+                            <div class="sold-ads skeleton-item"><span class="icon lnr-power"></span>{{ product.metafields.custom.sold_ads }}</div>
+                        {% endif %}
+                    {%- when 'excerpt' -%}
+                        {% comment %}-----EXCERPT-----{% endcomment %}
+                        {% if product.metafields.custom.excerpt != blank %}
+                            <div class="product-excerpt paragraph skeleton-item">{{ product.metafields.custom.excerpt }}</div>
+                        {% endif %}
+                    {%- when 'visitor' -%}
+                        {% comment %}-----VISITOR-----{% endcomment %}
+                        <div class="product-visitors js-visitors skeleton-item" data-min="10" data-max="25" data-interval-min="2" data-interval-max="6" data-stroke="4">
+                            {%- assign visitors_random_diff = block.settings.visitors_max | minus: block.settings.visitors_min -%}
+                            {%- assign visitors_random = "now" | date: "%N" | modulo: visitors_random_diff | plus: block.settings.visitors_min -%}
+                            {% capture visitors_counter_html %}
+                                <span class="visitors__counter d-inline-block px-8" data-js-counter>{{ visitors_random }}</span>
+                            {% endcapture %}
+                            <i class="icon main-icon-eye"></i><span class="text">{{ 'products.product.visitors_html' | t: counter: visitors_counter_html }}</span>
+                        </div>
+                    {%- when 'line' -%}
+                        {% comment %}-----LINE-----{% endcomment %}
+                        {% assign line_cl = block.settings.line_cl %}
+                        <div class="line" style="{% if line_cl != blank and line_cl.alpha != 0.0 %}--line-cl:{{ line_cl }}{% endif %}"></div>
+                    {%- when 'operations' -%}
+                        {% comment %}-----OPERATION-----{% endcomment %}
+                        <div class="product-operations skeleton-list">
+                            {% comment %}-----COMPARE COLOR-----{% endcomment %}
+                            {% if block.settings.show_compare_color %}
+                                {%- for option in product.options_with_values -%}
+                                    {% if option.name contains 'Color' %}
+                                        {%- render 'compare-color-popup', compare_color_text: block.settings.compare_color_text -%}
+                                    {% endif %}
+                                {%- endfor -%}
+                            {% endif %}
+                            {% comment %}-----SIZE CHART-----{% endcomment %}
+                            {% if block.settings.show_size_chart %}
+                                {% assign text = block.settings.size_chart_text %}
+                                {% assign page = product.metafields.custom.size_chart | default: block.settings.size_chart_page %}
+                                {% assign image = product.metafields.custom.size_chart_image | default: block.settings.size_chart_image %}
+                                <div class="product-size-chart">
+                                    <a class="size-chart" data-page-open-popup href="#size-chart" data-effect="mfp-move-horizontal">
+                                        <span class="icon main-icon-size-chart"></span>{{ text }}
+                                    </a>
+                                    <div id="size-chart" data-effect="mfp-move-horizontal" class="mfp-hide mfp-with-anim mfp-popup size-chart-open-popup">
+                                        <h3 class="mfp-popup-title">{{ text }}</h3>
+                                        <div class="mfp-popup-content">
+                                            {% if image != blank %}
+                                                {% render 'responsive-image', image: image, image_class: 'w-full h-full' %}
+                                            {% else %}
+                                                {{ pages[page].content }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% comment %}-----QUESTION-----{% endcomment %}
+                            {% if block.settings.show_question %}
+                                {%- assign text = block.settings.question_text -%}
+                                <div class="product-contact-us">
+                                    <a class="contact-us" data-page-open-popup href="#contact-us" data-effect="mfp-move-horizontal">
+                                        <span class="icon main-icon-support"></span>{{ text }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% comment %}-----SHARE-----{% endcomment %}
+                            {% if block.settings.show_share %}
+                                <div class="product-share">
+                                    <a class="popup_social" data-page-open-popup href="#popup_social" data-effect="mfp-move-horizontal">
+                                        <span class="icon main-icon-share-2"></span>{{ 'products.product.share' | t }}
+                                    </a>
+                                    <div id="popup_social" data-effect="mfp-move-horizontal" class="mfp-hide mfp-with-anim mfp-popup popup_social-open-popup">
+                                        <div class="mfp-popup-content">
+                                            <h4 class="title">{{ 'products.product.copy_link' | t }}</h4>
+                                            <div class="share-group copy-clipboard-warp">
+                                                <div class="form-field">
+                                                    <input type="text" class="field__input copy-clipboard" id="url" value="https://{{ shop.domain }}{{ product.url }}" placeholder="Link" data-url="https://{{ shop.domain }}{{ product.url }}" onclick="this.select();" readonly="">
+                                                </div>
+                                                <button class="button button--primary button-copy">
+                                                    <span class="icon main-icon-copy"></span>
+                                                    {{ 'products.product.copy_link' | t }}
+                                                </button>
+                                            </div>
+                                            {% render 'social-sharing', product: product %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {%- when 'countdown' -%}
+                        {% comment %}-----COUNTDOWN-----{% endcomment %}
+                        {%- render 'product-get-countdown', product: product, title: block.settings.text -%}
+                    {%- when 'price' -%}
+                        {% comment %}-----PRICE GROUP-----{% endcomment %}
+                        {%- render 'product-get-price-single', product: product -%}
+                    {%- when 'variants' -%}
+                        {% comment %}-----VARIANT-----{% endcomment %}
+                        {% render 'product-get-options', product: product, show_title_variant: true %}
+                    {%- when 'inventory' -%}
+                        {% comment %}-----INVENTORY-----{% endcomment %}
+                        {% render 'product-get-stock', product: product %}
+                    {%- when 'add_to_cart' -%}
+                        {% comment %}-----ADD TO CART-----{% endcomment %}
+                        {% assign url_affiliate = product.metafields.custom.external_affiliate %}
+                        {%- assign show_popup = block.settings.show_popup -%}
+                        {%- assign product_terms_conditions_page_content = pages[block.settings.product_terms_conditions_page_content].content -%}
+                        {%- assign qt_buy_it_now = block.settings.qt_buy_it_now -%}
+                        {% if url_affiliate %}
+                            <div data-product-meta class="product-btns">
+                                <a href="{{ url_affiliate }}" rel="nofollow" target="_blank" class="btn product-affiliate relative skeleton-item">{{ block.settings.btn_affiliate }}</a>
+                            </div>
+                        {% else %}
+                            <div data-product-meta class="product-btns">
+                                {% render 'product-get-quantity', product: product %}
+                                <button type="submit" class="button add-to-cart js_add_to_cart_button skeleton-item {% if product.selected_or_first_available_variant.available == false %}d-none-important{% endif %}"
+                                    data-js-product-button-add-to-cart data-pid="{{ product.variants.first.id }}" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+                                    <span class="circle-loading"></span>
+                                    <span class="text">{{ 'products.product.add_to_cart' | t }}</span>
+                                </button>
+                                <a class="button add-to-cart js-btn-sold-out skeleton-item {% if product.selected_or_first_available_variant.available %}d-none-important{% endif %}" href="javascript:void(0)" data-js-product-button-sold-out>
+                                    <span class="text">{{ 'products.product.sold_out' | t }}</span>
+                                </a>
+                                <div class="product-btn tooltip-top skeleton-list">
+                                    {% if block.settings.qt_show_wishlist %}
+                                        {% render 'product-get-button-wishlist', product: product %}
+                                    {% endif %}
+                                    {% if block.settings.qt_show_compare %}
+                                        {% render 'product-get-button-compare', product: product %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% comment %}-----BUY NOW-----{% endcomment %}
+                            {% if qt_buy_it_now and product.available %}
+                                {% assign variantCount = product.variants | size %}
+                                {%- capture terms_conditions -%}
+                                    {% if show_popup %}
+                                        <a data-page-open-popup data-effect="mfp-move-horizontal" href="#terms-conditions">{{ 'products.product.terms_conditions' | t }}</a>
+                                    {% else %}
+                                        <a href="#">{{ 'products.product.terms_conditions' | t }}</a>
+                                    {% endif %}
+                                {%- endcapture -%}
+                                {% if show_popup %}
+                                    <div id="terms-conditions" class="mfp-hide mfp-with-anim mfp-popup size-chart-open-popup">
+                                        {{ product_terms_conditions_page_content }}
+                                    </div>
+                                {% endif %}
+                                <div data-buyitnow-button class="group-button-buyitnow {% if show_popup %}disabled{% endif %}">
+                                    {% if show_popup %}
+                                        <div class="checkbox-group prpage-term-conditions-checkbox term-conditions-checkbox-js skeleton-item">
+                                            <input type="checkbox" id="prpage-cart-term-conditions-checkbox" value="1">
+                                            <label for="prpage-cart-term-conditions-checkbox">
+                                                <span class="check"></span>
+                                                <span class="box"></span>
+                                                {{ 'products.product.checkbox_buyitnow' | t }} {{ terms_conditions }}
+                                            </label>
+                                        </div>
+                                    {% endif %}
+                                    {{ form | payment_button }}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {%- when 'shipping_return' -%}
+                        {% comment %}-----SHIPPING, RETURN-----{% endcomment %}
+                        {% assign shipping = product.metafields.custom.shipping | default: block.settings.shipping %}
+                        {% assign return = product.metafields.custom.return | default: block.settings.return %}
+                        {% if shipping != blank or return != blank %}
+                            <div class="delivery-info skeleton-list">
+                                {% if shipping != blank %}
+                                    <div class="item shipping">
+                                        <span class="icon main-icon-boat"></span>{{ shipping }}
+                                    </div>
+                                {% endif %}
+                                {% if return != blank %}
+                                    <div class="item return">
+                                        <span class="icon main-icon-return"></span>{{ return }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {%- when 'metas' -%}
+                        {% comment %}-----METAS-----{% endcomment %}
+                        <div class="product-metas skeleton-list">
+                            {%- if block.settings.show_sku and current_variant.sku != blank %}
+                                <p data-js-product-sku class="product-sku">
+                                    <label class="label">{{ 'products.product.sku' | t }}:</label>
+                                    <span>{{ current_variant.sku }}</span>
+                                </p>
+                            {% endif %}
+                            {%- if block.settings.show_barcode and current_variant.barcode != blank -%}
+                                <p data-js-product-barcode class="product-barcode">
+                                    <label class="label">{{ 'products.product.barcode' | t }}:</label>
+                                    <span>{{ current_variant.barcode }}</span>
+                                </p>
+                            {% endif %}
+                            {%- if block.settings.show_vendor and product.vendor != blank -%}
+                                <p class="product-vendor">
+                                    <label class="label">{{ 'products.product.vendor' | t }}:</label>
+                                    <span>{{ product.vendor }}</span>
+                                </p>
+                            {% endif %}
+                            {%- if block.settings.show_collections and product.collections.size > 0 -%}
+                                <div class="name_collection">
+                                    <label class="label">{{ 'products.product.collections' | t }}:</label>
+                                    <p>
+                                        {%- for collection in product.collections -%}
+                                            <a href="{{ collection.url }}">{{ collection.title }}</a>
+                                            {% if forloop.last != true %},{% endif %}
+                                        {%- endfor -%}
+                                    </p>
+                                </div>
+                            {% endif %}
+                            {%- if block.settings.show_type and product.type != blank -%}
+                                <p class="product-type">
+                                    <label class="label">{{ 'products.product.type' | t }}:</label>
+                                    <span>{{ product.type }}</span>
+                                </p>
+                            {% endif %}
+                            {%- if block.settings.show_tags and product.tags -%}
+                                <div class="tags">
+                                    <label class="label">{{ 'products.product.tags' | t }}:</label>
+                                    <p>
+                                        {%- for tags in product.tags -%}
+                                            <a href="{{ routes.root_url }}collections/all/{{ tags | replace: " ", "-" }}" title="{{ tags }}">{{ tags }}</a>
+                                            {% if forloop.last != true %},{% endif %}
+                                        {%- endfor -%}
+                                    </p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {%- when 'payment' -%}
+                        {% comment %}-----PAYMENT-----{% endcomment %}
+                        {% assign payment = product.metafields.custom.payment | default: block.settings.payment %}
+                        {% assign payment_text = product.metafields.custom.payment_text | default: block.settings.payment_text %}
+                        {% if payment != blank %}
+                            {%- assign payment_url = block.settings.payment | img_url: '' -%}
+                            <div class="payment-info skeleton-item">
+                                {% if payment_text != blank %}
+                                    <p class="text"><span class="skeleton-item">{{ payment_text }}</span></p>
+                                {% endif %}
+                                <span class="image"><img class="lazyload" src="{{ payment_url }}" data-src="{{ payment_url }}" loading="lazy" alt=""/></span>
+                            </div>
+                        {% endif %}
+                {%- endcase -%}
+            {%- endfor -%}
+        {% endform %}
+    </div>
+</div>

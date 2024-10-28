@@ -1,0 +1,80 @@
+{%- capture style -%}
+    {%- if icon_cl != blank and icon_cl.alpha != 0.0 -%}--social-icon-cl:{{ icon_cl }}{%- endif -%}
+    {%- if icon_bg != blank and icon_bg.alpha != 0.0 -%}--social-icon-bg:{{ icon_bg }}{%- endif -%}
+{%- endcapture -%}
+<div class="alz-social {{ class }} apply-header-css" style="{{ style | strip_newlines | remove: "  " }}">
+    <ul class="social-list">
+        {% if settings.social1 != blank %}
+            <li class="social-item {{ settings.social1 }}">
+                <a class="social-link tooltip-wrap" target="_blank" href="{{ settings.social1_link }}">
+                    {%- render 'icon', icon: settings.social1_icon, icon_img: settings.social1_img, icon_svg: settings.social1_svg -%}
+                    <span class="text">{{ settings.social1 }}</span>
+                    <span class="tooltip-text">{{ settings.social1 }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.social2 != blank %}
+            <li class="social-item {{ settings.social2 }}">
+                <a class="social-link tooltip-wrap" target="_blank" href="{{ settings.social2_link }}">
+                    {%- render 'icon', icon: settings.social2_icon, icon_img: settings.social2_img, icon_svg: settings.social2_svg -%}
+                    <span class="text">{{ settings.social2 }}</span>
+                    <span class="tooltip-text">{{ settings.social2 }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.social3 != blank %}
+            <li class="social-item {{ settings.social3 }}">
+                <a class="social-link tooltip-wrap" target="_blank" href="{{ settings.social3_link }}">
+                    {%- render 'icon', icon: settings.social3_icon, icon_img: settings.social3_img, icon_svg: settings.social3_svg -%}
+                    <span class="text">{{ settings.social3 }}</span>
+                    <span class="tooltip-text">{{ settings.social3 }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.social4 != blank %}
+            <li class="social-item {{ settings.social4 }}">
+                <a class="social-link tooltip-wrap" target="_blank" href="{{ settings.social4_link }}">
+                    {%- render 'icon', icon: settings.social4_icon, icon_img: settings.social4_img, icon_svg: settings.social4_svg -%}
+                    <span class="text">{{ settings.social4 }}</span>
+                    <span class="tooltip-text">{{ settings.social4 }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.social5 != blank %}
+            <li class="social-item {{ settings.social5 }}">
+                <a class="social-link tooltip-wrap" target="_blank" href="{{ settings.social5_link }}">
+                    {%- render 'icon', icon: settings.social5_icon, icon_img: settings.social5_img, icon_svg: settings.social5_svg -%}
+                    <span class="text">{{ settings.social5 }}</span>
+                    <span class="tooltip-text">{{ settings.social5 }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.social6 != blank %}
+            <li class="social-item {{ settings.social6 }}">
+                <a class="social-link tooltip-wrap" target="_blank" href="{{ settings.social6_link }}">
+                    {%- render 'icon', icon: settings.social6_icon, icon_img: settings.social6_img, icon_svg: settings.social6_svg -%}
+                    <span class="text">{{ settings.social6 }}</span>
+                    <span class="tooltip-text">{{ settings.social6 }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.social7 != blank %}
+            <li class="social-item {{ settings.social7 }}">
+                <a class="social-link tooltip-wrap" target="_blank" href="{{ settings.social7_link }}">
+                    {%- render 'icon', icon: settings.social7_icon, icon_img: settings.social7_img, icon_svg: settings.social7_svg -%}
+                    <span class="text">{{ settings.social7 }}</span>
+                    <span class="tooltip-text">{{ settings.social7 }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.social8 != blank %}
+            <li class="social-item {{ settings.social8 }}">
+                <a class="social-link tooltip-wrap" target="_blank" href="{{ settings.social8_link }}">
+                    {%- render 'icon', icon: settings.social8_icon, icon_img: settings.social8_img, icon_svg: settings.social8_svg -%}
+                    <span class="text">{{ settings.social8 }}</span>
+                    <span class="tooltip-text">{{ settings.social8 }}</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

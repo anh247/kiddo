@@ -1,0 +1,35 @@
+{%- liquid
+    assign prd_stock_type = settings.prd_stock_type
+    assign prd_low_stock = settings.prd_low_stock | default: 10
+    assign prd_low_stock = prd_low_stock | plus: 0
+    assign available = product.available
+    assign quantity = product.variants.first.inventory_quantity
+    assign classes = 'product-stock skeleton-item'
+    if available
+        assign classes = classes | append: ' in-stock'
+    else
+        assign classes = classes | append: ' out-stock'
+    endif
+    if quantity > 0 and prd_stock_type == 'price-num' and quantity <= prd_low_stock
+        assign classes = classes | append: ' low-stock'
+    endif
+-%}
+<div class="{{ classes }}" data-js-prd-stock data-min="{{ prd_low_stock }}">
+    <span class="title">{{ 'products.product.availability' | t }}</span>
+    {% if prd_stock_type == 'price-num' %}
+        <span class="text-hurry">{{ 'products.product.availability_hurry_up' | t }}</span>
+        <span class="text-only">{{ 'products.product.availability_only' | t }}</span>
+        <span class="qty" data-js-prd-stock-number>{{ quantity }}</span>
+        <span class="text">{{ 'products.product.availability_in_stock' | t }}</span>
+        <span class="text-out">{{ 'products.product.availability_out_stock' | t }}</span>
+        <span class="text-left">{{ 'products.product.availability_left_in_stock' | t }}</span>
+        <div class="total">
+            {%- assign countdown_range_quotient = prd_low_stock | times: 1.0 | divided_by: 100 -%}
+            {%- assign countdown_range_procent = quantity | divided_by: countdown_range_quotient -%}
+            <div style="width: {{ countdown_range_procent }}%;" class="progress" data-js-prd-stock-progress></div>
+        </div>
+    {% else %}
+        <span class="text">{{ 'products.product.availability_in_stock' | t }}</span>
+        <span class="text-out">{{ 'products.product.availability_out_stock' | t }}</span>
+    {% endif %}
+</div>

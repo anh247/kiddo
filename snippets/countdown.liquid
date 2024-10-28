@@ -1,0 +1,15 @@
+{% assign style = style | default: 'style-01' %}
+{% assign days = days | default: settings.countdown_days %}
+{% assign hrs = hrs | default: settings.countdown_hrs %}
+{% assign mins = mins | default: settings.countdown_mins %}
+{% assign secs = secs | default: settings.countdown_secs %}
+{% assign days_text = days_text | default: settings.countdown_days_text %}
+{% assign hrs_text = hrs_text | default: settings.countdown_hrs_text %}
+{% assign mins_text = mins_text | default: settings.countdown_mins_text %}
+{% assign secs_text = secs_text | default: settings.countdown_secs_text %}
+{% assign timeout_text = timeout_text | default: settings.countdown_timeout_text %}
+<div class="alz-countdown {{ style }} js-text-countdown skeleton-item" data-days="{{ days }}" data-hrs="{{ hrs }}" data-mins="{{ mins }}" data-secs="{{ secs }}"
+     data-days-text="{{ days_text }}" data-hrs-text="{{ hrs_text }}" data-mins-text="{{ mins_text }}" data-secs-text="{{ secs_text }}" data-timeout-text="{{ timeout_text }}">
+    {% if title != blank %}<h4 class="countdown-title">{{ title }}</h4>{% endif %}
+    <span class="inner" data-js-text-countdown-counter></span>
+</div>

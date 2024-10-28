@@ -1,0 +1,103 @@
+<div class="cart-addons">
+    {% if settings.show_note %}
+        <div data-id="note" class="mini_cart_note tooltip-wrap">
+            <button type="button" data-open="note" class="mini_cart_addon_btn note">
+                <span class="icon main-icon-documentation"></span>
+                <span class="tooltip-text">{{ 'cart.general.order_note_title' | t }}</span>
+            </button>
+        </div>
+    {% endif %}
+    {% if settings.show_gift %}
+        <div data-id="gift" class="mini_cart_gift tooltip-wrap">
+            <button type="button" data-open="gift" class="mini_cart_addon_btn gift">
+                <span class="icon main-icon-gift"></span>
+                <span class="tooltip-text">{{ 'cart.general.add_gift' | t }}</span>
+            </button>
+        </div>
+    {% endif %}
+    {% if settings.show_estimate %}
+        <div data-id="shipping" class="mini_cart_shipping tooltip-wrap">
+            <button type="button" data-open="shipping" class="mini_cart_addon_btn shipping">
+                <span class="icon main-icon-package"></span>
+                <span class="tooltip-text">{{ 'cart.general.estimate' | t }}</span>
+            </button>
+        </div>
+    {% endif %}
+    {% if settings.show_coupon %}
+        <div data-id="coupon" class="mini_cart_coupon tooltip-wrap">
+            <button type="button" data-open="coupon" class="mini_cart_addon_btn coupon">
+                <span class="icon main-icon-percent"></span>
+                <span class="tooltip-text">{{ 'cart.general.coupon' | t }}</span>
+            </button>
+        </div>
+    {% endif %}
+</div>
+{% if settings.show_note %}
+    <div class="cart-addon" id="addon_note">
+        <h4 class="cart-addon-title">
+            <span class="icon main-icon-documentation"></span>{{ 'cart.general.order_note_title' | t }}
+        </h4>
+        <div class="cart-addon-content">
+            <p>
+                <textarea name="note" id="CartSpecialInstructions" class="cart-note__input" placeholder="{{ 'cart.general.order_note_text' | t }}">{{ cart.note }}</textarea>
+            </p>
+            <div class="buttons">
+                <button type="button" class="btn-save" data-action="note">{{ 'cart.general.save' | t }}</button>
+                <button type="button" class="btn-cancel button-02">{{ 'cart.general.cancel' | t }}</button>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if settings.show_gift %}
+    <div class="cart-addon" id="addon_gift">
+        <h4 class="cart-addon-title">
+            <span class="icon main-icon-gift"></span>{{ 'cart.general.add_gift' | t }}
+        </h4>
+        <div class="cart-addon-content">
+            <div class="add-order-gift">
+                {%- assign product = all_products[settings.product_gift] %}
+                {%- assign price = product.price | money %}
+                {% if product != blank %}
+                    <p>{{ 'cart.general.gift_wrap_html' | t: money: price }}</p>
+                {% endif %}
+            </div>
+            <div class="buttons">
+                {% if product != blank %}
+                    <a href="{{ product.url }}" data-pid="{{ product.variants.first.id }}" class="js_add_to_cart_button alz-add-giftwrap btn w-full">
+                        <span class="circle-loading"></span>
+                        <span class="text">{{ 'cart.general.add_gift_wrap' | t }}</span>
+                    </a>
+                {% endif %}
+                <button type="button" class="btn-cancel button-02">{{ 'cart.general.cancel' | t }}</button>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if settings.show_estimate %}
+    <div class="cart-addon" id="addon_shipping">
+        <h4 class="cart-addon-title">
+            <span class="icon main-icon-package"></span>{{ 'cart.shipping_rates.title' | t }}
+        </h4>
+        <div class="cart-addon-content">
+            {% render 'shipping-calculator' %}
+            <div class="buttons">
+                <button type="button" class="btn-cancel button-02">{{ 'cart.general.cancel' | t }}</button>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if settings.show_coupon %}
+    <div class="cart-addon" id="addon_coupon">
+        <h4 class="cart-addon-title">
+            <span class="icon main-icon-percent"></span>{{ 'cart.general.add_coupon' | t }}
+        </h4>
+        <div class="cart-addon-content">
+            <p>{{ 'cart.general.info_coupon' | t }}</p>
+            <p><input type="text" name="discount" id="couponcode" value="" placeholder="{{ 'cart.general.placeholder_coupon' | t }}"></p>
+            <div class="buttons">
+                <button type="button" class="btn-save" data-action="discount">{{ 'cart.general.save' | t }}</button>
+                <button type="button" class="btn-cancel button-02">{{ 'cart.general.cancel' | t }}</button>
+            </div>
+        </div>
+    </div>
+{% endif %}

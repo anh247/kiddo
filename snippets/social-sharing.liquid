@@ -1,0 +1,88 @@
+{%comment%} /snippets/social-sharing.liquid {%endcomment%}
+{% assign _share_permalink = product.url | default: article.url | default: page.url %}
+{% assign _share_permalink2 = shop.url | append: _share_permalink %}
+{% assign permalinkURL = share_permalink | default: _share_permalink2 %}
+{% assign _share_title = share_title | default: product.title | default: article.title | default: page.title | default: shop.name %}
+{% assign permaTitle = _share_title | url_param_escape %}
+{% assign _share_image = share_image | default: product.featured_image | default: article.image | default: settings.share_image | default: page_image | default: settings.logo %}
+{% assign permaImage = _share_image | img_url: '1024x1024' %}
+
+<div class="alz-share alz-social style-02">
+    <h4 class="title">{{ 'general.social.title' | t }}</h4>
+    <ul class="share-list">
+        {% if settings.share_twitter %}
+            <li class="share-item twitter">
+                <a class="share-link tooltip-wrap" data-no-instant rel="noopener noreferrer nofollow" href="http://twitter.com/share?text={{ permaTitle }}&amp;url={{ permalinkURL }}" target="_blank">
+                    <i class="icon fab fa-twitter"></i>
+                    <span class="text">{{ 'general.social.twitter' | t }}</span>
+                    <span class="tooltip-text">{{ 'general.social.share_on' | t }} {{ 'general.social.twitter' | t }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.share_facebook %}
+            <li class="share-item facebook">
+                <a class="share-link tooltip-wrap" data-no-instant rel="noopener noreferrer nofollow" href="https://www.facebook.com/sharer/sharer.php?u={{ permalinkURL }}" target="_blank">
+                    <i class="icon fab fa-facebook-f"></i>
+                    <span class="text">{{ 'general.social.facebook' | t }}</span>
+                    <span class="tooltip-text">{{ 'general.social.share_on' | t }} {{ 'general.social.facebook' | t }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.share_linkedin %}
+            <li class="share-item linkedin">
+                <a class="share-link tooltip-wrap" data-no-instant rel="noopener noreferrer nofollow" href="//linkedin.com/sharing/share-offsite/?url={{ permalinkURL }}" target="_blank">
+                    <i class="icon fab fa-linkedin-in"></i>
+                    <span class="text">{{ 'general.social.linkedin' | t }}</span>
+                    <span class="tooltip-text">{{ 'general.social.share_on' | t }} {{ 'general.social.linkedin' | t }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.share_email %}
+            <li class="share-item email">
+                <a class="share-link tooltip-wrap" data-no-instant rel="noopener noreferrer nofollow" href="mailto:?subject=Check this {{ permalinkURL }}" target="_blank">
+                    <i class="icon fas fa-envelope"></i>
+                    <span class="text">{{ 'general.social.email' | t }}</span>
+                    <span class="tooltip-text">{{ 'general.social.share_on' | t }} {{ 'general.social.email' | t }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {%- if permaImage != blank -%}
+            {% if settings.share_pinterest %}
+                <li class="share-item pinterest">
+                    <a class="share-link tooltip-wrap" data-no-instant rel="noopener noreferrer nofollow" href="http://pinterest.com/pin/create/button/?url={{ permalinkURL }}&amp;media=http:{{ permaImage }}&amp;description={{ permaTitle }}" target="_blank">
+                        <i class="icon fab fa-pinterest"></i>
+                        <span class="text">{{ 'general.social.pinterest' | t }}</span>
+                        <span class="tooltip-text">{{ 'general.social.share_on' | t }} {{ 'general.social.pinterest' | t }}</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if settings.share_tumblr %}
+                <li class="share-item tumblr">
+                    <a class="share-link tooltip-wrap" data-no-instant rel="noopener noreferrer nofollow" data-content="http:{{ permaImage }}" href="//tumblr.com/widgets/share/tool?canonicalUrl={{ permalinkURL }}" target="_blank">
+                        <i class="icon fab fa-tumblr"></i>
+                        <span class="text">{{ 'general.social.tumblr' | t }}</span>
+                        <span class="tooltip-text">{{ 'general.social.share_on' | t }} {{ 'general.social.tumblr' | t }}</span>
+                    </a>
+                </li>
+            {% endif %}
+        {%- endif -%}
+        {% if settings.share_telegram %}
+            <li class="share-item telegram">
+                <a class="share-link tooltip-wrap" data-no-instant rel="nofollow" target="_blank" href="https://telegram.me/share/url?url={{ permalinkURL }}">
+                    <i class="icon fab fa-telegram"></i>
+                    <span class="text">{{ 'general.social.telegram' | t }}</span>
+                    <span class="tooltip-text">{{ 'general.social.share_on' | t }} {{ 'general.social.telegram' | t }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if settings.share_whatsapp %}
+            <li class="share-item whatsapp">
+                <a class="share-link tooltip-wrap" data-no-instant rel="nofollow" target="_blank" href="https://wa.me/?text={{ permaTitle }}&#x20;{{ permalinkURL }}">
+                    <i class="icon fab fa-whatsapp"></i>
+                    <span class="text">{{ 'general.social.whatsapp' | t }}</span>
+                    <span class="tooltip-text">{{ 'general.social.share_on' | t }} {{ 'general.social.whatsapp' | t }}</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

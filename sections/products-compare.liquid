@@ -1,0 +1,87 @@
+{%- assign items_length = search.results_count -%}
+<a href="#" class="button compare__button-remove js-store-lists-clear-compare{% if items_length < 1 %} d-none-important{% endif %}" data-js-store-lists-has-items-compare>
+    <i class="icon main-icon-trash-2"></i>{{ 'compare_page.button_remove_all' | t }}
+</a>
+<div class="compare_content">
+    <table class="table {% if items_length < 1 %}d-none-important{% endif %}" data-js-store-lists-has-items-compare>
+        <tr>
+            <td class="compare__title"><h3>{{ 'compare_page.products_title' | t }}</h3></td>
+            <td>
+                <div class="compare__items">
+                    {% for product in search.results %}
+                        {%- assign current_handle = product[1] -%}
+                        {%- assign current_variant_id = product[0] | abs -%}
+                        {%- assign product = all_products[current_handle] -%}
+                        {% assign current_variant = product.selected_or_first_available_variant %}
+                        <div class="compare__item col">
+                            <div class="product-compare" data-js-product data-js-store-lists-product-compare data-product-handle="{{ product.handle }}" data-product-variant-id="{{ current_variant_id }}">
+                                <div class="product-compare__image js-product-images-navigation js-product-images-hovered-end">
+                                    <a class="effect image-zoom" href="{{ product.url }}">
+                                        {% assign image = product.featured_media | image_url: width: 200 %}
+                                        <img class="effect-obj default_media lazyload" src="{{ image }}" data-src="{{ image }}" alt="{{ product.featured_media.alt | escape }}">
+                                    </a>
+                                </div>
+                                <div class="product-compare__content">
+                                    {% render 'product-get-title', product: product %}
+                                    {% render 'product-get-price', product: product %}
+                                    {% render 'product-get-button-cart', product: product %}
+                                </div>
+                                <div class="product-compare__remove js-store-lists-remove-compare"><i class="main-icon-trash-2"></i></div>
+                            </div>
+                        </div>
+                        {% capture handles %}{{ handles }}{% if handles %}|||{% endif %}{{ product.handle }}{% endcapture %}
+                        {%- if current_variant.option1 and current_variant.option1 != 'Default Title' -%}
+                            {%- unless compare_options contains product.options[0] -%}
+                                {% capture compare_options %}{{ compare_options }}{%- if compare_options %}|||{% endif -%}{{ product.options[0] }}{% endcapture %}
+                            {%- endunless -%}
+                        {%- endif -%}
+                        {%- if current_variant.option2 and current_variant.option2 != 'Default Title' -%}
+                            {%- unless compare_options contains product.options[1] -%}
+                                {% capture compare_options %}{{ compare_options }}{%- if compare_options %}|||{% endif -%}{{ product.options[1] }}{% endcapture %}
+                            {%- endunless -%}
+                        {%- endif -%}
+                        {%- if current_variant.option3 and current_variant.option3 != 'Default Title' -%}
+                            {%- unless compare_options contains product.options[2] -%}
+                                {% capture compare_options %}{{ compare_options }}{%- if compare_options %}|||{% endif -%}{{ product.options[2] }}{% endcapture %}
+                            {%- endunless -%}
+                        {%- endif -%}
+                    {%- endfor -%}
+                    {% capture compare_variants %}
+                        {{ compare_variants }}{% if compare_variants %}|||{% endif %}
+                        {{ product.options[0] }}={{ current_variant.option1 }}+{{ product.options[1] }}={{ current_variant.option2 }}+{{ product.options[2] }}={{ current_variant.option3 }}
+                    {% endcapture %}
+                </div>
+            </td>
+        </tr>
+        {%- assign handles = handles | split: '|||' -%}
+        {%- assign compare_options = compare_options | split: '|||' -%}
+        {%- assign compare_variants = compare_variants | split: '|||' -%}
+        {%- for option in compare_options -%}
+            <tr>
+                <td class="compare__title"><h3>{{ option }}</h3></td>
+                <td>
+                    <div class="compare__items">
+                        {% for product in search.results %}
+                            {%- assign current_handle = product[1] -%}
+                            {%- assign current_variant_id = product[0] | abs -%}
+                            {%- assign product = all_products[current_handle] -%}
+                            {% assign current_variant = product.selected_or_first_available_variant %}
+                            <div class="compare__item" data-js-store-lists-product-compare data-product-handle="{{ handles[forloop.index0] }}">
+                                {% if product.options contains option %}{{ product.options_by_name[option].values | join: ' | ' | default: '-' }}{% else %}-{% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+        {%- endfor -%}
+    </table>
+</div>
+<div class="{% if items_length > 0 %} d-none{% endif %}" data-js-store-lists-dhas-items-compare>
+    <div class="shopify-info no-products"><i class="flash icon-alert-triangle" aria-hidden="true"></i> {{ 'compare_page.empty' | t }}</div>
+</div>
+{% schema %}
+{
+    "name": "Products Compare",
+    "settings": []
+}
+{% endschema %}

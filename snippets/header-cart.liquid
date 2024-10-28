@@ -1,0 +1,12 @@
+<div class="header-cart apply-header-css {{ section.settings.control_cart_style }}">
+    <a class="push_side" href="{{ routes.cart_url }}" {% if request.page_type != 'cart' %}data-id="#js_cart_popup"{% endif %}>
+        <span class="icon main-icon-shopping-cart">
+            <span class="header-count js-cart-count" data-js-cart-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+        </span>
+        <span class="text">
+            {{ 'cart.general.title' | t }}
+            <span class="count js-cart-count" data-js-cart-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+        </span>
+        <span class="total js-total-price">{{ cart.total_price | money }}</span>
+    </a>
+</div>

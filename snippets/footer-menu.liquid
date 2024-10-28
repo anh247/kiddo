@@ -1,0 +1,34 @@
+{% liquid
+    assign border_top = block.settings.border_top
+    assign border_bottom = block.settings.border_bottom
+    assign pageUrl = content_for_header | split: '"pageurl":"' | last | split: '"' | first | split: '.myshopify.com' | last | replace: '\/', '/' | replace: '%20', ' ' | replace: '\u0026', '&'
+%}
+<div id="b_{{ block.id }}" class="section-block footer-menu {% if border_top %}border-top{% endif %} {% if border_bottom %}border-bottom{% endif %}" {{ block.shopify_attributes }}>
+    {%- render 'section_style_block', block: block -%}
+    <div class="alz-menu widget widget_nav_menu">
+        {%- assign title = block.settings.title -%}
+        {%- if title != blank -%}
+            {%- if block.settings.mobile_toggle -%}
+                <h3 class="widget-title js-mobile-toggle">{{ title }}<span class="icon alz-icon-plus"></span></h3>
+            {%- else -%}
+                <h3 class="widget-title">{{ title }}</h3>
+            {%- endif -%}
+        {%- endif -%}
+        <ul class="widget-content {% if block.settings.mobile_toggle %}js-mobile-toggle-content{% endif %}">
+            {%- assign menu = block.settings.menu -%}
+            {%- if menu != blank -%}
+                {%- for link in linklists[menu].links -%}
+                    <li class="menu-item {% if link.active or link.url == pageUrl %}current{% endif %}">
+                        <a href="{{ link.url }}">{{ link.title | split: '[' | first }}
+                            {%- if link.object.all_products_count -%}
+                                <span class="count">({{ link.object.all_products_count }})</span>
+                            {%- endif -%}
+                        </a>
+                    </li>
+                {%- endfor -%}
+            {%- else -%}
+                <li>{{ 'general.menu.not_select' | t }}</li>
+            {%- endif -%}
+        </ul>
+    </div>
+</div>

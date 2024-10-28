@@ -1,0 +1,121 @@
+{% liquid
+    assign bg_image = section.settings.bg_image
+    assign bg_position = section.settings.bg_position
+    assign bg_size = section.settings.bg_size
+    assign bg_repeat = section.settings.bg_repeat
+    assign bg_gradient = section.settings.bg_gradient
+    assign bg_cl = section.settings.bg_cl
+    assign main_cl = section.settings.main_cl
+    assign main_cl_t = section.settings.main_cl_t
+    assign dark_cl = section.settings.dark_cl
+    assign dark_cl_2 = section.settings.dark_cl_2
+    assign dark_cl_3 = section.settings.dark_cl_3
+    assign light_cl = section.settings.light_cl
+    assign light_cl_2 = section.settings.light_cl_2
+    assign line_cl = section.settings.line_cl
+
+    assign m_bg_image = section.settings.m_bg_image
+    assign m_bg_position = section.settings.m_bg_position
+    assign m_bg_size = section.settings.m_bg_size
+    assign m_bg_repeat = section.settings.m_bg_repeat
+    assign m_bg_gradient = section.settings.m_bg_gradient
+    assign m_bg_cl = section.settings.m_bg_cl
+    assign m_main_cl = section.settings.m_main_cl
+    assign m_main_cl_t = section.settings.m_main_cl_t
+    assign m_dark_cl = section.settings.m_dark_cl
+    assign m_dark_cl_2 = section.settings.m_dark_cl_2
+    assign m_dark_cl_3 = section.settings.m_dark_cl_3
+    assign m_light_cl = section.settings.m_light_cl
+    assign m_light_cl_2 = section.settings.m_light_cl_2
+    assign m_line_cl = section.settings.m_line_cl
+
+    assign b_for_inner = section.settings.b_for_inner
+    assign b_bg_image = section.settings.b_bg_image
+    assign b_bg_position = section.settings.b_bg_position
+    assign b_bg_size = section.settings.b_bg_size
+    assign b_bg_repeat = section.settings.b_bg_repeat
+    assign b_bg_gradient = section.settings.b_bg_gradient
+    assign b_bg_cl = section.settings.b_bg_cl
+    assign b_main_cl = section.settings.b_main_cl
+    assign b_main_cl_t = section.settings.b_main_cl_t
+    assign b_dark_cl = section.settings.b_dark_cl
+    assign b_dark_cl_2 = section.settings.b_dark_cl_2
+    assign b_dark_cl_3 = section.settings.b_dark_cl_3
+    assign b_light_cl = section.settings.b_light_cl
+    assign b_light_cl_2 = section.settings.b_light_cl_2
+    assign b_line_cl = section.settings.b_line_cl
+%}
+{%- capture style -%}
+    {% comment %}----- Header -----{% endcomment %}
+    .alz-header{
+    {% if bg_image != blank %}
+        background-image: url('{{ bg_image | img_url: "1920x" }}');
+        background-position:{{ bg_position }};
+        background-size:{{ bg_size }};
+        background-repeat:{{ bg_repeat }};
+    {% endif %}
+    {% if bg_gradient != blank %}background-image:{{ bg_gradient }};{% endif %}
+    {% if bg_cl != blank and bg_cl.alpha != 0.0 %}background-color:{{ bg_cl }};{% endif %}
+    }
+    .alz-header .apply-header-css{
+    {% if main_cl != blank and main_cl.alpha != 0.0 %}--main-cl:{{ main_cl }};{% endif %}
+    {% if main_cl_t != blank and main_cl_t.alpha != 0.0 %}--main-cl-t:{{ main_cl_t }};{% endif %}
+    {% if dark_cl != blank and dark_cl.alpha != 0.0 %}--dark-cl:{{ dark_cl }};{% endif %}
+    {% if dark_cl_2 != blank and dark_cl_2.alpha != 0.0 %}--dark-cl-2:{{ dark_cl_2 }};{% endif %}
+    {% if dark_cl_3 != blank and dark_cl_3.alpha != 0.0 %}--dark-cl-3:{{ dark_cl_3 }};{% endif %}
+    {% if light_cl != blank and light_cl.alpha != 0.0 %}--light-cl:{{ light_cl }};{% endif %}
+    {% if light_cl_2 != blank and light_cl_2.alpha != 0.0 %}--light-cl-2:{{ light_cl_2 }};{% endif %}
+    {% if line_cl != blank and line_cl.alpha != 0.0 %}--line-cl:{{ line_cl }};{% endif %}
+    }
+    {% comment %}----- Header main -----{% endcomment %}
+    .header-main{
+    {% if m_bg_image != blank %}
+        background-image: url('{{ m_bg_image | img_url: "1920x" }}');
+        background-position:{{ m_bg_position }};
+        background-size:{{ m_bg_size }};
+        background-repeat:{{ m_bg_repeat }};
+    {% endif %}
+    {% if m_bg_gradient != blank %}background-image:{{ m_bg_gradient }};{% endif %}
+    {% if m_bg_cl != blank and m_bg_cl.alpha != 0.0 %}background-color:{{ m_bg_cl }};{% endif %}
+    }
+    .header-main .apply-header-css{
+    {% if m_main_cl != blank and m_main_cl.alpha != 0.0 %}--main-cl:{{ m_main_cl }};{% endif %}
+    {% if m_main_cl_t != blank and m_main_cl_t.alpha != 0.0 %}--main-cl-t:{{ m_main_cl_t }};{% endif %}
+    {% if m_dark_cl != blank and m_dark_cl.alpha != 0.0 %}--dark-cl:{{ m_dark_cl }};{% endif %}
+    {% if m_dark_cl_2 != blank and m_dark_cl_2.alpha != 0.0 %}--dark-cl-2:{{ m_dark_cl_2 }};{% endif %}
+    {% if m_dark_cl_3 != blank and m_dark_cl_3.alpha != 0.0 %}--dark-cl-3:{{ m_dark_cl_3 }};{% endif %}
+    {% if m_light_cl != blank and m_light_cl.alpha != 0.0 %}--light-cl:{{ m_light_cl }};{% endif %}
+    {% if m_light_cl_2 != blank and m_light_cl_2.alpha != 0.0 %}--light-cl-2:{{ m_light_cl_2 }};{% endif %}
+    {% if m_line_cl != blank and m_line_cl.alpha != 0.0 %}--line-cl:{{ m_line_cl }};{% endif %}
+    }
+    {% comment %}----- Header bottom -----{% endcomment %}
+    {% if b_for_inner %}
+        {% if b_bg_image != blank or b_bg_gradient != blank or b_bg_cl != blank and b_bg_cl.alpha != 0.0 %}
+            @media (min-width:1200px){
+            .header-bottom .section-inner{column-gap:0}
+            .header-bottom .box-header-nav{padding:0 var(--cols-gap)}
+            }
+        {% endif %}
+    {% endif %}
+    .header-bottom{% if b_for_inner %} .section-inner{% endif %}{
+    {% if b_bg_image != blank %}
+        background-image: url('{{ b_bg_image | img_url: "1920x" }}');
+        background-position:{{ b_bg_position }};
+        background-size:{{ b_bg_size }};
+        background-repeat:{{ b_bg_repeat }};
+    {% endif %}
+    {% if b_bg_gradient != blank %}background-image:{{ b_bg_gradient }};{% endif %}
+    {% if b_bg_cl != blank and b_bg_cl.alpha != 0.0 %}background-color:{{ b_bg_cl }};{% endif %}
+    }
+    .header-bottom .apply-header-css{
+    {% if b_main_cl != blank and b_main_cl.alpha != 0.0 %}--main-cl:{{ b_main_cl }};{% endif %}
+    {% if b_main_cl_t != blank and b_main_cl_t.alpha != 0.0 %}--main-cl-t:{{ b_main_cl_t }};{% endif %}
+    {% if b_dark_cl != blank and b_dark_cl.alpha != 0.0 %}--dark-cl:{{ b_dark_cl }};{% endif %}
+    {% if b_dark_cl_2 != blank and b_dark_cl_2.alpha != 0.0 %}--dark-cl-2:{{ b_dark_cl_2 }};{% endif %}
+    {% if b_dark_cl_3 != blank and b_dark_cl_3.alpha != 0.0 %}--dark-cl-3:{{ b_dark_cl_3 }};{% endif %}
+    {% if b_light_cl != blank and b_light_cl.alpha != 0.0 %}--light-cl:{{ b_light_cl }};{% endif %}
+    {% if b_light_cl_2 != blank and b_light_cl_2.alpha != 0.0 %}--light-cl-2:{{ b_light_cl_2 }};{% endif %}
+    {% if b_line_cl != blank and b_line_cl.alpha != 0.0 %}--line-cl:{{ b_line_cl }};{% endif %}
+    }
+{% endcapture %}
+{%- style -%}{{ style | strip_newlines | remove: "  " }}{%- endstyle -%}

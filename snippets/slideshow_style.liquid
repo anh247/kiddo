@@ -1,0 +1,188 @@
+{%- capture style-slideshow -%}
+    {% liquid
+        assign sid = section.id
+    %}
+    #{{ sid }}{
+    --item-height:{{ section.settings.slide_height }};
+    --item-height-1200:{{ section.settings.slide_height_1200 }};
+    --item-height-992:{{ section.settings.slide_height_992 }};
+    --item-height-768:{{ section.settings.slide_height_768 }};
+    }
+    {%- for block in section.blocks -%}
+        {%- case block.type -%}
+            {% when 'img' %}
+                {% liquid
+                    assign bg_cl = block.settings.bg_cl
+                    assign bg_gradient = block.settings.bg_gradient
+                    assign bd_radius = block.settings.bd_radius
+                    assign width = block.settings.width
+                    assign mg = block.settings.mg
+                    assign pd = block.settings.pd
+                    assign width_1200 = block.settings.width_1200
+                    assign mg_1200 = block.settings.mg_1200
+                    assign pd_1200 = block.settings.pd_1200
+                    assign width_992 = block.settings.width_992
+                    assign mg_992 = block.settings.mg_992
+                    assign pd_992 = block.settings.pd_992
+                    assign width_768 = block.settings.width_768
+                    assign mg_768 = block.settings.mg_768
+                    assign pd_768 = block.settings.pd_768
+                %}
+                .alz-slideshow #b_{{ block.id }} .wrapper_caption{
+                {% if bg_cl != blank and bg_cl.alpha != 0.0 %}background-color:{{ bg_cl }};{% endif %}
+                {% if bg_gradient != blank %}background-image:{{ bg_gradient }};{% endif %}
+                {% if bd_radius != blank %}border-radius:{{ bd_radius }};{% endif %}
+                {% if width != blank %}width:{{ width }};{% endif %}
+                {% if mg != blank %}margin:{{ mg }};{% endif %}
+                {% if pd != blank %}padding:{{ pd }};{% endif %}
+                }
+                {%- if width_1200 != blank or mg_1200 != blank or pd_1200 != blank -%}
+                    @media (max-width: 1199px){
+                    .alz-slideshow #b_{{ block.id }} .wrapper_caption{
+                    {% if width_1200 != blank %}width:{{ width_1200 }};{% endif %}
+                    {% if mg_1200 != blank %}margin:{{ mg_1200 }};{% endif %}
+                    {% if pd_1200 != blank %}padding:{{ pd_1200 }};{% endif %}
+                    }
+                    }
+                {% endif %}
+                {%- if width_992 != blank or mg_992 != blank or pd_992 != blank -%}
+                    @media (max-width: 991px){
+                    .alz-slideshow #b_{{ block.id }} .wrapper_caption{
+                    {% if width_992 != blank %}width:{{ width_992 }};{% endif %}
+                    {% if mg_992 != blank %}margin:{{ mg_992 }};{% endif %}
+                    {% if pd_992 != blank %}padding:{{ pd_992 }};{% endif %}
+                    }
+                    }
+                {% endif %}
+                {%- if width_768 != blank or mg_768 != blank or pd_768 != blank -%}
+                    @media (max-width: 767px){
+                    .alz-slideshow #b_{{ block.id }} .wrapper_caption{
+                    {% if width_768 != blank %}width:{{ width_768 }};{% endif %}
+                    {% if mg_768 != blank %}margin:{{ mg_768 }};{% endif %}
+                    {% if pd_768 != blank %}padding:{{ pd_768 }};{% endif %}
+                    }
+                    }
+                {% endif %}
+            {% when 'text' or 'image' %}
+                {% liquid
+                    assign animate = block.settings.animate
+                    assign animate_out = block.settings.animate_out
+                    assign duration = block.settings.duration | default: 2
+                    assign cl = block.settings.cl
+                    assign cl_gradient = block.settings.cl_gradient
+                    assign bg_cl = block.settings.bg_cl
+                    assign bg_gradient = block.settings.bg_gradient
+                    assign cl_h = block.settings.cl_h
+                    assign bg_cl_h = block.settings.bg_cl_h
+                    assign fz = block.settings.fz
+                    assign lh = block.settings.lh
+                    assign ls = block.settings.ls
+                    assign fw = block.settings.fw
+                    assign tt = block.settings.tt
+                    assign bd_style = block.settings.bd_style
+                    assign bd_width = block.settings.bd_width
+                    assign bd_radius = block.settings.bd_radius
+                    assign bd_color = block.settings.bd_color
+                    assign width = block.settings.width
+                    assign mg = block.settings.mg
+                    assign pd = block.settings.pd
+                    assign fz_1200 = block.settings.fz_1200
+                    assign lh_1200 = block.settings.lh_1200
+                    assign ls_1200 = block.settings.ls_1200
+                    assign bd_width_1200 = block.settings.bd_width_1200
+                    assign width_1200 = block.settings.width_1200
+                    assign mg_1200 = block.settings.mg_1200
+                    assign pd_1200 = block.settings.pd_1200
+                    assign fz_992 = block.settings.fz_992
+                    assign lh_992 = block.settings.lh_992
+                    assign ls_992 = block.settings.ls_992
+                    assign bd_width_992 = block.settings.bd_width_992
+                    assign width_992 = block.settings.width_992
+                    assign mg_992 = block.settings.mg_992
+                    assign pd_992 = block.settings.pd_992
+                    assign fz_768 = block.settings.fz_768
+                    assign lh_768 = block.settings.lh_768
+                    assign ls_768 = block.settings.ls_768
+                    assign bd_width_768 = block.settings.bd_width_768
+                    assign width_768 = block.settings.width_768
+                    assign mg_768 = block.settings.mg_768
+                    assign pd_768 = block.settings.pd_768
+                %}
+                {% if animate != blank %}
+                    .slick-slide.slick-active #b_{{ block.id }}{
+                    {% if animate != blank %}animation:{{ animate }} cubic-bezier(1, 0, 0.5, 0.9);{% endif %}
+                    {% if duration != blank %}animation-duration:{{ duration }}s;{% endif %}
+                    }
+                    .slick-slide:not(.slick-active) #b_{{ block.id }}{
+                    {% if animate_out != blank %}animation-name:{{ animate_out }};{% endif %}
+                    }
+                {% endif %}
+                .alz-slideshow #b_{{ block.id }}{
+                {% if cl != blank and cl.alpha != 0.0 %}color:{{ cl }};{% endif %}
+                {% if block.settings.cl_gradient != blank %}
+                    background: {{ block.settings.cl_gradient }};
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                {% endif %}
+                {% if bg_cl != blank and bg_cl.alpha != 0.0 %}background-color:{{ bg_cl }};{% endif %}
+                {% if bg_gradient != blank %}background-image:{{ bg_gradient }};{% endif %}
+                {% if fz != blank %}font-size:{{ fz }};{% endif %}
+                {% if lh != blank %}line-height:{{ lh }};{% endif %}
+                {% if ls != blank %}letter-spacing:{{ ls }};{% endif %}
+                {% if fw != blank %}font-weight:{{ fw }};{% endif %}
+                {% if tt != blank %}text-transform:{{ tt }};{% endif %}
+                {% if bd_style != blank %}border-style:{{ bd_style }};{% endif %}
+                {% if bd_width != blank %}border-width:{{ bd_width }};{% endif %}
+                {% if bd_radius != blank %}border-radius:{{ bd_radius }};{% endif %}
+                {% if bd_color != blank and bd_color.alpha != 0.0 %}border-color:{{ bd_color }};{% endif %}
+                {% if width != blank %}width:{{ width }};{% endif %}
+                {% if mg != blank %}margin:{{ mg }};{% endif %}
+                {% if pd != blank %}padding:{{ pd }};{% endif %}
+                }
+                {% if cl_h != blank and cl_h.alpha != 0.0 %}.alz-slideshow #b_{{ block.id }}:hover{color:{{ cl_h }}}{% endif %}
+                {% if bg_cl_h != blank and bg_cl_h.alpha != 0.0 %}.alz-slideshow #b_{{ block.id }}:hover{background-color:{{ bg_cl_h }}}{% endif %}
+                @media (max-width: 1199px){
+                .alz-slideshow #b_{{ block.id }}{
+                {% if fz_1200 != blank %}font-size:{{ fz_1200 }};{% endif %}
+                {% if lh_1200 != blank %}line-height:{{ lh_1200 }};{% endif %}
+                {% if ls_1200 != blank %}letter-spacing:{{ ls_1200 }};{% endif %}
+                {% if bd_width_1200 != blank %}border-width:{{ bd_width_1200 }};{% endif %}
+                {% if width_1200 != blank %}width:{{ width_1200 }};{% endif %}
+                {% if mg_1200 != blank %}margin:{{ mg_1200 }};{% endif %}
+                {% if pd_1200 != blank %}padding:{{ pd_1200 }};{% endif %}
+                }
+                }
+                @media (max-width: 991px){
+                .alz-slideshow #b_{{ block.id }}{
+                {% if fz_992 != blank %}font-size:{{ fz_992 }};{% endif %}
+                {% if lh_992 != blank %}line-height:{{ lh_992 }};{% endif %}
+                {% if ls_992 != blank %}letter-spacing:{{ ls_992 }};{% endif %}
+                {% if bd_width_992 != blank %}border-width:{{ bd_width_992 }};{% endif %}
+                {% if width_992 != blank %}width:{{ width_992 }};{% endif %}
+                {% if mg_992 != blank %}margin:{{ mg_992 }};{% endif %}
+                {% if pd_992 != blank %}padding:{{ pd_992 }};{% endif %}
+                }
+                }
+                @media (max-width: 767px){
+                .alz-slideshow #b_{{ block.id }}{
+                {% if fz_768 != blank %}font-size:{{ fz_768 }};{% endif %}
+                {% if lh_768 != blank %}line-height:{{ lh_768 }};{% endif %}
+                {% if ls_768 != blank %}letter-spacing:{{ ls_768 }};{% endif %}
+                {% if bd_width_768 != blank %}border-width:{{ bd_width_768 }};{% endif %}
+                {% if width_768 != blank %}width:{{ width_768 }};{% endif %}
+                {% if mg_768 != blank %}margin:{{ mg_768 }};{% endif %}
+                {% if pd_768 != blank %}padding:{{ pd_768 }};{% endif %}
+                }
+                }
+        {% endcase %}
+    {% endfor %}
+    @media (max-width: 1024px) {
+    .hide_mobile{display:none;}
+    }
+{%- endcapture -%}
+
+{% style %}
+    {{ style-slideshow | strip_newlines | remove: "  " }}
+{% endstyle %}
