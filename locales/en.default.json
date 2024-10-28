@@ -689,6 +689,7 @@
   "customer": {
     "account": {
       "title": "Account",
+       "logout": "Logout",
       "details": "Account details",
       "view_addresses": "View addresses",
         "dashboard": "Dashboard",
