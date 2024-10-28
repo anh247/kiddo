@@ -791,6 +791,11 @@
       "button": "Send",
       "subtext": "We will send you an email to reset your password.",
       "success": "We've sent you an email with a link to update your password."
+    },
+      "reset": {
+      "title": "Reset",
+      "button": "Confirm",
+      "subtext": "Enter a new password for {{ email }}"
     }
   },
   "localization": {
