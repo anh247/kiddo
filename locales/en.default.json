@@ -751,6 +751,7 @@
       "tracking_company": "Carrier",
       "tracking_number": "Tracking number",
       "subtotal": "Subtotal",
+      "fulfilled_at": "Fulfilled {{ date }}",
       "total_duties": "Duties"
     },
      "orders": {
