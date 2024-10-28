@@ -701,6 +701,7 @@
       "phone": "Phone:",
       "city": "City:",
       "zip": "Zip:",
+      "account_details": "Account details:",
        "address": "Address:",
       "address2": "Address 2:",
     "return": "Return to Account details"
