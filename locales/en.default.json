@@ -697,6 +697,10 @@
     "back_account":"Back account",
     "name": "Name:",
     "country": "Country:",
+       "email": "E-mail:",
+      "phone": "Phone:",
+      "city": "City:",
+      "zip": "Zip:",
     "return": "Return to Account details"
     },
     "activate_account": {
