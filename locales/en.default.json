@@ -18,7 +18,8 @@
       "prev": "Prev",
       "next": "Next",
       "page": "Page",
-      "current_page": "Page {{ current }} of {{ total }}"
+      "current_page": "Page {{ current }} of {{ total }}",
+       "previous": "Previous page"
     },
     "password_page": {
       "login_form_heading": "Enter store using password:",
