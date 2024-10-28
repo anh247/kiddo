@@ -694,6 +694,7 @@
       "view_addresses": "View addresses",
         "dashboard": "Dashboard",
         "view_wishlist": "Wishlist",
+      "back_account":"",
       "return": "Return to Account details"
     },
     "activate_account": {
