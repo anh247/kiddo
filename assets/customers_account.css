@@ -47,3 +47,6 @@ th, td {
     padding: 10px;
     text-align: inherit;
 }
+table.table {
+    margin-top: 20px;
+}
