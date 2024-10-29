@@ -1,11 +1,17 @@
 .section-inner {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
-input#RegisterForm-FirstName,input#RegisterForm-LastName,input#RegisterForm-email,input#CreatePassword,input#PasswordConfirmation {
-    width: 100%;
-    border-radius: 30px;
-    height: 30px;
+input#RegisterForm-FirstName,
+input#RegisterForm-LastName,
+input#RegisterForm-email,
+input#CreatePassword,
+input#PasswordConfirmation {
+  width: 100%;
+  border-radius: 30px;
+  height: 30px;
 }
-#registerForm h2{
+#registerForm h2 {
+  text-transform: capitalize;
+  text-align: center;
 }
