@@ -25,3 +25,6 @@
   padding: var(--table-pd) var(--table-pd-hz);
   margin: 0;
 }
+ul.addresses-info {
+    list-style: none;
+}
