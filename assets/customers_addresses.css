@@ -88,3 +88,7 @@ input#AddressFirstName_8789289664669,input#AddressLastName_8789289664669,input#A
 input#AddressAddress1_8789289664669,input#AddressAddress2_8789289664669,input#AddressCity_8789289664669,select#AddressCountry_8789289664669,select#AddressProvince_8789289664669,input#AddressZip_8789289664669{
   width:100%;
 }
+form#address_form_new {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
