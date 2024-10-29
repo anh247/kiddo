@@ -82,6 +82,6 @@ button#address-edit-toggle:hover , button.address-delete:hover{
 button#address-edit-toggle {
     width: 100%;
 }
-input#AddressFirstName_8789289664669,input#AddressLastName_8789289664669,input#AddressCompany_8789289664669 {
+input#AddressFirstName_8789289664669,input#AddressLastName_8789289664669,input#AddressCompany_8789289664669,input#AddressPhone_8789289664669 {
     width: 100%;
 }
