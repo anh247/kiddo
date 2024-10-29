@@ -202,21 +202,20 @@
                                         <a class="button hidden_form_vertical" data-form-id="{{ form.id }}">{{ 'customer.addresses.cancel' | t }}</a>
                                     </div>
                                     <script type="text/javascript">
-                                      // document.getElementById("address-edit-toggle").addEventListener("click", myFunction);
-
-                                      // function myFunction() {
-                                      //               $("#EditAddress_{{ address.id }}").removeClass('hidden');
-                                      //               $("#edit_{{ address.id }}").addClass('hidden');
-                                      // }
+                                      document.getElementById("address-edit-toggle").addEventListener("click", myFunction);
+                                      function myFunction() {
+                                          $("#EditAddress_{{ address.id }}").removeClass('hidden');
+                                          $("#edit_{{ address.id }}").addClass('hidden');
+                                      }
                                       
-                                          $(document).ready(function () {
-                                                  console.log('0');
-                                                $('#edit_{{ address.id }} .address-edit-toggle').on('click', function () {
-                                                    $("#EditAddress_{{ address.id }}").removeClass('hidden');
-                                                    $("#edit_{{ address.id }}").addClass('hidden');
-                                                  console.log('1');
-                                                });
-                                          });
+                                          // $(document).ready(function () {
+                                          //         console.log('0');
+                                          //       $('#edit_{{ address.id }} .address-edit-toggle').on('click', function () {
+                                          //           $("#EditAddress_{{ address.id }}").removeClass('hidden');
+                                          //           $("#edit_{{ address.id }}").addClass('hidden');
+                                          //         console.log('1');
+                                          //       });
+                                          // });
                                         // (function ($) {
                                         //     'use strict';
                                         //     $(document).ready(function ($) {
