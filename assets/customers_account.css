@@ -39,3 +39,6 @@
   box-shadow: rgb(180, 222, 176) 0px 0px 0px 1px;
   padding: 8px 15px;
 }
+.order-history h3{
+  margin-bottom:10px;
+}
