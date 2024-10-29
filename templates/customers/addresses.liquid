@@ -205,7 +205,8 @@
                                       document.getElementById("address-edit-toggle").addEventListener("click", myFunction);
 
                                       function myFunction() {
-                                        alert ("Hello World!");
+                                                    $("#EditAddress_{{ address.id }}").removeClass('hidden');
+                                                    $("#edit_{{ address.id }}").addClass('hidden');
                                       }
                                       
                                           // $(document).ready(function () {
