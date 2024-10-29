@@ -29,3 +29,9 @@ a.go-register.link {
 a.go-register.link:hover {
     text-decoration: underline;
 }
+input.button:hover{
+color: #111;
+  background-color: transparent;
+  transition: .40s;
+  border: 1px solid #111;
+}
