@@ -7,6 +7,9 @@
       border: 1px solid#ccc;
   padding:10px;
 }
+.customer-page-nav a{
+  color:#888;
+}
 .customer-page-nav>* {
     display: block;
     padding: var(--table-pd) var(--table-pd-hz);
