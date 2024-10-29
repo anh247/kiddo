@@ -34,7 +34,7 @@ ul.addresses-info {
     gap: 30px;
 }
 .addresses-item {
-    border: 1px solid var(--line-cl);
+    border: 1px solid #e5e5e5;
     display: flex;
     flex-direction: column;
     --text-space: var(--space-15);
@@ -42,11 +42,11 @@ ul.addresses-info {
     --input-pd-hz: 15px;
     --btn-pd: 10px;
     --btn-pd-hz: 15px;
-    --btn-cl: var(--dark-cl);
-    --btn-bg: var(--light-cl-2);
-    --btn-bd: var(--line-cl);
+    --btn-cl: #222222;
+    --btn-bg: #f1f1f1;
+    --btn-bd: #e5e5e5;
     --btn-bd-width: 1px;
-    --btn-cl-hover: var(--light-cl);
-    --btn-bg-hover: var(--dark-cl);
+    --btn-cl-hover: #fff;
+    --btn-bg-hover: #222222;
     --btn-bd-hover: transparent;
 }
