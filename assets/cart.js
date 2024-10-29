@@ -1,28 +1,17 @@
-// Định nghĩa hàm fetchConfig
-function fetchConfig() {
-  return {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include', // Nếu bạn cần gửi cookie
-  };
-}
-// Tạo lớp CartRemoveButton để xử lý sự kiện nhấn nút xóa sản phẩm
 class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
 
     this.addEventListener('click', (event) => {
-      event.preventDefault();// Ngăn chặn hành vi mặc định
+      event.preventDefault();
       const cartItems = this.closest('cart-items') || this.closest('cart-drawer-items');
-      cartItems.updateQuantity(this.dataset.index, 0);// Cập nhật số lượng sản phẩm về 0
+      cartItems.updateQuantity(this.dataset.index, 0);
     });
   }
 }
 
 customElements.define('cart-remove-button', CartRemoveButton);
-// Tạo lớp CartItems để quản lý các sản phẩm trong giỏ hàng
+
 class CartItems extends HTMLElement {
   constructor() {
     super();
@@ -30,48 +19,47 @@ class CartItems extends HTMLElement {
       document.getElementById('shopping-cart-line-item-status') || document.getElementById('CartDrawer-LineItemStatus');
 
     const debouncedOnChange = debounce((event) => {
-      this.onChange(event);// Gọi hàm xử lý khi có sự thay đổi
+      this.onChange(event);
     }, ON_CHANGE_DEBOUNCE_TIMER);
 
     this.addEventListener('change', debouncedOnChange.bind(this));
   }
 
-  cartUpdateUnsubscriber = undefined;// Đăng ký để hủy sự kiện cập nhật giỏ hàng
-
+  cartUpdateUnsubscriber = undefined;
 
   connectedCallback() {
     this.cartUpdateUnsubscriber = subscribe(PUB_SUB_EVENTS.cartUpdate, (event) => {
       if (event.source === 'cart-items') {
-        return;// Nếu sự kiện đến từ cart-items, không làm gì
+        return;
       }
-      this.onCartUpdate();// Gọi hàm cập nhật giỏ hàng
+      this.onCartUpdate();
     });
   }
 
   disconnectedCallback() {
     if (this.cartUpdateUnsubscriber) {
-      this.cartUpdateUnsubscriber();// Hủy đăng ký khi phần tử không còn trên DOM
+      this.cartUpdateUnsubscriber();
     }
   }
 
   resetQuantityInput(id) {
     const input = this.querySelector(`#Quantity-${id}`);
-    input.value = input.getAttribute('value'); // Đặt lại giá trị số lượng
+    input.value = input.getAttribute('value');
     this.isEnterPressed = false;
   }
 
   setValidity(event, index, message) {
-      event.target.setCustomValidity(message); // Đặt thông báo lỗi cho input
-    event.target.reportValidity(); // Hiện thông báo lỗi
-    this.resetQuantityInput(index); // Đặt lại giá trị input
-    event.target.select(); // Chọn nội dung trong input
+    event.target.setCustomValidity(message);
+    event.target.reportValidity();
+    this.resetQuantityInput(index);
+    event.target.select();
   }
 
   validateQuantity(event) {
     const inputValue = parseInt(event.target.value);
     const index = event.target.dataset.index;
     let message = '';
-  // Kiểm tra giá trị nhập vào có hợp lệ không
+
     if (inputValue < event.target.dataset.min) {
       message = window.quickOrderListStrings.min_error.replace('[min]', event.target.dataset.min);
     } else if (inputValue > parseInt(event.target.max)) {
@@ -81,9 +69,9 @@ class CartItems extends HTMLElement {
     }
 
     if (message) {
-      this.setValidity(event, index, message); // Gọi hàm setValidity nếu có lỗi
+      this.setValidity(event, index, message);
     } else {
-      event.target.setCustomValidity('');// Nếu không có lỗi
+      event.target.setCustomValidity('');
       event.target.reportValidity();
       this.updateQuantity(
         index,
@@ -95,7 +83,7 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    this.validateQuantity(event);// Xử lý sự kiện thay đổi
+    this.validateQuantity(event);
   }
 
   onCartUpdate() {
