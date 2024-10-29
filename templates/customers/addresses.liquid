@@ -29,7 +29,7 @@
             </div>
             <div class="customer-page-content">
                 <p class="btn-add-addresses">
-                    <button type="button" class="button address-add-toggle" id="addFormButton">
+                    <button id ="address-add-toggle" type="button" class="button address-add-toggle" id="addFormButton">
                         {{ 'customer.addresses.add_new' | t }}
                     </button>
                 </p>
@@ -97,17 +97,11 @@
                             $(".hidden_form_address_add").click(function () {
                                 $("#AddressNewForm").addClass('hidden');
                             })
-                    // (function ($) {
-                    //     'use strict';
-                    //     $(document).ready(function ($) {
-                    //         $(".address-add-toggle").click(function () {
-                    //             $("#AddressNewForm").toggleClass('hidden');
-                    //         });
-                    //         $(".hidden_form_address_add").click(function () {
-                    //             $("#AddressNewForm").addClass('hidden');
-                    //         })
-                    //     });
-                    // });
+                       document.getElementById("address-add-toggle").addEventListener("click", myAddToggle);
+                                      function myAddToggle() {
+                                          $("#EditAddress_{{ address.id }}").removeClass('hidden');
+                                          $("#edit_{{ address.id }}").addClass('hidden');
+                                      }
                 </script>
                 {% comment %}
                   List all customer addresses with a unique edit form.
@@ -219,22 +213,7 @@
                                           $("#edit_{{ address.id }}").removeClass('hidden');
                                       })
                                       
-                                        // (function ($) {
-                                        //     'use strict';
-                                        //     $(document).ready(function ($) {
-                                        //           console.log('0');
-                                        //         $("#edit_{{ address.id }} .address-edit-toggle").click(function () {
-                                        //             $("#EditAddress_{{ address.id }}").removeClass('hidden');
-                                        //             $("#edit_{{ address.id }}").addClass('hidden');
-                                        //           console.log('1');
-                                        //         });
-
-                                        //         $(".hidden_form_vertical").click(function () {
-                                        //             $("#EditAddress_{{ address.id }}").addClass('hidden');
-                                        //             $("#edit_{{ address.id }}").removeClass('hidden');
-                                        //         })
-                                        //     });
-                                        // });
+                                     
                                     </script>
                                 {% endform %}
                             </div>
