@@ -690,6 +690,7 @@
     "account": {
     "title": "Account",
     "logout": "Logout",
+        "welcome": "Welcome",
     "details": "Account details",
     "view_addresses": "View addresses",
     "dashboard": "Dashboard",
