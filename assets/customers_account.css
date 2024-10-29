@@ -9,3 +9,6 @@
     padding: var(--table-pd) var(--table-pd-hz);
     margin: 0;
 }
+#admin_header,#customer_sidebar,#customer_orders{
+  display:none;
+}
