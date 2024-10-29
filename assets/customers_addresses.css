@@ -57,3 +57,7 @@ ul.addresses-info {
 h4.addresses-title {
     background: #f1f1f1;
 }
+.group-button {
+    display: flex;
+    justify-content: space-between;
+}
