@@ -1,5 +1,5 @@
 .customer-page-nav .active {
-    color: var(--dark-cl);
+    color: #111;
     font-weight: var(--heading-fw);
     background-color: var(--light-cl-2);
 }
