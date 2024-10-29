@@ -48,6 +48,7 @@ th, td {
     text-align: inherit;
 }
 table.table {
+        margin-bottom: 30px;
     margin-top: 20px;
 }
 .btn-view-addresses a.button{
