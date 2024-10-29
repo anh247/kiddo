@@ -23,3 +23,9 @@ div#recoverPassword {
   list-style:none;
   color:#ff0000;
 }
+a.go-register.link {
+    text-decoration: none;
+}
+a.go-register.link:hover {
+    text-decoration: underline;
+}
