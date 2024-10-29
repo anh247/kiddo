@@ -79,7 +79,7 @@ button#address-edit-toggle:hover , button.address-delete:hover{
   color:#fff;
 }
 
-button#address-edit-toggle {
+button#address-edit-toggle,input#AddressFirstNameNew,input#AddressLastNameNew,input#AddressCompanyNew,input#AddressAddress1New,input#AddressAddress2New,input#AddressCityNew,select#AddressCountryNew,select#AddressProvinceNew,input#AddressZipNew,input#AddressPhoneNew {
     width: 100%;
 }
 input#AddressFirstName_8789289664669,input#AddressLastName_8789289664669,input#AddressCompany_8789289664669,input#AddressPhone_8789289664669 {
