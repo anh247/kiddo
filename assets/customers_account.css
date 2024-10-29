@@ -14,3 +14,7 @@
 #admin_header,#customer_sidebar,#customer_orders{
   display:none;
 }
+.section-inner.customer-page-wrap{
+  display:flex;
+  gap:100px;
+}
