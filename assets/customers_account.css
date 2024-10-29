@@ -3,7 +3,7 @@
     font-weight: var(--heading-fw);
     background-color: var(--light-cl-2);
 }
-.customer-page-nav{
+.customer-page-nav p{
       border: 1px solid#ccc;
 }
 .customer-page-nav>* {
