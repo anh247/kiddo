@@ -33,3 +33,20 @@ ul.addresses-info {
     flex-wrap: wrap;
     gap: 30px;
 }
+.addresses-item {
+    border: 1px solid var(--line-cl);
+    display: flex;
+    flex-direction: column;
+    --text-space: var(--space-15);
+    --input-pd: 10px;
+    --input-pd-hz: 15px;
+    --btn-pd: 10px;
+    --btn-pd-hz: 15px;
+    --btn-cl: var(--dark-cl);
+    --btn-bg: var(--light-cl-2);
+    --btn-bd: var(--line-cl);
+    --btn-bd-width: 1px;
+    --btn-cl-hover: var(--light-cl);
+    --btn-bg-hover: var(--dark-cl);
+    --btn-bd-hover: transparent;
+}
