@@ -1,7 +1,7 @@
 .section-inner.customer-page-wrap {
-    display: flex;
-    justify-content: center;
-  gap:100px;
+  display: flex;
+  justify-content: center;
+  gap: 100px;
 }
 .customer-page-nav .active {
   color: #111;
@@ -26,48 +26,50 @@
   margin: 0;
 }
 ul.addresses-info {
-    list-style: none;
+  list-style: none;
 }
 .addresses-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
 }
 .addresses-item {
-    border: 1px solid #e5e5e5;
-    display: flex;
-    flex-direction: column;
-    --text-space: var(--space-15);
-    --input-pd: 10px;
-    --input-pd-hz: 15px;
-    --btn-pd: 10px;
-    --btn-pd-hz: 15px;
-    --btn-cl: #222222;
-    --btn-bg: #f1f1f1;
-    --btn-bd: #e5e5e5;
-    --btn-bd-width: 1px;
-    --btn-cl-hover: #fff;
-    --btn-bg-hover: #222222;
-    --btn-bd-hover: transparent;
+  border: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  --text-space: var(--space-15);
+  --input-pd: 10px;
+  --input-pd-hz: 15px;
+  --btn-pd: 10px;
+  --btn-pd-hz: 15px;
+  --btn-cl: #222222;
+  --btn-bg: #f1f1f1;
+  --btn-bd: #e5e5e5;
+  --btn-bd-width: 1px;
+  --btn-cl-hover: #fff;
+  --btn-bg-hover: #222222;
+  --btn-bd-hover: transparent;
   padding: 20px;
 }
-.addresses-title span{
-  background:#aaa;
+.addresses-title span {
+  background: #aaa;
 }
 h4.addresses-title {
-    background: #f1f1f1;
-  padding:12px;
+  background: #f1f1f1;
+  padding: 12px;
 }
 .group-button {
-    display: flex;
-    justify-content: space-between;
-  gap:20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 button.address-delete {
-    width: 100%;
-  padding:10px 0;
+  width: 100%;
+  padding: 10px 0;
+  text-transform: uppercase;
 }
 button#EditFormButton_8697699893405 {
-    width: 100%;
-    padding:10px 0;
+  width: 100%;
+  padding: 10px 0;
+  text-transform: uppercase;
 }
