@@ -90,7 +90,7 @@
                         </div>
                     {% endform %}
                 </div>
-                <script type="text/javascript">
+                <!-- <script type="text/javascript">
                     (function ($) {
                         'use strict';
                         $(document).ready(function ($) {
@@ -102,7 +102,7 @@
                             })
                         });
                     });
-                </script>
+                </script> -->
                 {% comment %}
                   List all customer addresses with a unique edit form.
                   Also add pagination in case they have a large number of addresses
@@ -211,22 +211,22 @@
                                           //         console.log('1');
                                           //       });
                                           // });
-                                        (function ($) {
-                                            'use strict';
-                                            $(document).ready(function ($) {
-                                                  console.log('0');
-                                                $("#edit_{{ address.id }} .address-edit-toggle").click(function () {
-                                                    $("#EditAddress_{{ address.id }}").removeClass('hidden');
-                                                    $("#edit_{{ address.id }}").addClass('hidden');
-                                                  console.log('1');
-                                                });
+                                        // (function ($) {
+                                        //     'use strict';
+                                        //     $(document).ready(function ($) {
+                                        //           console.log('0');
+                                        //         $("#edit_{{ address.id }} .address-edit-toggle").click(function () {
+                                        //             $("#EditAddress_{{ address.id }}").removeClass('hidden');
+                                        //             $("#edit_{{ address.id }}").addClass('hidden');
+                                        //           console.log('1');
+                                        //         });
 
-                                                $(".hidden_form_vertical").click(function () {
-                                                    $("#EditAddress_{{ address.id }}").addClass('hidden');
-                                                    $("#edit_{{ address.id }}").removeClass('hidden');
-                                                })
-                                            });
-                                        });
+                                        //         $(".hidden_form_vertical").click(function () {
+                                        //             $("#EditAddress_{{ address.id }}").addClass('hidden');
+                                        //             $("#edit_{{ address.id }}").removeClass('hidden');
+                                        //         })
+                                        //     });
+                                        // });
                                     </script>
                                 {% endform %}
                             </div>
