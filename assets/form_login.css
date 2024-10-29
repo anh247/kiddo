@@ -37,6 +37,7 @@ color: #111;
 }
 input.button {
     text-transform: uppercase;
+      border-radius: 31px;
 }
 a.forgot-password:hover {
     text-decoration: underline;
