@@ -60,7 +60,11 @@ h4.addresses-title {
 .group-button {
     display: flex;
     justify-content: space-between;
+  gap:20px;
 }
 button.address-delete {
+    width: 100%;
+}
+button#EditFormButton_8697699893405 {
     width: 100%;
 }
