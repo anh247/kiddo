@@ -1,7 +1,7 @@
 .customer-page-nav .active {
     color: #111;
     font-weight: var(--heading-fw);
-    background-color: var(--light-cl-2);
+    background-color: #fff;
 }
 .customer-page-nav p,.customer-page-nav a{
       border: 1px solid#ccc;
