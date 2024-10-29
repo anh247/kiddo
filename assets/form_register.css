@@ -19,5 +19,7 @@ span.required {
     color: #ff0000;
 }
 input.button:hover{
-background:#ff0000;
+color: #111;
+  background-color: transparent;
+  transition: .40s;
 }
