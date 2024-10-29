@@ -1,0 +1,11 @@
+.customer-page-nav .active {
+    color: var(--dark-cl);
+    font-weight: var(--heading-fw);
+    background-color: var(--light-cl-2);
+}
+
+.customer-page-nav>* {
+    display: block;
+    padding: var(--table-pd) var(--table-pd-hz);
+    margin: 0;
+}
