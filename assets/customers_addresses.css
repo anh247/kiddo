@@ -1,0 +1,5 @@
+.section-inner.customer-page-wrap {
+    display: flex;
+    justify-content: center;
+  gap:100px;
+}
