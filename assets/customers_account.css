@@ -4,7 +4,7 @@
     background-color: var(--light-cl-2);
 }
 .customer-page-nav{
-      border: 1px solid var(--line-cl);
+      border: 1px solid#ccc;
 }
 .customer-page-nav>* {
     display: block;
