@@ -5,6 +5,7 @@
 }
 .customer-page-nav p,.customer-page-nav a{
       border: 1px solid#ccc;
+  padding:10px;
 }
 .customer-page-nav>* {
     display: block;
