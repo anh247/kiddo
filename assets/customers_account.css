@@ -50,3 +50,8 @@ th, td {
 table.table {
     margin-top: 20px;
 }
+.btn-view-addresses a.button{
+      background: #e74b43;
+    color: #fff;
+    padding: 8px;
+}
