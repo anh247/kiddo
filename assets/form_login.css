@@ -8,7 +8,7 @@
   font-family: Nunito;
   font-weight: 900;
 }
-input#CustomerEmail {
+input#CustomerEmail,input#CustomerPassword {
   width: 100%;
   border-radius: 15px;
   height: 30px;
