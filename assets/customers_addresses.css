@@ -61,3 +61,6 @@ h4.addresses-title {
     display: flex;
     justify-content: space-between;
 }
+button.address-delete {
+    width: 100%;
+}
