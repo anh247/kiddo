@@ -78,6 +78,7 @@ button#EditFormButton_8789042102429:hover , button.address-delete:hover{
   background:#111;
   color:#fff;
 }
-button#EditFormButton_8789042102429 {
+
+button#address-edit-toggle {
     width: 100%;
 }
