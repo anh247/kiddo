@@ -1,4 +1,5 @@
 <script src="{{ 'customer.js' | asset_url }}" defer></script>
+{{ 'global.css' | asset_url | stylesheet_tag }}
 <!-- main -->
 {%- liquid
     assign content_width = settings.customer_content_width
