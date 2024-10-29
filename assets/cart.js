@@ -8,20 +8,21 @@ function fetchConfig() {
     credentials: 'include', // Nếu bạn cần gửi cookie
   };
 }
+// Tạo lớp CartRemoveButton để xử lý sự kiện nhấn nút xóa sản phẩm
 class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
 
     this.addEventListener('click', (event) => {
-      event.preventDefault();
+      event.preventDefault();// Ngăn chặn hành vi mặc định
       const cartItems = this.closest('cart-items') || this.closest('cart-drawer-items');
-      cartItems.updateQuantity(this.dataset.index, 0);
+      cartItems.updateQuantity(this.dataset.index, 0);// Cập nhật số lượng sản phẩm về 0
     });
   }
 }
 
 customElements.define('cart-remove-button', CartRemoveButton);
-
+// Tạo lớp CartItems để quản lý các sản phẩm trong giỏ hàng
 class CartItems extends HTMLElement {
   constructor() {
     super();
@@ -29,47 +30,48 @@ class CartItems extends HTMLElement {
       document.getElementById('shopping-cart-line-item-status') || document.getElementById('CartDrawer-LineItemStatus');
 
     const debouncedOnChange = debounce((event) => {
-      this.onChange(event);
+      this.onChange(event);// Gọi hàm xử lý khi có sự thay đổi
     }, ON_CHANGE_DEBOUNCE_TIMER);
 
     this.addEventListener('change', debouncedOnChange.bind(this));
   }
 
-  cartUpdateUnsubscriber = undefined;
+  cartUpdateUnsubscriber = undefined;// Đăng ký để hủy sự kiện cập nhật giỏ hàng
+
 
   connectedCallback() {
     this.cartUpdateUnsubscriber = subscribe(PUB_SUB_EVENTS.cartUpdate, (event) => {
       if (event.source === 'cart-items') {
-        return;
+        return;// Nếu sự kiện đến từ cart-items, không làm gì
       }
-      this.onCartUpdate();
+      this.onCartUpdate();// Gọi hàm cập nhật giỏ hàng
     });
   }
 
   disconnectedCallback() {
     if (this.cartUpdateUnsubscriber) {
-      this.cartUpdateUnsubscriber();
+      this.cartUpdateUnsubscriber();// Hủy đăng ký khi phần tử không còn trên DOM
     }
   }
 
   resetQuantityInput(id) {
     const input = this.querySelector(`#Quantity-${id}`);
-    input.value = input.getAttribute('value');
+    input.value = input.getAttribute('value'); // Đặt lại giá trị số lượng
     this.isEnterPressed = false;
   }
 
   setValidity(event, index, message) {
-    event.target.setCustomValidity(message);
-    event.target.reportValidity();
-    this.resetQuantityInput(index);
-    event.target.select();
+      event.target.setCustomValidity(message); // Đặt thông báo lỗi cho input
+    event.target.reportValidity(); // Hiện thông báo lỗi
+    this.resetQuantityInput(index); // Đặt lại giá trị input
+    event.target.select(); // Chọn nội dung trong input
   }
 
   validateQuantity(event) {
     const inputValue = parseInt(event.target.value);
     const index = event.target.dataset.index;
     let message = '';
-
+  // Kiểm tra giá trị nhập vào có hợp lệ không
     if (inputValue < event.target.dataset.min) {
       message = window.quickOrderListStrings.min_error.replace('[min]', event.target.dataset.min);
     } else if (inputValue > parseInt(event.target.max)) {
@@ -79,9 +81,9 @@ class CartItems extends HTMLElement {
     }
 
     if (message) {
-      this.setValidity(event, index, message);
+      this.setValidity(event, index, message); // Gọi hàm setValidity nếu có lỗi
     } else {
-      event.target.setCustomValidity('');
+      event.target.setCustomValidity('');// Nếu không có lỗi
       event.target.reportValidity();
       this.updateQuantity(
         index,
@@ -93,40 +95,30 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    this.validateQuantity(event);
+    this.validateQuantity(event);// Xử lý sự kiện thay đổi
   }
 
-  onCartUpdate() {
-    if (this.tagName === 'CART-DRAWER-ITEMS') {
-      fetch(`${routes.cart_url}?section_id=cart-drawer`)
-        .then((response) => response.text())
-        .then((responseText) => {
-          const html = new DOMParser().parseFromString(responseText, 'text/html');
-          const selectors = ['cart-drawer-items', '.cart-drawer__footer'];
-          for (const selector of selectors) {
-            const targetElement = document.querySelector(selector);
-            const sourceElement = html.querySelector(selector);
-            if (targetElement && sourceElement) {
-              targetElement.replaceWith(sourceElement);
-            }
+    onCartUpdate() {
+    // Cập nhật giỏ hàng khi có thay đổi
+    const sectionId = this.tagName === 'CART-DRAWER-ITEMS' ? 'cart-drawer' : 'main-cart-items';
+    fetch(`${routes.cart_url}?section_id=${sectionId}`)
+      .then((response) => response.text())
+      .then((responseText) => {
+        const html = new DOMParser().parseFromString(responseText, 'text/html');
+        const selectors = ['cart-drawer-items', '.cart-drawer__footer'];
+        for (const selector of selectors) {
+          const targetElement = document.querySelector(selector);
+          const sourceElement = html.querySelector(selector);
+          if (targetElement && sourceElement) {
+            targetElement.replaceWith(sourceElement);
           }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    } else {
-      fetch(`${routes.cart_url}?section_id=main-cart-items`)
-        .then((response) => response.text())
-        .then((responseText) => {
-          const html = new DOMParser().parseFromString(responseText, 'text/html');
-          const sourceQty = html.querySelector('cart-items');
-          this.innerHTML = sourceQty.innerHTML;
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    }
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
+
 
   getSectionsToRender() {
     return [
