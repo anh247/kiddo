@@ -15,3 +15,6 @@ input#PasswordConfirmation {
   text-transform: capitalize;
   text-align: center;
 }
+span.required {
+    color: #ff0000;
+}
