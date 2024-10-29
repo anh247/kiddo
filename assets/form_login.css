@@ -44,3 +44,6 @@ a.forgot-password:hover {
 .form-field label{
 font-size:30px;
 }
+p.label-text.check {
+    font-size: 20px;
+}
