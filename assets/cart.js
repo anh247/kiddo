@@ -1,3 +1,13 @@
+// Định nghĩa hàm fetchConfig
+function fetchConfig() {
+  return {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include', // Nếu bạn cần gửi cookie
+  };
+}
 class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
