@@ -93,7 +93,7 @@
                 <script type="text/javascript">
                     (function ($) {
                         'use strict';
-                        jQuery(document).ready(function ($) {
+                        $(document).ready(function ($) {
                             $(".address-add-toggle").click(function () {
                                 $("#AddressNewForm").toggleClass('hidden');
                             });
@@ -101,7 +101,7 @@
                                 $("#AddressNewForm").addClass('hidden');
                             })
                         });
-                    })(jQuery);
+                    });
                 </script>
                 {% comment %}
                   List all customer addresses with a unique edit form.
@@ -204,7 +204,7 @@
                                     <script type="text/javascript">
                                         (function ($) {
                                             'use strict';
-                                            jQuery(document).ready(function ($) {
+                                            $(document).ready(function ($) {
                                                 $("#edit_{{ address.id }} .address-edit-toggle").click(function () {
                                                     $("#EditAddress_{{ address.id }}").removeClass('hidden');
                                                     $("#edit_{{ address.id }}").addClass('hidden');
@@ -215,7 +215,7 @@
                                                     $("#edit_{{ address.id }}").removeClass('hidden');
                                                 })
                                             });
-                                        })(jQuery);
+                                        });
                                     </script>
                                 {% endform %}
                             </div>
