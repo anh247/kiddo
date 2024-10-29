@@ -74,7 +74,7 @@ button#EditFormButton_8697699893405 {
   padding: 10px 0;
   text-transform: uppercase;
 }
-button#EditFormButton_8789042102429:hover , button.address-delete:hover{
+button#address-edit-toggle:hover , button.address-delete:hover{
   background:#111;
   color:#fff;
 }
