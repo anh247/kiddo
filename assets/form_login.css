@@ -19,3 +19,7 @@ span.required {
 div#recoverPassword {
     display: none;
 }
+.errors ul{
+  list-style:none;
+  color:#ff0000;
+}
