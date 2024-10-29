@@ -90,19 +90,25 @@
                         </div>
                     {% endform %}
                 </div>
-                <!-- <script type="text/javascript">
-                    (function ($) {
-                        'use strict';
-                        $(document).ready(function ($) {
+                <script type="text/javascript">
                             $(".address-add-toggle").click(function () {
                                 $("#AddressNewForm").toggleClass('hidden');
                             });
                             $(".hidden_form_address_add").click(function () {
                                 $("#AddressNewForm").addClass('hidden');
                             })
-                        });
-                    });
-                </script> -->
+                    // (function ($) {
+                    //     'use strict';
+                    //     $(document).ready(function ($) {
+                    //         $(".address-add-toggle").click(function () {
+                    //             $("#AddressNewForm").toggleClass('hidden');
+                    //         });
+                    //         $(".hidden_form_address_add").click(function () {
+                    //             $("#AddressNewForm").addClass('hidden');
+                    //         })
+                    //     });
+                    // });
+                </script>
                 {% comment %}
                   List all customer addresses with a unique edit form.
                   Also add pagination in case they have a large number of addresses
@@ -199,7 +205,7 @@
                                     </div>
                                     <div class="group-button">
                                         <input type="submit" class="btn button submit" value="{{ 'customer.addresses.update' | t }}">
-                                        <a class="button hidden_form_vertical" data-form-id="{{ form.id }}">{{ 'customer.addresses.cancel' | t }}</a>
+                                        <a id="hidden_form_vertical" class="button hidden_form_vertical" data-form-id="{{ form.id }}">{{ 'customer.addresses.cancel' | t }}</a>
                                     </div>
                                     <script type="text/javascript">
                                       document.getElementById("address-edit-toggle").addEventListener("click", myFunction);
@@ -207,15 +213,12 @@
                                           $("#EditAddress_{{ address.id }}").removeClass('hidden');
                                           $("#edit_{{ address.id }}").addClass('hidden');
                                       }
+                                      document.getElementById("hidden_form_vertical").addEventListener("click", myFunction2);
+                                      function myFunction2() {
+                                          $("#EditAddress_{{ address.id }}").addClass('hidden');
+                                          $("#edit_{{ address.id }}").removeClass('hidden');
+                                      })
                                       
-                                          // $(document).ready(function () {
-                                          //         console.log('0');
-                                          //       $('#edit_{{ address.id }} .address-edit-toggle').on('click', function () {
-                                          //           $("#EditAddress_{{ address.id }}").removeClass('hidden');
-                                          //           $("#edit_{{ address.id }}").addClass('hidden');
-                                          //         console.log('1');
-                                          //       });
-                                          // });
                                         // (function ($) {
                                         //     'use strict';
                                         //     $(document).ready(function ($) {
