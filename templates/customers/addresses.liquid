@@ -29,7 +29,7 @@
             </div>
             <div class="customer-page-content">
                 <p class="btn-add-addresses">
-                    <button id ="address-add-toggle" type="button" class="button address-add-toggle" id="addFormButton">
+                    <button  type="button" class="button address-add-toggle" id="addFormButton">
                         {{ 'customer.addresses.add_new' | t }}
                     </button>
                 </p>
@@ -92,7 +92,7 @@
                 </div>
                 <script type="text/javascript">
 
-                       document.getElementById("address-add-toggle").addEventListener("click", myFunction3);
+                       document.getElementById("addFormButton").addEventListener("click", myFunction3);
                                       function myFunction3() {
                                           $("#EditAddress_{{ address.id }}").removeClass('hidden');
                                           $("#edit_{{ address.id }}").addClass('hidden');
