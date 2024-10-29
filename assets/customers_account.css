@@ -30,7 +30,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
-success {
+.success {
     padding: 8px 15px;
     color: var(--success-msg-cl);
     box-shadow: 0 0 0 1px var(--success-msg-bd) inset;
