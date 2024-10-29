@@ -49,6 +49,7 @@ ul.addresses-info {
     --btn-cl-hover: #fff;
     --btn-bg-hover: #222222;
     --btn-bd-hover: transparent;
+  padding: 20px;
 }
 .addresses-title span{
   background:#aaa;
