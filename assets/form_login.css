@@ -3,10 +3,10 @@
   justify-content: center;
   gap: 100px;
 }
-#loginForm.title {
-  font-size: 48px;
-  font-family: Nunito;
-  font-weight: 900;
+loginForm h2{
+  text-align:center;
+  font-size:48px;
+  font-weight:900;
 }
 input#CustomerEmail,input#CustomerPassword {
   width: 100%;
