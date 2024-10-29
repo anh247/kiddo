@@ -128,7 +128,7 @@
                                     <li>{{ address.address2 }}</li>
                                 </ul>
                                 <div class="group-button">
-                                    <button type="button" class="address-edit-toggle"
+                                    <button id="address-edit-toggle" type="button" class="address-edit-toggle"
                                             id="EditFormButton_{{ address.id }}"
                                             aria-label="{{ 'customer.addresses.edit_address' | t }} {{ forloop.index }}"
                                             aria-controls="EditAddress_{{ address.id }}"
@@ -202,6 +202,11 @@
                                         <a class="button hidden_form_vertical" data-form-id="{{ form.id }}">{{ 'customer.addresses.cancel' | t }}</a>
                                     </div>
                                     <script type="text/javascript">
+                                      document.getElementById("address-edit-toggle").addEventListener("click", myFunction);
+
+                                      function myFunction() {
+                                        alert ("Hello World!");
+                                      }
                                       
                                           // $(document).ready(function () {
                                           //         console.log('0');
