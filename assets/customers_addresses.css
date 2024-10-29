@@ -28,3 +28,8 @@
 ul.addresses-info {
     list-style: none;
 }
+.addresses-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
