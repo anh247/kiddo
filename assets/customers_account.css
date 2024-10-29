@@ -10,6 +10,9 @@
 .customer-page-nav a{
   color:#888;
 }
+.customer-page-nav a:hover{
+  background:#ff0000;
+}
 .customer-page-nav>* {
     display: block;
     padding: var(--table-pd) var(--table-pd-hz);
