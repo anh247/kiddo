@@ -8,6 +8,6 @@
   font-family: Nunito;
   font-weight: 900;
 
-#CustomerEmail {
+#CustomerEmail,#CustomerPassword{
   width: 100%;
 }
