@@ -3,3 +3,25 @@
     justify-content: center;
   gap:100px;
 }
+.customer-page-nav .active {
+  color: #111;
+  font-weight: var(--heading-fw);
+  background-color: #fff;
+}
+.customer-page-nav p,
+.customer-page-nav a {
+  border: 1px solid#ccc;
+  padding: 10px;
+}
+.customer-page-nav a {
+  color: #888;
+}
+.customer-page-nav a:hover {
+  background: #111;
+  color: #fff;
+}
+.customer-page-nav > * {
+  display: block;
+  padding: var(--table-pd) var(--table-pd-hz);
+  margin: 0;
+}
