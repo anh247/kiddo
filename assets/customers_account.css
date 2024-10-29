@@ -3,7 +3,9 @@
     font-weight: var(--heading-fw);
     background-color: var(--light-cl-2);
 }
-
+.customer-page-nav{
+      border: 1px solid var(--line-cl);
+}
 .customer-page-nav>* {
     display: block;
     padding: var(--table-pd) var(--table-pd-hz);
