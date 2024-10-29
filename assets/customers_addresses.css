@@ -50,3 +50,6 @@ ul.addresses-info {
     --btn-bg-hover: #222222;
     --btn-bd-hover: transparent;
 }
+.addresses-title span{
+  background:#aaa;
+}
