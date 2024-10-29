@@ -7,3 +7,5 @@ input#RegisterForm-FirstName,input#RegisterForm-LastName,input#RegisterForm-emai
     border-radius: 30px;
     height: 30px;
 }
+#registerForm h2{
+}
