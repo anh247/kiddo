@@ -41,3 +41,6 @@ input.button {
 a.forgot-password:hover {
     text-decoration: underline;
 }
+.form-field label{
+font-size:20px;
+}
