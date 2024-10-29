@@ -85,3 +85,6 @@ button#address-edit-toggle {
 input#AddressFirstName_8789289664669,input#AddressLastName_8789289664669,input#AddressCompany_8789289664669,input#AddressPhone_8789289664669 {
     width: 100%;
 }
+input#AddressAddress1_8789289664669,input#AddressAddress2_8789289664669,input#AddressCity_8789289664669,select#AddressCountry_8789289664669,select#AddressProvince_8789289664669,input#AddressZip_8789289664669{
+  width:100%;
+}
