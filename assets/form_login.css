@@ -16,3 +16,6 @@ input#CustomerEmail,input#CustomerPassword {
 span.required {
     color: #ff0000;
 }
+div#recoverPassword {
+    display: none;
+}
