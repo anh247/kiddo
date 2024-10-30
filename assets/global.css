@@ -245,6 +245,9 @@ a.button.add-to-cart.js-btn-sold-out.skeleton-item.d-none-important {
   display:flex;
   align-items:center;
 }
+.js-quantity.quantity.skeleton-item {
+    border: 1px solid #111;
+}
 @media (max-width: 1499px){
     :root{
         /* sidebar */
