@@ -1,7 +1,3 @@
-(function ($) {
-    'use strict';
-
-  
 
 function fetchConfig(type = 'json') {
   return {
@@ -75,4 +71,3 @@ class QuantityInput extends HTMLElement {
 }
 
 customElements.define('quantity-input', QuantityInput);
-});
