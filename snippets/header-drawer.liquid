@@ -292,19 +292,3 @@
     </div>
   </details>
 </header-drawer>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-  // Lấy phần tử với id Details-menu-drawer-container
-  const drawerContainer = document.getElementById("Details-menu-drawer-container");
-  // Lấy phần tử với id menu-drawer
-  const menuDrawer = document.getElementById("menu-drawer");
-
-  if (drawerContainer && menuDrawer) {
-    // Lắng nghe sự kiện click trên drawerContainer
-    drawerContainer.addEventListener("click", function() {
-      // Kiểm tra và bật/tắt lớp CSS để mở menu
-      menuDrawer.classList.toggle("open");
-    });
-  }
-});
-</script>
