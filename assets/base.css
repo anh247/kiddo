@@ -2605,7 +2605,7 @@ account-icon {
 
 /* Search */
 menu-drawer + .header__search {
-  display: none;
+  display: block;
 }
 
 .header > .header__search {
