@@ -432,11 +432,11 @@ table:not([class]) th {
   border: 0.1rem solid rgba(var(--color-foreground), 0.2);
 }
 
-@media screen and (max-width: 749px) {
+/* @media screen and (max-width: 749px) {
   .small-hide {
     display: none !important;
   }
-}
+} */
 
 @media screen and (min-width: 750px) and (max-width: 989px) {
   .medium-hide {
