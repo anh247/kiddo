@@ -75,18 +75,13 @@
 }
 
 /* base */
-.header{
-  display:flex;
-  justify-content: space-between;
-}
+
 .page-width {
   max-width: var(--page-width);
   margin: 0 auto;
   padding: 0 1.5rem;
 }
-h1.h2.center {
-    display: none;
-}
+
 body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   max-width: 100%;
 }
@@ -131,8 +126,8 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 
 @media screen and (min-width: 990px) {
   .header:not(.drawer-menu).page-width {
-   display: flex;
-    padding: 15px 0;
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
 
   .page-width--narrow {
@@ -483,7 +478,7 @@ h3:empty,
 h4:empty,
 h5:empty,
 h6:empty {
-  
+  display: none;
 }
 
 .link,
@@ -1626,7 +1621,7 @@ details[open] > .share-button__fallback {
   left: var(--inputs-border-width);
   border: 0.1rem solid transparent;
   border-radius: var(--inputs-radius);
- // box-shadow: 0 0 0 var(--inputs-border-width) rgba(var(--color-foreground), var(--inputs-border-opacity));
+  box-shadow: 0 0 0 var(--inputs-border-width) rgba(var(--color-foreground), var(--inputs-border-opacity));
   transition: box-shadow var(--duration-short) ease;
   z-index: 1;
 }
@@ -2083,6 +2078,7 @@ input[type='checkbox'] {
 
 .cart-count-bubble {
   position: absolute;
+  background-color: rgb(var(--color-button));
   color: rgb(var(--color-button-text));
   height: 1.7rem;
   width: 1.7rem;
@@ -2091,9 +2087,8 @@ input[type='checkbox'] {
   justify-content: center;
   align-items: center;
   font-size: 0.9rem;
-background: #FF961A;
-  top: 0.2rem;
-  left: 2.5em;
+  bottom: 0.8rem;
+  left: 2.2rem;
   line-height: calc(1 + 0.1 / var(--font-body-scale));
 }
 
@@ -2354,9 +2349,9 @@ background: #FF961A;
   background-color: rgb(var(--color-background));
 }
 
-/*.header-wrapper--border-bottom {
+.header-wrapper--border-bottom {
   border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
-}*/
+}
 
 .header {
   display: grid;
@@ -2551,10 +2546,6 @@ background: #FF961A;
 .header__icon:hover .icon,
 .modal__close-button:hover .icon {
   transform: scale(1.07);
- color: #F05E2D;
-}
-.header__icon.header__icon--account.link.focus-inset.small-hide {
-  padding-left: 15px;
 }
 
 .header__icon .icon {
@@ -2759,7 +2750,7 @@ details[open] > .header__icon--menu .icon-hamburger {
 details[open] > .header__submenu {
   animation: animateMenuOpen var(--duration-default) ease;
   animation-fill-mode: forwards;
-  z-index: 5;
+  z-index: 1;
 }
 
 @media (prefers-reduced-motion) {
@@ -2806,26 +2797,13 @@ details[open] > .header__submenu {
 .header__menu-item {
   padding: 1.2rem;
   text-decoration: none;
-  color: #423127;
-  font-size: 16px;
-  font-weight: 600;
+  color: rgba(var(--color-foreground), 0.75);
 }
 
 .header__menu-item:hover {
- color: #FF961A;
+  color: rgb(var(--color-foreground));
 }
-.header__menu-item.products:hover{
-  color:#FF566F;
-}
-#HeaderMenu-shop_all:active,#HeaderMenu-page:active,#HeaderMenu-fall:active,#HeaderMenu-girls:active,#HeaderMenu-boys:active,#HeaderMenu-collection:active,#HeaderMenu-gifts:active ,#HeaderMenu-sales:active{
-  color: #FF566F;
-}
-#HeaderMenu-home:active {
-  color: #FF566F;
-}
-.menu_products:active {
-  color: #FF566F;
-}
+
 .header__menu-item span {
   transition: text-decoration var(--duration-short) ease;
 }
@@ -2837,18 +2815,8 @@ details[open] > .header__submenu {
 
 details[open] > .header__menu-item {
   text-decoration: underline;
-  color:#FF961A;
 }
-details[open] > .header__menu-item.products {
-  text-decoration: underline;
-  color: #FF566F;
-}
-.menu_products {
-  font-size: 12px;
-  font-weight: 900;
-  text-transform: uppercase;
-  font-family: 'Nunito',sans-serif;
-}
+
 details[open]:hover > .header__menu-item {
   text-decoration-thickness: 0.2rem;
 }
@@ -2958,6 +2926,7 @@ details-disclosure > details {
   font-size: 1.2rem;
   letter-spacing: 0.1rem;
   line-height: 1;
+  padding: 0.5rem 1.3rem 0.6rem 1.3rem;
   text-align: center;
   background-color: rgb(var(--color-badge-background));
   border-color: rgba(var(--color-badge-border), var(--alpha-badge-border));
