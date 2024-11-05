@@ -292,3 +292,16 @@
     </div>
   </details>
 </header-drawer>
+<script>
+  document.getElementById("Details-menu-drawer-container").addEventListener("click", function () {
+    const details = document.getElementById("Details-menu-drawer-container");
+    
+    // Toggle the open state of the <details> element
+    if (details.hasAttribute("open")) {
+        details.removeAttribute("open");
+    } else {
+        details.setAttribute("open", "");
+    }
+});
+
+</script>
